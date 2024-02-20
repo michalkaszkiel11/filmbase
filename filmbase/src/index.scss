@@ -1,0 +1,67 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Anek Telugu", sans-serif;
+    font-optical-sizing: auto;
+}
+//Ready classes//
+.row {
+    display: flex;
+    flex-direction: row;
+}
+.column {
+    display: flex;
+    flex-direction: column;
+}
+.center {
+    justify-content: center;
+    align-items: center;
+}
+////Navbar////
+// Logo
+.App {
+    @extend .column;
+    color: white;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(59, 59, 59);
+    position: relative;
+
+    .nav-bar {
+        @extend .row, .center;
+        height: 85px;
+        justify-content: space-between;
+        .logo-box {
+            .logo {
+                background-image: url(./images/logo1.png);
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: contain;
+            }
+            .logo-h1 {
+                font-size: 2vw;
+            }
+        }
+        .user-icon-box {
+            @extend .row, .center;
+
+            width: 10%;
+            height: 100%;
+            .user-icon-name {
+            }
+            .user-icon {
+                width: 3rem;
+                height: fit-content;
+            }
+        }
+    }
+    .main {
+        width: 100vw;
+        height: 70vh;
+        background-image: url(./images/next.jpeg);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+}
