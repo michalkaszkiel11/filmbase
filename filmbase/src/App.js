@@ -20,6 +20,7 @@ export default function App() {
     const [selectedId, setSelectedId] = useState(null);
     const [selectedMovie, setSelectedMovie] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
     const {
         Title: title,
         Year: year,
@@ -56,12 +57,15 @@ export default function App() {
             try {
                 setLoading(true);
                 const res = await fetch(
-                    `http://www.omdbapi.com/?apikey=${apiKey}&s=${query}`,
+                    `http://www.omdbapi.com/?apikey=${apiKey}&s=${query}&page=${currentPage}`,
                     { signal: controller.signal }
                 );
                 const data = await res.json();
-                setMovies(data.Search);
+                if (data.Search && Array.isArray(data.Search)) {
+                    setMovies(data.Search);
+                }
                 setLoading(false);
+                console.log(data);
             } catch (e) {
                 if (e.name !== "AbortError") {
                     console.error(e);
@@ -77,7 +81,7 @@ export default function App() {
         return function () {
             controller.abort();
         };
-    }, [query]);
+    }, [query, currentPage]);
     useEffect(() => {
         getSelectedMovie(selectedId);
     }, [selectedId]);
@@ -110,6 +114,14 @@ export default function App() {
             ? selectedMovie.Title
             : "Film-base");
     };
+    const nextPage = () => {
+        if (currentPage < 101) setCurrentPage((prevPage) => prevPage + 1);
+    };
+    const prevPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage((prevPage) => prevPage - 1);
+        }
+    };
     return (
         <div className="App">
             <Navbar>
@@ -126,6 +138,8 @@ export default function App() {
                         <MovieList
                             movies={movies}
                             setSelectedId={setSelectedId}
+                            nextPage={nextPage}
+                            prevPage={prevPage}
                         />
                     )}
                 </Box>

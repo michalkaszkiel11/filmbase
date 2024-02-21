@@ -91,26 +91,38 @@
         }
     }
     .main {
+        @extend .center;
         width: 100vw;
-        height: 70vh;
+        height: 100vh;
         background-color: rgb(46, 46, 46);
         // background-image: url(./images/gold.jpeg);
         // background-position: center;
         // background-repeat: no-repeat;
         // background-size: cover;
         .movie-box {
+            @extend .row, .center;
+            padding: 2rem;
             width: 100vw;
             height: 30vh;
+            gap: 1rem;
+
             .movie-list {
                 @extend .row;
+
                 width: 100%;
                 height: 100%;
                 gap: 3rem;
             }
+            .fa-solid {
+                font-size: 3rem;
+                cursor: pointer;
+            }
             .movie {
                 @extend .column;
+
+                gap: 1rem;
                 img {
-                    width: 200px;
+                    width: 125px;
                 }
             }
         }
