@@ -5,7 +5,11 @@ export const Movie = ({ movie, setSelectedId }) => {
         console.log(id);
     }
     return (
-        <li key={movie.imdbID} onClick={() => setId(movie.imdbID)}>
+        <li
+            key={movie.imdbID}
+            onClick={() => setId(movie.imdbID)}
+            className="movie"
+        >
             <img src={movie.Poster} alt={`${movie.Title} poster`} />
             <h3>{movie.Title}</h3>
             <div>

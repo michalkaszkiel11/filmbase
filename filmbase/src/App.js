@@ -108,7 +108,7 @@ export default function App() {
     const changeTitle = () => {
         return (document.title = selectedMovie.Title
             ? selectedMovie.Title
-            : "Film-based");
+            : "Film-base");
     };
     return (
         <div className="App">
@@ -129,7 +129,7 @@ export default function App() {
                         />
                     )}
                 </Box>
-                <Box>
+                {/* <Box>
                     {selectedId ? (
                         <>
                             <button onClick={() => closeDetails()}>
@@ -152,7 +152,7 @@ export default function App() {
                             <WatchedMoviesList watched={watched} />
                         </>
                     )}
-                </Box>
+                </Box> */}
             </Main>
         </div>
     );

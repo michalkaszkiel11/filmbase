@@ -33,8 +33,15 @@
         height: 85px;
         justify-content: space-between;
         .logo-box {
+            padding: 1rem;
+            @extend .row;
+            align-items: center;
+            width: 20%;
+            gap: 1rem;
             .logo {
-                background-image: url(./images/logo1.png);
+                width: 80px;
+                height: 80px;
+                background-image: url(./images/logo.png);
                 background-position: center;
                 background-repeat: no-repeat;
                 background-size: contain;
@@ -43,7 +50,31 @@
                 font-size: 2vw;
             }
         }
+        .search-box {
+            position: relative;
+            @extend .row, .center;
+            width: 40%;
+            height: 50px;
+            .scope-icon {
+                right: 8px;
+                position: absolute;
+                width: 40px;
+                height: fit-content;
+            }
+            .search {
+                font-size: 1.5rem;
+                width: 100%;
+                height: 50px;
+                background-color: rgb(255, 255, 255);
+                border-radius: 1rem;
+                border: 5px solid white;
+                &:focus {
+                    border-color: #dbdbdb;
+                }
+            }
+        }
         .user-icon-box {
+            width: 10%;
             @extend .row, .center;
 
             width: 10%;
@@ -55,13 +86,33 @@
                 height: fit-content;
             }
         }
+        .search-results {
+            width: 10%;
+        }
     }
     .main {
         width: 100vw;
         height: 70vh;
-        background-image: url(./images/next.jpeg);
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
+        background-color: rgb(46, 46, 46);
+        // background-image: url(./images/gold.jpeg);
+        // background-position: center;
+        // background-repeat: no-repeat;
+        // background-size: cover;
+        .movie-box {
+            width: 100vw;
+            height: 30vh;
+            .movie-list {
+                @extend .row;
+                width: 100%;
+                height: 100%;
+                gap: 3rem;
+            }
+            .movie {
+                @extend .column;
+                img {
+                    width: 200px;
+                }
+            }
+        }
     }
 }
