@@ -3,13 +3,15 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Movie } from "../Main/MovieList/Movie";
 
-export const Carousel = ({ movies, setSelectedId }) => {
+export const Carousel = ({ movies, setSelectedId, loading }) => {
     const settings = {
         dots: false,
         infinite: true,
         speed: 500,
         slidesToShow: 5,
         slidesToScroll: 2,
+        adaptiveHeight: true,
+        adaptiveWidth: true,
         // fade: true,
         // centerMode: true,
 
@@ -44,11 +46,17 @@ export const Carousel = ({ movies, setSelectedId }) => {
         <>
             <Slider {...settings} className="slider">
                 {movies?.map((movie) => (
-                    <Movie
-                        movie={movie}
-                        key={movie.imbID}
-                        setSelectedId={setSelectedId}
-                    />
+                    <>
+                        {loading ? (
+                            <div className="loading-spinner"></div>
+                        ) : (
+                            <Movie
+                                movie={movie}
+                                key={movie.imbID}
+                                setSelectedId={setSelectedId}
+                            />
+                        )}
+                    </>
                 ))}
             </Slider>
         </>

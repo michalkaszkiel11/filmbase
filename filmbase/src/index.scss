@@ -39,8 +39,8 @@
             width: 20%;
             gap: 1rem;
             .logo {
-                width: 80px;
-                height: 80px;
+                width: 60px;
+                height: 60px;
                 background-image: url(./images/logo.png);
                 background-position: center;
                 background-repeat: no-repeat;
@@ -173,4 +173,23 @@
 .btn:hover,
 .btn:focus {
     opacity: 0.75;
+}
+
+.loading-spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto; /* Adjust the margin based on your layout */
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }

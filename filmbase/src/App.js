@@ -4,7 +4,6 @@ import { useState } from "react";
 import { Search } from "./Navbar/Search";
 import { NumResults } from "./Navbar/NumResults";
 import { Box } from "./Box";
-import { MovieList } from "./Main/MovieList/MovieList";
 import { WatchedSummary } from "./Main/Watched/WatchedSummary";
 import { WatchedMoviesList } from "./Main/Watched/WatchedMoviesList";
 import { useEffect } from "react";
@@ -132,23 +131,19 @@ export default function App() {
             </Navbar>
             <Main>
                 <Box>
-                    <>
-                        {loading ? (
-                            <div className="loading-spinner"></div>
-                        ) : (
-                            <Carousel
-                                movies={movies}
-                                setSelectedId={setSelectedId}
-                                results={results}
-                            />
-                        )}
-                        <Pages
-                            results={results}
-                            pages={pages}
-                            setCurrentPage={setCurrentPage}
-                            currentPage={currentPage}
-                        />
-                    </>
+                    <Carousel
+                        movies={movies}
+                        setSelectedId={setSelectedId}
+                        results={results}
+                        loading={loading}
+                    />
+
+                    <Pages
+                        results={results}
+                        pages={pages}
+                        setCurrentPage={setCurrentPage}
+                        currentPage={currentPage}
+                    />
                 </Box>
 
                 {/* <Box>
