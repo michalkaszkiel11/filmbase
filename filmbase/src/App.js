@@ -3,7 +3,7 @@ import { Main } from "./Main/Main";
 import { useState } from "react";
 import { Search } from "./Navbar/Search";
 import { NumResults } from "./Navbar/NumResults";
-import { Box } from "./ListBox";
+import { Box } from "./Box";
 import { MovieList } from "./Main/MovieList/MovieList";
 import { WatchedSummary } from "./Main/Watched/WatchedSummary";
 import { WatchedMoviesList } from "./Main/Watched/WatchedMoviesList";
@@ -11,16 +11,20 @@ import { useEffect } from "react";
 import { MovieDetails } from "./Main/MovieDetails/MovieDetails";
 import { LoginNav, User } from "./Navbar/User";
 import { Logo } from "./Navbar/Logo";
+import { Carousel } from "./Slider/Carousel";
+import { Pages } from "./Slider/Pages";
 
 const apiKey = "9fef7c80";
 export default function App() {
     const [query, setQuery] = useState("");
     const [movies, setMovies] = useState([]);
     const [watched, setWatched] = useState([]);
+    const [results, setResults] = useState("");
     const [selectedId, setSelectedId] = useState(null);
     const [selectedMovie, setSelectedMovie] = useState([]);
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
+    const pages = results / 10;
     const {
         Title: title,
         Year: year,
@@ -43,7 +47,7 @@ export default function App() {
             const data = await res.json();
             setSelectedMovie(data);
             setLoading(false);
-            console.log(selectedMovie);
+            // console.log(selectedMovie);
             console.log(data);
         } catch (e) {
             console.error(e);
@@ -63,6 +67,9 @@ export default function App() {
                 const data = await res.json();
                 if (data.Search && Array.isArray(data.Search)) {
                     setMovies(data.Search);
+                }
+                if (data.totalResults) {
+                    setResults(data.totalResults);
                 }
                 setLoading(false);
                 console.log(data);
@@ -90,7 +97,7 @@ export default function App() {
     }, [selectedMovie]);
     const closeDetails = () => {
         setSelectedId(false);
-        console.log(selectedId, selectedMovie);
+        // console.log(selectedId, selectedMovie);
     };
     const handleAdd = (e) => {
         e.preventDefault();
@@ -114,35 +121,36 @@ export default function App() {
             ? selectedMovie.Title
             : "Film-base");
     };
-    const nextPage = () => {
-        if (currentPage < 101) setCurrentPage((prevPage) => prevPage + 1);
-    };
-    const prevPage = () => {
-        if (currentPage > 1) {
-            setCurrentPage((prevPage) => prevPage - 1);
-        }
-    };
+
     return (
         <div className="App">
             <Navbar>
                 <Logo />
                 <Search query={query} setQuery={setQuery} />
-                <NumResults movies={movies} />
+                <NumResults results={results} />
                 <User />
             </Navbar>
             <Main>
                 <Box>
-                    {loading ? (
-                        <div className="loading-spinner"></div>
-                    ) : (
-                        <MovieList
-                            movies={movies}
-                            setSelectedId={setSelectedId}
-                            nextPage={nextPage}
-                            prevPage={prevPage}
+                    <>
+                        {loading ? (
+                            <div className="loading-spinner"></div>
+                        ) : (
+                            <Carousel
+                                movies={movies}
+                                setSelectedId={setSelectedId}
+                                results={results}
+                            />
+                        )}
+                        <Pages
+                            results={results}
+                            pages={pages}
+                            setCurrentPage={setCurrentPage}
+                            currentPage={currentPage}
                         />
-                    )}
+                    </>
                 </Box>
+
                 {/* <Box>
                     {selectedId ? (
                         <>

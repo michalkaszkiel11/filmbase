@@ -1,7 +1,7 @@
-export const NumResults = ({ movies }) => {
+export const NumResults = ({ results }) => {
     return (
         <p className="search-results">
-            Found <strong>{movies?.length}</strong> results
+            Found <strong>{results}</strong> results
         </p>
     );
 };

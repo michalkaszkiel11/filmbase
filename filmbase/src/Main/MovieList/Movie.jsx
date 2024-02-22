@@ -5,7 +5,7 @@ export const Movie = ({ movie, setSelectedId }) => {
         console.log(id);
     }
     return (
-        <li
+        <div
             key={movie.imdbID}
             onClick={() => setId(movie.imdbID)}
             className="movie"
@@ -18,6 +18,6 @@ export const Movie = ({ movie, setSelectedId }) => {
                     <span>{movie.Year}</span>
                 </p>
             </div>
-        </li>
+        </div>
     );
 };
