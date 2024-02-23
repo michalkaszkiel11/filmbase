@@ -33,15 +33,17 @@
         height: 85px;
         justify-content: space-between;
         .logo-box {
-            padding: 1rem;
             @extend .row;
+            text-decoration: none;
+            padding: 1rem;
             align-items: center;
             width: 20%;
-            gap: 1rem;
+            color: #fff;
+            cursor: pointer;
             .logo {
-                width: 60px;
-                height: 60px;
-                background-image: url(./images/logo.png);
+                width: 80px;
+                height: 80px;
+                background-image: url(./images/clip.png);
                 background-position: center;
                 background-repeat: no-repeat;
                 background-size: contain;
@@ -95,12 +97,56 @@
         width: 100vw;
         height: 100vh;
         background-color: rgb(46, 46, 46);
+        .landing-page {
+            padding: 5rem 0 5rem 4rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: left;
+            width: 100%;
+            height: 100%;
+            background-image: url(./images/background.png);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            gap: 2rem;
+            .landing-page-info {
+                @extend .column;
+                width: 50%;
+                height: 100%;
+                gap: 1rem;
+                h1 {
+                    font-size: 4vw;
+                    .header-span {
+                        font-family: "Dancing Script", cursive;
+                        font-weight: 700;
+                    }
+                }
+                p {
+                    font-size: 1vw;
+                }
+                .learn-more {
+                    width: 20%;
+                }
+            }
+            .landing-page-graphic {
+                width: 50%;
+                .graphic {
+                    width: 360px;
+                    height: 360px;
+                    background-image: url(./images/camera.png);
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    background-size: contain;
+                }
+            }
+        }
         .movie-box {
             @extend .center;
-            margin-top: 2rem;
+            display: flex;
+            flex-direction: column;
             width: 100vw;
             padding: 0 2rem 0 2rem;
-            height: 100vh;
+            height: 100%;
             .slider {
                 @extend .row, .center;
                 padding: 1rem;
@@ -125,7 +171,7 @@
                 }
                 .active-page {
                     font-weight: bold;
-                    color: rgb(129, 129, 129);
+                    color: #209d9d;
                 }
             }
             // .movie-list {

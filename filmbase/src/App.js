@@ -12,6 +12,7 @@ import { LoginNav, User } from "./Navbar/User";
 import { Logo } from "./Navbar/Logo";
 import { Carousel } from "./Slider/Carousel";
 import { Pages } from "./Slider/Pages";
+import { LandingPage } from "./Main/LandingPage/LandingPage";
 
 const apiKey = "9fef7c80";
 export default function App() {
@@ -96,7 +97,6 @@ export default function App() {
     }, [selectedMovie]);
     const closeDetails = () => {
         setSelectedId(false);
-        // console.log(selectedId, selectedMovie);
     };
     const handleAdd = (e) => {
         e.preventDefault();
@@ -124,28 +124,31 @@ export default function App() {
     return (
         <div className="App">
             <Navbar>
-                <Logo />
+                <Logo setMovies={setMovies} />
                 <Search query={query} setQuery={setQuery} />
                 <NumResults results={results} />
                 <User />
             </Navbar>
             <Main>
-                <Box>
-                    <Carousel
-                        movies={movies}
-                        setSelectedId={setSelectedId}
-                        results={results}
-                        loading={loading}
-                    />
+                {movies.length ? (
+                    <Box>
+                        <Carousel
+                            movies={movies}
+                            setSelectedId={setSelectedId}
+                            results={results}
+                            loading={loading}
+                        />
 
-                    <Pages
-                        results={results}
-                        pages={pages}
-                        setCurrentPage={setCurrentPage}
-                        currentPage={currentPage}
-                    />
-                </Box>
-
+                        <Pages
+                            results={results}
+                            pages={pages}
+                            setCurrentPage={setCurrentPage}
+                            currentPage={currentPage}
+                        />
+                    </Box>
+                ) : (
+                    <LandingPage />
+                )}
                 {/* <Box>
                     {selectedId ? (
                         <>

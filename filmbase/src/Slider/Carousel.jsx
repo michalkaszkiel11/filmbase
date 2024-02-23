@@ -10,7 +10,6 @@ export const Carousel = ({ movies, setSelectedId, loading }) => {
         speed: 500,
         slidesToShow: 5,
         slidesToScroll: 2,
-        adaptiveHeight: true,
         adaptiveWidth: true,
         // fade: true,
         // centerMode: true,
@@ -19,8 +18,8 @@ export const Carousel = ({ movies, setSelectedId, loading }) => {
             {
                 breakpoint: 1024,
                 settings: {
-                    slidesToShow: 4,
-                    slidesToScroll: 3,
+                    slidesToShow: 5,
+                    slidesToScroll: 2,
                     infinite: true,
                     dots: true,
                 },
