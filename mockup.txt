@@ -1,0 +1,24 @@
+                <Box>
+                    {selectedId ? (
+                        <>
+                            <button onClick={() => closeDetails()}>
+                                ◀ Close details
+                            </button>
+                            {loading ? (
+                                <div className="loading-spinner"></div>
+                            ) : (
+                                <MovieDetails
+                                    selectedId={selectedId}
+                                    selectedMovie={selectedMovie}
+                                    handleAddWatched={handleAddWatched}
+                                    handleAdd={handleAdd}
+                                />
+                            )}
+                        </>
+                    ) : (
+                        <>
+                            <WatchedSummary watched={watched} />
+                            <WatchedMoviesList watched={watched} />
+                        </>
+                    )}
+                </Box> 

@@ -1,5 +1,5 @@
 import scope from "../images/scope1.png";
-export const Search = ({ query, setQuery }) => {
+export const Search = ({ query, setQuery, searchInputRef }) => {
     return (
         <div className="search-box">
             <input
@@ -10,6 +10,7 @@ export const Search = ({ query, setQuery }) => {
                 onChange={(e) => {
                     setQuery(e.target.value);
                 }}
+                ref={searchInputRef}
             />
             <img src={scope} alt="scope-icon" className="scope-icon" />
         </div>

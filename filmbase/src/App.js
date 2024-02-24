@@ -1,6 +1,6 @@
 import { Navbar } from "./Navbar/Navbar";
 import { Main } from "./Main/Main";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Search } from "./Navbar/Search";
 import { NumResults } from "./Navbar/NumResults";
 import { Box } from "./Box";
@@ -24,6 +24,7 @@ export default function App() {
     const [selectedMovie, setSelectedMovie] = useState([]);
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
+    const searchInputRef = useRef(null);
     const pages = results / 10;
     const {
         Title: title,
@@ -120,18 +121,26 @@ export default function App() {
             ? selectedMovie.Title
             : "Film-base");
     };
-
+    const handleFocus = () => {
+        if (searchInputRef.current) {
+            searchInputRef.current.focus();
+        }
+    };
     return (
         <div className="App">
             <Navbar>
                 <Logo setMovies={setMovies} />
-                <Search query={query} setQuery={setQuery} />
+                <Search
+                    query={query}
+                    setQuery={setQuery}
+                    searchInputRef={searchInputRef}
+                />
                 <NumResults results={results} />
                 <User />
             </Navbar>
             <Main>
                 {movies.length ? (
-                    <Box>
+                    <Box classN="movie-box">
                         <Carousel
                             movies={movies}
                             setSelectedId={setSelectedId}
@@ -147,32 +156,8 @@ export default function App() {
                         />
                     </Box>
                 ) : (
-                    <LandingPage />
+                    <LandingPage handleFocus={handleFocus} />
                 )}
-                {/* <Box>
-                    {selectedId ? (
-                        <>
-                            <button onClick={() => closeDetails()}>
-                                ◀ Close details
-                            </button>
-                            {loading ? (
-                                <div className="loading-spinner"></div>
-                            ) : (
-                                <MovieDetails
-                                    selectedId={selectedId}
-                                    selectedMovie={selectedMovie}
-                                    handleAddWatched={handleAddWatched}
-                                    handleAdd={handleAdd}
-                                />
-                            )}
-                        </>
-                    ) : (
-                        <>
-                            <WatchedSummary watched={watched} />
-                            <WatchedMoviesList watched={watched} />
-                        </>
-                    )}
-                </Box> */}
             </Main>
         </div>
     );
