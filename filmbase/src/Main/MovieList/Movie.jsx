@@ -1,5 +1,5 @@
 // import { useState } from "react";
-export const Movie = ({ movie, setSelectedId }) => {
+export const Movie = ({ movie, setSelectedId, handleFocusOnMovie }) => {
     function setId(id) {
         setSelectedId(id);
         console.log(id);
@@ -7,7 +7,10 @@ export const Movie = ({ movie, setSelectedId }) => {
     return (
         <div
             key={movie.imdbID}
-            onClick={() => setId(movie.imdbID)}
+            onClick={() => {
+                setId(movie.imdbID);
+                handleFocusOnMovie();
+            }}
             className="movie"
         >
             <img src={movie.Poster} alt={`${movie.Title} poster`} />

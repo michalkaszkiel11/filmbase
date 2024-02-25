@@ -3,7 +3,12 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Movie } from "../Main/MovieList/Movie";
 
-export const Carousel = ({ movies, setSelectedId, loading }) => {
+export const Carousel = ({
+    movies,
+    setSelectedId,
+    loading,
+    handleFocusOnMovie,
+}) => {
     const settings = {
         dots: false,
         infinite: true,
@@ -53,6 +58,7 @@ export const Carousel = ({ movies, setSelectedId, loading }) => {
                                 movie={movie}
                                 key={movie.imbID}
                                 setSelectedId={setSelectedId}
+                                handleFocusOnMovie={handleFocusOnMovie}
                             />
                         )}
                     </>

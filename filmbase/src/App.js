@@ -13,6 +13,8 @@ import { Logo } from "./Navbar/Logo";
 import { Carousel } from "./Slider/Carousel";
 import { Pages } from "./Slider/Pages";
 import { LandingPage } from "./Main/LandingPage/LandingPage";
+import { Plot } from "./Main/MovieDetails/Plot";
+import { Fade } from "react-awesome-reveal";
 
 const apiKey = "9fef7c80";
 export default function App() {
@@ -25,6 +27,7 @@ export default function App() {
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const searchInputRef = useRef(null);
+    const pickedMovieRef = useRef(null);
     const pages = results / 10;
     const {
         Title: title,
@@ -126,6 +129,11 @@ export default function App() {
             searchInputRef.current.focus();
         }
     };
+    const handleFocusOnMovie = () => {
+        if (pickedMovieRef.current) {
+            pickedMovieRef.current.scrollIntoView({ behavior: "smooth" });
+        }
+    };
     return (
         <div className="App">
             <Navbar>
@@ -140,21 +148,35 @@ export default function App() {
             </Navbar>
             <Main>
                 {movies.length ? (
-                    <Box classN="movie-box">
-                        <Carousel
-                            movies={movies}
-                            setSelectedId={setSelectedId}
-                            results={results}
-                            loading={loading}
-                        />
+                    <>
+                        <Box classN="movie-box">
+                            <Carousel
+                                movies={movies}
+                                setSelectedId={setSelectedId}
+                                results={results}
+                                loading={loading}
+                                handleFocusOnMovie={handleFocusOnMovie}
+                            />
 
-                        <Pages
-                            results={results}
-                            pages={pages}
-                            setCurrentPage={setCurrentPage}
-                            currentPage={currentPage}
-                        />
-                    </Box>
+                            <Pages
+                                results={results}
+                                pages={pages}
+                                setCurrentPage={setCurrentPage}
+                                currentPage={currentPage}
+                            />
+                        </Box>
+                        {selectedId && (
+                            <Fade className="faded">
+                                <Box classN="selected-movie">
+                                    <MovieDetails
+                                        handleAdd={handleAdd}
+                                        selectedMovie={selectedMovie}
+                                        pickedMovieRef={pickedMovieRef}
+                                    />
+                                </Box>
+                            </Fade>
+                        )}
+                    </>
                 ) : (
                     <LandingPage handleFocus={handleFocus} />
                 )}
