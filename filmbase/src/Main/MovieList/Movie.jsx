@@ -2,7 +2,6 @@
 export const Movie = ({ movie, setSelectedId, handleFocusOnMovie }) => {
     function setId(id) {
         setSelectedId(id);
-        console.log(id);
     }
     return (
         <div

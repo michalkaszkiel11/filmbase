@@ -38,7 +38,9 @@ export const Pages = ({ pages, currentPage, setCurrentPage }) => {
             {pagesArray.map((page, index) => (
                 <div
                     key={index}
-                    onClick={() => pageHandler(page)}
+                    onClick={() => {
+                        pageHandler(page);
+                    }}
                     className={`page ${
                         currentPage === page ? "active-page" : ""
                     }`}

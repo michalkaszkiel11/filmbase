@@ -150,17 +150,17 @@
             flex-direction: column;
             width: 100vw;
             height: 90vh;
+            padding: 0 4rem 0 4rem;
             .slider {
-                @extend .row, .center;
-                padding: 1rem;
                 width: 100%;
                 .movie {
-                    padding: 5rem;
+                    padding: 4rem;
                     img {
                         width: 100%;
                     }
                 }
             }
+
             .pagination {
                 margin-top: 2rem;
                 display: flex;
@@ -189,6 +189,9 @@
             //     cursor: pointer;
             // }
         }
+        .overlay {
+            overflow: hidden;
+        }
         .faded {
             background-color: rgb(88, 88, 88);
             height: 55vh;
@@ -201,7 +204,7 @@
                 height: 100%;
 
                 .details-overview {
-                    border-left: 20px solid white;
+                    border-left: 15px solid white;
                     padding: 2rem;
                     @extend .column;
                     width: 60%;

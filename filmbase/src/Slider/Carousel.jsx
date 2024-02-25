@@ -2,7 +2,6 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Movie } from "../Main/MovieList/Movie";
-
 export const Carousel = ({
     movies,
     setSelectedId,
@@ -15,9 +14,12 @@ export const Carousel = ({
         speed: 500,
         slidesToShow: 5,
         slidesToScroll: 2,
+        lazyLoad: true,
+        // adaptiveHeight: true,
         adaptiveWidth: true,
         // fade: true,
         // centerMode: true,
+        // centerPadding: "60px",
 
         responsive: [
             {
@@ -26,7 +28,7 @@ export const Carousel = ({
                     slidesToShow: 5,
                     slidesToScroll: 2,
                     infinite: true,
-                    dots: true,
+                    dots: false,
                 },
             },
             {

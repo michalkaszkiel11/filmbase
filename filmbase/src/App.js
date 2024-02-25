@@ -134,10 +134,11 @@ export default function App() {
             pickedMovieRef.current.scrollIntoView({ behavior: "smooth" });
         }
     };
+    const boxOverlay = !selectedId ? "overlay" : "";
     return (
         <div className="App">
             <Navbar>
-                <Logo setMovies={setMovies} />
+                <Logo setMovies={setMovies} setSelectedId={setSelectedId} />
                 <Search
                     query={query}
                     setQuery={setQuery}
@@ -149,7 +150,7 @@ export default function App() {
             <Main>
                 {movies.length ? (
                     <>
-                        <Box classN="movie-box">
+                        <Box classN={`movie-box ${boxOverlay}`}>
                             <Carousel
                                 movies={movies}
                                 setSelectedId={setSelectedId}
