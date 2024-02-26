@@ -51,8 +51,6 @@ export default function App() {
             const data = await res.json();
             setSelectedMovie(data);
             setLoading(false);
-            // console.log(selectedMovie);
-            console.log(data);
         } catch (e) {
             console.error(e);
             setLoading(false);
@@ -76,7 +74,6 @@ export default function App() {
                     setResults(data.totalResults);
                 }
                 setLoading(false);
-                console.log(data);
             } catch (e) {
                 if (e.name !== "AbortError") {
                     console.error(e);

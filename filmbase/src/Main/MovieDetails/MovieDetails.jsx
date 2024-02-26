@@ -1,7 +1,13 @@
+import { useEffect } from "react";
 import { StarRating } from "../../StarRating";
 import { Plot } from "./Plot";
 
 export const MovieDetails = ({ selectedMovie, pickedMovieRef, handleAdd }) => {
+    useEffect(() => {
+        if (pickedMovieRef.current) {
+            pickedMovieRef.current.scrollIntoView({ behavior: "smooth" });
+        }
+    }, [pickedMovieRef]);
     return (
         <>
             <div className="details-overview" ref={pickedMovieRef}>
