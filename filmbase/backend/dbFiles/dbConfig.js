@@ -1,14 +1,15 @@
 const config = {
-    user: "michal",
-    password: "mis",
-    server: "MSI",
-    database: "SQL tutorial",
+    user: "kaszkiel",
+    password: "michal",
+    server: "localhost", // Double backslashes for the instance name
+    database: "tutorial",
     options: {
         trustServerCertificate: true,
         trustedConnection: false,
         enableArithAbort: true,
-        // instancename: "SQLEXPRESS",
+        instanceName: "SQLEXPRESS",
     },
     port: 1433,
 };
+
 module.exports = config;

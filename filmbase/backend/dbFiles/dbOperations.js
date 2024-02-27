@@ -1,5 +1,5 @@
-const config = require("./dbConfig"),
-    sql = require("mssql");
+const config = require("./dbConfig");
+const sql = require("mssql");
 
 const getEmployees = async () => {
     try {
@@ -13,4 +13,5 @@ const getEmployees = async () => {
         console.error(err);
     }
 };
+
 module.exports = { getEmployees };
