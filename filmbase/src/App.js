@@ -4,17 +4,19 @@ import { useRef, useState } from "react";
 import { Search } from "./Navbar/Search";
 import { NumResults } from "./Navbar/NumResults";
 import { Box } from "./Box";
-import { WatchedSummary } from "./Main/Watched/WatchedSummary";
-import { WatchedMoviesList } from "./Main/Watched/WatchedMoviesList";
+// import { WatchedSummary } from "./Main/Watched/WatchedSummary";
+// import { WatchedMoviesList } from "./Main/Watched/WatchedMoviesList";
 import { useEffect } from "react";
 import { MovieDetails } from "./Main/MovieDetails/MovieDetails";
-import { LoginNav, User } from "./Navbar/User";
+
 import { Logo } from "./Navbar/Logo";
 import { Carousel } from "./Slider/Carousel";
 import { Pages } from "./Slider/Pages";
 import { LandingPage } from "./Main/LandingPage/LandingPage";
-import { Plot } from "./Main/MovieDetails/Plot";
+// import { Plot } from "./Main/MovieDetails/Plot";
 import { Fade } from "react-awesome-reveal";
+import { UserBox } from "./Navbar/UserBox";
+import { Login } from "./User/Login";
 
 const apiKey = "9fef7c80";
 export default function App() {
@@ -26,6 +28,8 @@ export default function App() {
     const [selectedMovie, setSelectedMovie] = useState([]);
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
+    const [isLogClicked, setIsLogClicked] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const searchInputRef = useRef(null);
     const pickedMovieRef = useRef(null);
     const pages = results / 10;
@@ -142,43 +146,50 @@ export default function App() {
                     searchInputRef={searchInputRef}
                 />
                 <NumResults results={results} />
-                <User />
+                <UserBox
+                    isLoggedIn={isLoggedIn}
+                    setIsLoggedIn={setIsLoggedIn}
+                />
             </Navbar>
-            <Main>
-                {movies.length ? (
-                    <>
-                        <Box classN={`movie-box ${boxOverlay}`}>
-                            <Carousel
-                                movies={movies}
-                                setSelectedId={setSelectedId}
-                                results={results}
-                                loading={loading}
-                                handleFocusOnMovie={handleFocusOnMovie}
-                            />
+            {isLogClicked ? (
+                <Main>
+                    {movies.length ? (
+                        <>
+                            <Box classN={`movie-box ${boxOverlay}`}>
+                                <Carousel
+                                    movies={movies}
+                                    setSelectedId={setSelectedId}
+                                    results={results}
+                                    loading={loading}
+                                    handleFocusOnMovie={handleFocusOnMovie}
+                                />
 
-                            <Pages
-                                results={results}
-                                pages={pages}
-                                setCurrentPage={setCurrentPage}
-                                currentPage={currentPage}
-                            />
-                        </Box>
-                        {selectedId && (
-                            <Fade className="faded">
-                                <Box classN="selected-movie">
-                                    <MovieDetails
-                                        handleAdd={handleAdd}
-                                        selectedMovie={selectedMovie}
-                                        pickedMovieRef={pickedMovieRef}
-                                    />
-                                </Box>
-                            </Fade>
-                        )}
-                    </>
-                ) : (
-                    <LandingPage handleFocus={handleFocus} />
-                )}
-            </Main>
+                                <Pages
+                                    results={results}
+                                    pages={pages}
+                                    setCurrentPage={setCurrentPage}
+                                    currentPage={currentPage}
+                                />
+                            </Box>
+                            {selectedId && (
+                                <Fade className="faded">
+                                    <Box classN="selected-movie">
+                                        <MovieDetails
+                                            handleAdd={handleAdd}
+                                            selectedMovie={selectedMovie}
+                                            pickedMovieRef={pickedMovieRef}
+                                        />
+                                    </Box>
+                                </Fade>
+                            )}
+                        </>
+                    ) : (
+                        <LandingPage handleFocus={handleFocus} />
+                    )}
+                </Main>
+            ) : (
+                <Login />
+            )}
         </div>
     );
 }

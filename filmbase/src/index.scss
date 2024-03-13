@@ -74,23 +74,55 @@
                 }
             }
         }
-        .user-icon-box {
+        .user-box {
+            @extend .column, .center;
+            position: relative;
             width: 10%;
-            @extend .row, .center;
-
             width: 10%;
             height: 100%;
-            .user-icon-name {
+            .user-icons {
+                @extend .row, .center;
+                .user-icon-name {
+                }
+                .user-icon {
+                    width: 3rem;
+                    height: fit-content;
+                }
             }
-            .user-icon {
-                width: 3rem;
-                height: fit-content;
+            .user-info {
+                position: absolute;
+                width: 15vw;
+                height: 15vh;
+                background-color: #209d9d;
+                top: 15vh;
+                right: 0;
             }
         }
         .search-results {
             width: 10%;
         }
     }
+    .user-login,
+    .user-register {
+        @extend .column, .center;
+        .user-login-input-box,
+        .user-register-input-box {
+            @extend .column, .center;
+            gap: 2px;
+            input {
+                width: 200px;
+                height: 40px;
+            }
+            p {
+                margin: 10px;
+            }
+        }
+        .click-register {
+            cursor: pointer;
+            text-decoration: underline;
+        }
+    }
+
     .main {
         @extend .center;
         width: 100vw;
@@ -172,8 +204,8 @@
                     cursor: pointer;
                     font-size: 1.2rem;
                 }
-                .active-page {Cannot GET /
-                    font-weight: bold;Cannot GET /
+                .active-page {
+                    font-weight: bold;
                     color: #209d9d;
                 }
             }
