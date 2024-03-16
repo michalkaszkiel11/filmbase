@@ -17,6 +17,7 @@ import { LandingPage } from "./Main/LandingPage/LandingPage";
 import { Fade } from "react-awesome-reveal";
 import { UserBox } from "./Navbar/UserBox";
 import { Login } from "./User/Login";
+import { useClickContext } from "./Context/isClickedContext";
 
 const apiKey = "9fef7c80";
 export default function App() {
@@ -28,7 +29,7 @@ export default function App() {
     const [selectedMovie, setSelectedMovie] = useState([]);
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
-    const [isLogClicked, setIsLogClicked] = useState(false);
+    const { isLogClicked } = useClickContext();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const searchInputRef = useRef(null);
     const pickedMovieRef = useRef(null);
@@ -151,7 +152,7 @@ export default function App() {
                     setIsLoggedIn={setIsLoggedIn}
                 />
             </Navbar>
-            {isLogClicked ? (
+            {!isLogClicked ? (
                 <Main>
                     {movies.length ? (
                         <>

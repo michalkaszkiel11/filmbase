@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { Register } from "./Register";
+import { useClickContext } from "../Context/isClickedContext";
 
 export const Login = () => {
     const [isRegisterClicked, setIsRegisterClicked] = useState(false);
+    const { setClickContext } = useClickContext();
+
     return (
         <div className="user-login">
             {!isRegisterClicked ? (
@@ -16,11 +19,16 @@ export const Login = () => {
                     >
                         Or join us now!
                     </p>
+                    <i
+                        className="fa-solid fa-house-chimney"
+                        onClick={setClickContext}
+                    ></i>
                 </div>
             ) : (
                 <Register
                     setIsRegisterClicked={setIsRegisterClicked}
                     isRegisterClicked={isRegisterClicked}
+                    setClickContext={setClickContext}
                 />
             )}
         </div>

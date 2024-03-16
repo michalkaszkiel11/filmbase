@@ -1,4 +1,8 @@
-export const Register = ({ setIsRegisterClicked, isRegisterClicked }) => {
+export const Register = ({
+    setIsRegisterClicked,
+    isRegisterClicked,
+    setClickContext,
+}) => {
     return (
         <div className="user-register">
             <div className="user-register-input-box">
@@ -11,6 +15,10 @@ export const Register = ({ setIsRegisterClicked, isRegisterClicked }) => {
                 >
                     Or Log in!
                 </p>
+                <i
+                    className="fa-solid fa-house-chimney"
+                    onClick={setClickContext}
+                ></i>
             </div>
         </div>
     );
