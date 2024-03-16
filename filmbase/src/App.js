@@ -29,7 +29,7 @@ export default function App() {
     const [selectedMovie, setSelectedMovie] = useState([]);
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
-    const { isLogClicked } = useClickContext();
+    const { isLogClicked, goHome } = useClickContext();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const searchInputRef = useRef(null);
     const pickedMovieRef = useRef(null);
@@ -140,7 +140,11 @@ export default function App() {
     return (
         <div className="App">
             <Navbar>
-                <Logo setMovies={setMovies} setSelectedId={setSelectedId} />
+                <Logo
+                    setMovies={setMovies}
+                    setSelectedId={setSelectedId}
+                    goHome={goHome}
+                />
                 <Search
                     query={query}
                     setQuery={setQuery}
@@ -150,6 +154,7 @@ export default function App() {
                 <UserBox
                     isLoggedIn={isLoggedIn}
                     setIsLoggedIn={setIsLoggedIn}
+                    watched={watched}
                 />
             </Navbar>
             {!isLogClicked ? (

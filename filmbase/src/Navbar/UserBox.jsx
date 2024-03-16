@@ -1,7 +1,7 @@
 import { useClickContext } from "../Context/isClickedContext";
 import userpng from "../images/user.png";
 import { User } from "../User/User";
-export const UserBox = ({ isLoggedIn, setIsLoggedIn }) => {
+export const UserBox = ({ isLoggedIn, setIsLoggedIn, watched }) => {
     const { setClickContext } = useClickContext();
     return (
         <div className="user-box">
@@ -15,7 +15,7 @@ export const UserBox = ({ isLoggedIn, setIsLoggedIn }) => {
                     <i className="fa-solid fa-right-to-bracket"></i>
                 )}
             </div>
-            <User />
+            <User watched={watched} />
         </div>
     );
 };

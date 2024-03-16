@@ -8,8 +8,11 @@ export const ClickLoginContext = ({ children }) => {
         setIsLogClicked(!isLogClicked);
         console.log(isLogClicked, "clicked");
     };
+    const goHome = () => {
+        setIsLogClicked(false);
+    };
     return (
-        <ClickLogin.Provider value={{ isLogClicked, setClickContext }}>
+        <ClickLogin.Provider value={{ isLogClicked, setClickContext, goHome }}>
             {children}
         </ClickLogin.Provider>
     );
