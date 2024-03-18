@@ -1,7 +1,7 @@
 import { useClickContext } from "../Context/isClickedContext";
 import userpng from "../images/user.png";
 import { User } from "../User/User";
-export const UserBox = ({ isLoggedIn, setIsLoggedIn, watched }) => {
+export const UserBox = ({ isLoggedIn, watched }) => {
     const { setClickContext } = useClickContext();
     return (
         <div className="user-box">

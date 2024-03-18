@@ -1,23 +1,19 @@
-import { Navbar } from "./Navbar/Navbar";
-import { Main } from "./Main/Main";
+import { useEffect } from "react";
 import { useRef, useState } from "react";
+import { useClickContext } from "./Context/isClickedContext";
+import { Fade } from "react-awesome-reveal";
+import { Navbar } from "./Navbar/Navbar";
 import { Search } from "./Navbar/Search";
 import { NumResults } from "./Navbar/NumResults";
-import { Box } from "./Box";
-// import { WatchedSummary } from "./Main/Watched/WatchedSummary";
-// import { WatchedMoviesList } from "./Main/Watched/WatchedMoviesList";
-import { useEffect } from "react";
-import { MovieDetails } from "./Main/MovieDetails/MovieDetails";
-
 import { Logo } from "./Navbar/Logo";
+import { Main } from "./Main/Main";
+import { Box } from "./Box";
+import { MovieDetails } from "./Main/MovieDetails/MovieDetails";
 import { Carousel } from "./Slider/Carousel";
 import { Pages } from "./Slider/Pages";
 import { LandingPage } from "./Main/LandingPage/LandingPage";
-// import { Plot } from "./Main/MovieDetails/Plot";
-import { Fade } from "react-awesome-reveal";
 import { UserBox } from "./Navbar/UserBox";
 import { Login } from "./User/Login";
-import { useClickContext } from "./Context/isClickedContext";
 
 const apiKey = "9fef7c80";
 export default function App() {
@@ -28,11 +24,15 @@ export default function App() {
     const [selectedId, setSelectedId] = useState(null);
     const [selectedMovie, setSelectedMovie] = useState([]);
     const [rating, setRating] = useState(0);
-    const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
-    const { isLogClicked, goHome } = useClickContext();
+    const [isRegister, setIsRegister] = useState(false);
+    const [userName, setUserName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const searchInputRef = useRef(null);
+    const { isLogClicked, goHome } = useClickContext();
     const pickedMovieRef = useRef(null);
     const pages = results / 10;
     const {
@@ -101,6 +101,53 @@ export default function App() {
     const closeDetails = () => {
         setSelectedId(false);
     };
+    function generateRandomId(length) {
+        const characters =
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        let id = "";
+        for (let i = 0; i < length; i++) {
+            const randomIndex = Math.floor(Math.random() * characters.length);
+            id += characters[randomIndex];
+        }
+        return id;
+    }
+
+    const createUser = async (e) => {
+        e.preventDefault();
+        const newUser = {
+            userId: generateRandomId(10),
+            userName: userName,
+            email: email,
+            password: password,
+        };
+        try {
+            setLoading(true);
+            const response = await fetch(
+                "http://localhost:10000/api/users/create",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(newUser),
+                }
+            );
+            if (!response.ok) {
+                setIsRegister(false);
+                setLoading(false);
+                throw new Error("Network response wasn't ok");
+            }
+            setIsRegister(true);
+            const data = await response.json();
+            console.log("New user created successfully:", data);
+        } catch (e) {
+            setLoading(false);
+            console.error("Error creating new user:", e);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     const handleAdd = (e) => {
         e.preventDefault();
         const newWatchedMovie = {
@@ -193,7 +240,14 @@ export default function App() {
                     )}
                 </Main>
             ) : (
-                <Login />
+                <Login
+                    setUserName={setUserName}
+                    setEmail={setEmail}
+                    setPassword={setPassword}
+                    createUser={createUser}
+                    loading={loading}
+                    isRegister={isRegister}
+                />
             )}
         </div>
     );

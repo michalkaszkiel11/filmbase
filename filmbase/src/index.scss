@@ -36,7 +36,7 @@
             text-decoration: none;
             padding: 1rem;
             align-items: center;
-            width: 20%;
+            width: 15%;
             color: #fff;
             cursor: pointer;
             .logo {
@@ -54,7 +54,7 @@
         .search-box {
             position: relative;
             @extend .row, .center;
-            width: 40%;
+            width: 50%;
             height: 50px;
             .scope-icon {
                 right: 8px;
@@ -65,7 +65,7 @@
             .search {
                 font-size: 1.5rem;
                 width: 100%;
-                height: 50px;
+                height: 45px;
                 background-color: rgb(255, 255, 255);
                 border-radius: 1rem;
                 border: 5px solid white;
@@ -117,6 +117,20 @@
                 }
                 .user-info-box > :nth-child(-n + 1) {
                     border-right: 1px solid rgba(217, 217, 217, 0.2);
+                }
+                .user-info-option {
+                    .summary {
+                        .watched-options {
+                            p {
+                                display: flex;
+                                flex-direction: row;
+                                gap: 0.5rem;
+                            }
+                            i {
+                                font-size: 1.15rem;
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -307,6 +321,7 @@
 }
 
 .btn {
+    opacity: 0.95;
     background-color: #222;
     border-radius: 4px;
     border-style: none;
@@ -335,7 +350,7 @@
 
 .btn:hover,
 .btn:focus {
-    opacity: 0.75;
+    opacity: 1;
 }
 
 .loading-spinner {
@@ -355,4 +370,58 @@
     100% {
         transform: rotate(360deg);
     }
+}
+
+/* CSS */
+.btn {
+    align-items: center;
+    appearance: none;
+    background-image: radial-gradient(
+        100% 100% at 100% 0,
+        #d9d9d9 0,
+        #737373 100%
+    );
+    border: 0;
+    border-radius: 6px;
+    box-shadow: rgba(69, 66, 75, 0.4) 0 2px 4px,
+        rgba(45, 35, 66, 0.3) 0 7px 13px -3px,
+        rgba(58, 65, 111, 0.5) 0 -3px 0 inset;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    display: inline-flex;
+    font-family: "JetBrains Mono", monospace;
+    height: 48px;
+    justify-content: center;
+    line-height: 1;
+    list-style: none;
+    overflow: hidden;
+    padding-left: 16px;
+    padding-right: 16px;
+    position: relative;
+    text-align: left;
+    text-decoration: none;
+    transition: box-shadow 0.15s, transform 0.15s;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    white-space: nowrap;
+    will-change: box-shadow, transform;
+    font-size: 18px;
+}
+
+.btn:focus {
+    box-shadow: #ff5495 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px,
+        rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #ff5495 0 -3px 0 inset;
+}
+
+.btn:hover {
+    box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px,
+        rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #ff5495 0 -3px 0 inset;
+    transform: translateY(-2px);
+}
+
+.btn:active {
+    box-shadow: #ff5495 0 3px 7px inset;
+    transform: translateY(2px);
 }

@@ -6,25 +6,25 @@ export const WatchedSummary = ({ watched }) => {
     const avgRuntime = average(
         watched.map((movie) => movie.Runtime.split(" ").at(0))
     );
+
     return (
         <div className="summary">
-            <h2>Movies you watched</h2>
-            <div>
+            <div className="watched-options">
                 <p>
-                    <span>#️⃣</span>
-                    <span>{watched.length} movies</span>
+                    <i className="fa-solid fa-clapperboard"></i>
+                    <span>watched {watched.length} movies</span>
                 </p>
                 <p>
-                    <span>⭐️</span>
-                    <span>{avgImdbRating.toFixed(2)}</span>
+                    <i className="fa-solid fa-star"></i>
+                    <span>imdb rating {avgImdbRating.toFixed(2)}</span>
                 </p>
                 <p>
-                    <span>🌟</span>
-                    <span>{avgUserRating.toFixed(2)}</span>
+                    <i className="fa-solid fa-bahai"></i>
+                    <span>your rating {avgUserRating.toFixed(2)}</span>
                 </p>
                 <p>
-                    <span>⏳</span>
-                    <span>{avgRuntime.toFixed(2)} min</span>
+                    <i className="fa-regular fa-hourglass-half"></i>
+                    <span>avarage {avgRuntime.toFixed(2)} min watched</span>
                 </p>
             </div>
         </div>

@@ -1,10 +1,10 @@
 const express = require("express");
 const { getUsers } = require("./Controllers/getUsers");
-const { createUser } = require("./Controllers/createUser");
+const { createUser } = require("./Controllers/userController");
 const router = express.Router();
 
 const User = require("./dbFiles/user");
-const Michal = new User("112AB", "ADIS", "michsadasi@gmail.com", "logo12");
+// const Michal = new User("112AB", "ADIS", "michsadasi@gmail.com", "logo12");
 
 router.get("/users", async (req, res) => {
     try {
@@ -18,13 +18,19 @@ router.get("/users", async (req, res) => {
     }
 });
 
-router.get("/users/create", async (req, res) => {
+router.post("/users/create", async (req, res) => {
+    const newUserMocker = new User(
+        req.body.userId,
+        req.body.userName,
+        req.body.email,
+        req.body.password
+    );
     try {
-        const newUser = await createUser(Michal);
+        const newUser = await createUser(newUserMocker);
         console.log("User created successfully:", newUser);
         res.json(newUser);
     } catch (err) {
-        console.error("Error fetching users:", err.message);
+        console.error("Error creating user:", err.message);
         res.status(500).json({ error: "Internal Server Error" });
     }
 });

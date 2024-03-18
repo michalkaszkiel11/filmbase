@@ -19,13 +19,13 @@ export const User = ({ watched }) => {
                 >
                     Watched{" "}
                     {openSummary ? (
-                        <i
+                        <span
                             className="fa-solid fa-xmark"
                             onClick={(e) => {
                                 e.stopPropagation(); // Prevent event propagation
                                 setOpenSummary(false);
                             }}
-                        ></i>
+                        ></span>
                     ) : (
                         ""
                     )}
