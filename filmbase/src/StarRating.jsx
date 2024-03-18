@@ -6,8 +6,9 @@ export const StarRating = ({
     color = "#fcc419",
     size = 36,
     defaultRating = 0,
+    rating,
+    setRating,
 }) => {
-    const [rating, setRating] = useState(0);
     const [starHover, setStarHover] = useState(defaultRating);
     const contStyle = {
         width: "100%",

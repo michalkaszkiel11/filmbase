@@ -27,6 +27,7 @@ export default function App() {
     const [results, setResults] = useState("");
     const [selectedId, setSelectedId] = useState(null);
     const [selectedMovie, setSelectedMovie] = useState([]);
+    const [rating, setRating] = useState(0);
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const { isLogClicked, goHome } = useClickContext();
@@ -41,12 +42,8 @@ export default function App() {
         Runtime: runtime,
         imdbRating,
         userRating,
-        // Plot: plot,
-        // Released: released,
-        // Actors: actors,
-        // Director: director,
-        // Genre: genre,
     } = selectedMovie;
+
     async function getSelectedMovie(id) {
         try {
             setLoading(true);
@@ -112,8 +109,8 @@ export default function App() {
             year,
             poster,
             imdbRating: Number(imdbRating),
-            userRating: Number(userRating),
-            runtime: Number(runtime.split(" ").at(0)),
+            userRating: userRating,
+            runtime,
         };
         handleAddWatched(newWatchedMovie);
         closeDetails();
@@ -184,6 +181,8 @@ export default function App() {
                                             handleAdd={handleAdd}
                                             selectedMovie={selectedMovie}
                                             pickedMovieRef={pickedMovieRef}
+                                            rating={rating}
+                                            setRating={setRating}
                                         />
                                     </Box>
                                 </Fade>
