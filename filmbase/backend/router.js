@@ -3,9 +3,9 @@ const jwt = require("jsonwebtoken");
 const {
     createUser,
     loginUser,
-    getUserById,
+    // getUserById,
 } = require("./Controllers/userController");
-const { authenticateToken } = require("./middleware/authentication");
+// const { authenticateToken } = require("./middleware/authentication");
 
 const router = express.Router();
 
@@ -31,9 +31,14 @@ router.post("/users/login", async (req, res) => {
                 process.env.JWT_SECRET,
                 { expiresIn: "45m" }
             );
+
+            // Include additional user data like userName in the response
             res.cookie("jwtToken", token, { httpOnly: true, secure: true })
                 .status(200)
-                .json({ token });
+                .json({
+                    token,
+                    userName: user.userName,
+                });
         } else {
             res.status(401).json({
                 message: "Combination email/password does not exist",
@@ -44,22 +49,4 @@ router.post("/users/login", async (req, res) => {
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
-
-router.get("/users/me", authenticateToken, async (req, res) => {
-    try {
-        const userId = req.user.userId;
-        // Assuming you have a function to fetch user information from the database
-        const user = await getUserById(userId);
-
-        if (!user) {
-            return res.status(404).json({ message: "User not found" });
-        }
-
-        res.status(200).json(user);
-    } catch (error) {
-        console.error("Error fetching user information:", error.message);
-        res.status(500).json({ error: "Internal Server Error" });
-    }
-});
-
 module.exports = router;
