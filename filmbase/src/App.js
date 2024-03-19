@@ -14,6 +14,7 @@ import { Pages } from "./Slider/Pages";
 import { LandingPage } from "./Main/LandingPage/LandingPage";
 import { UserBox } from "./Navbar/UserBox";
 import { Login } from "./User/Login";
+import { useAuth } from "./Context/isLoggedContext";
 
 const apiKey = "9fef7c80";
 export default function App() {
@@ -30,11 +31,11 @@ export default function App() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const searchInputRef = useRef(null);
     const { isLogClicked, goHome } = useClickContext();
     const pickedMovieRef = useRef(null);
     const pages = results / 10;
+    const { isLoggedIn, logout } = useAuth();
     const {
         Title: title,
         Year: year,
@@ -43,7 +44,6 @@ export default function App() {
         imdbRating,
         userRating,
     } = selectedMovie;
-
     async function getSelectedMovie(id) {
         try {
             setLoading(true);
@@ -195,11 +195,7 @@ export default function App() {
                     searchInputRef={searchInputRef}
                 />
                 <NumResults results={results} />
-                <UserBox
-                    isLoggedIn={isLoggedIn}
-                    setIsLoggedIn={setIsLoggedIn}
-                    watched={watched}
-                />
+                <UserBox isLoggedIn={isLoggedIn} watched={watched} />
             </Navbar>
             {!isLogClicked ? (
                 <Main>
@@ -247,6 +243,7 @@ export default function App() {
                     createUser={createUser}
                     loading={loading}
                     isRegister={isRegister}
+                    setLoading={setLoading}
                 />
             )}
         </div>

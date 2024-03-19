@@ -378,10 +378,10 @@
     appearance: none;
     background-image: radial-gradient(
         100% 100% at 100% 0,
-        #d9d9d9 0,
-        #737373 100%
+        #474747 0,
+        #313131 100%
     );
-    border: 0;
+    border: 1px solid white;
     border-radius: 6px;
     box-shadow: rgba(69, 66, 75, 0.4) 0 2px 4px,
         rgba(45, 35, 66, 0.3) 0 7px 13px -3px,
@@ -411,17 +411,17 @@
 }
 
 .btn:focus {
-    box-shadow: #ff5495 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px,
-        rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #ff5495 0 -3px 0 inset;
+    box-shadow: #ffffff 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px,
+        rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #ffffff 0 -3px 0 inset;
 }
 
 .btn:hover {
     box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px,
-        rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #ff5495 0 -3px 0 inset;
+        rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #ffffff 0 -3px 0 inset;
     transform: translateY(-2px);
 }
 
 .btn:active {
-    box-shadow: #ff5495 0 3px 7px inset;
+    box-shadow: #ffffff 0 3px 7px inset;
     transform: translateY(2px);
 }

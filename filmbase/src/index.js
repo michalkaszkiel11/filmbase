@@ -4,12 +4,15 @@ import "./index.scss";
 import { ClickLoginContext } from "./Context/isClickedContext";
 
 import App from "./App";
+import { AuthProvider } from "./Context/isLoggedContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <React.StrictMode>
-        <ClickLoginContext>
-            <App />
-        </ClickLoginContext>
+        <AuthProvider>
+            <ClickLoginContext>
+                <App />
+            </ClickLoginContext>
+        </AuthProvider>
     </React.StrictMode>
 );
