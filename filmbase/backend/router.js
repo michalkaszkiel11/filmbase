@@ -5,9 +5,21 @@ const {
     loginUser,
     // getUserById,
 } = require("./Controllers/userController");
+const { getUsers } = require("./Controllers/getUsers");
 // const { authenticateToken } = require("./middleware/authentication");
 
 const router = express.Router();
+router.get("/users", async (req, res) => {
+    try {
+        console.log("Request received for /users");
+        const users = await getUsers();
+        console.log("Users fetched successfully:", users);
+        res.json(users);
+    } catch (err) {
+        console.error("Error fetching users:", err.message);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
 
 router.post("/users/create", async (req, res) => {
     try {
