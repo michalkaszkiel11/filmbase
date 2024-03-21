@@ -77,6 +77,7 @@ export const Login = ({
             login();
             // const userData = await fetchUserInfo(token);
             setLoggedInUser(data.userName);
+            setClickContext();
         } catch (err) {
             console.error("Error logging in:", err.message);
             window.alert("Failed to login. Please try again.");

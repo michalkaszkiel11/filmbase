@@ -30,11 +30,13 @@ export default function App() {
     const [userName, setUserName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [isDashboardOpen, setIsDashboardOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const searchInputRef = useRef(null);
     const { isLogClicked, goHome } = useClickContext();
     const pickedMovieRef = useRef(null);
     const pages = results / 10;
+    const boxOverlay = !selectedId ? "overlay" : "";
     const { isLoggedIn, logout } = useAuth();
     const {
         Title: title,
@@ -180,7 +182,9 @@ export default function App() {
             pickedMovieRef.current.scrollIntoView({ behavior: "smooth" });
         }
     };
-    const boxOverlay = !selectedId ? "overlay" : "";
+    const handleDashboard = () => {
+        setIsDashboardOpen(!isDashboardOpen);
+    };
     return (
         <div className="App">
             <Navbar>
@@ -195,7 +199,12 @@ export default function App() {
                     searchInputRef={searchInputRef}
                 />
                 <NumResults results={results} />
-                <UserBox isLoggedIn={isLoggedIn} watched={watched} />
+                <UserBox
+                    isLoggedIn={isLoggedIn}
+                    watched={watched}
+                    handleDashboard={handleDashboard}
+                    isDashboardOpen={isDashboardOpen}
+                />
             </Navbar>
             {!isLogClicked ? (
                 <Main>
@@ -218,8 +227,8 @@ export default function App() {
                                 />
                             </Box>
                             {selectedId && (
-                                <Fade className="faded">
-                                    <Box classN="selected-movie">
+                                <Fade className="faded overlay">
+                                    <Box classN="selected-movie overlay">
                                         <MovieDetails
                                             handleAdd={handleAdd}
                                             selectedMovie={selectedMovie}
