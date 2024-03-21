@@ -1,18 +1,21 @@
+// AuthContext.js
 import React, { createContext, useContext, useState } from "react";
 import Cookies from "js-cookie";
+
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(!!Cookies.get("jwtToken"));
-    const [loggedInUser, setLoggedInUser] = useState("");
-    const login = (user) => {
+    const [loggedInUser, setLoggedInUser] = useState(""); // Add loggedInUser state
+
+    const login = () => {
         setIsLoggedIn(true);
-        setLoggedInUser(user);
     };
 
     const logout = () => {
         Cookies.remove("jwtToken", { httpOnly: true, secure: true });
         setIsLoggedIn(false);
+        setLoggedInUser(""); // Clear loggedInUser when logging out
     };
 
     return (
@@ -21,6 +24,8 @@ export const AuthProvider = ({ children }) => {
                 isLoggedIn,
                 login,
                 logout,
+                loggedInUser, // Include loggedInUser in the context value
+                setLoggedInUser, // Include setLoggedInUser in the context value
             }}
         >
             {children}

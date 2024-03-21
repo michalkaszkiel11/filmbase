@@ -54,8 +54,9 @@
         .search-box {
             position: relative;
             @extend .row, .center;
-            width: 50%;
+            width: 45%;
             height: 50px;
+
             .scope-icon {
                 right: 8px;
                 position: absolute;
@@ -77,19 +78,16 @@
         .user-box {
             @extend .column, .center;
             position: relative;
-            width: 10%;
-            width: 10%;
+            width: 15%;
             height: 100%;
             .user-icons {
                 @extend .row, .center;
                 gap: 0.5rem;
                 cursor: pointer;
-                font-size: 1.2rem;
+                font-size: 1.15rem;
                 .user-icon-name {
-                }
-                .user-icon {
-                    width: 3rem;
-                    height: fit-content;
+                    @extend .row, .center;
+                    gap: 1rem;
                 }
             }
             .user-info {
@@ -98,11 +96,14 @@
                 position: absolute;
                 width: 40vw;
                 height: fit-content;
-                background-color: rgba(0, 0, 0, 0.1);
-                top: 15vh;
+                background-color: rgba(0, 0, 0, 0.35);
+                top: 10vh;
                 right: 0;
                 .user-info-username {
                     border-bottom: 1px solid rgba(217, 217, 217, 0.2);
+                    .user-info-username-span {
+                        color: #a91079;
+                    }
                 }
                 .user-info-box {
                     @extend .row;
@@ -182,6 +183,7 @@
         width: 100vw;
         height: 150vh;
         background-color: rgb(46, 46, 46);
+
         .landing-page {
             padding: 5rem 0 5rem 4rem;
             display: flex;
@@ -197,6 +199,7 @@
             .fade {
                 width: 100%;
                 height: 100%;
+
                 .landing-page-info {
                     @extend .column;
                     width: 50%;
@@ -280,6 +283,7 @@
         .overlay {
             overflow: hidden;
         }
+
         .faded {
             background-color: rgb(88, 88, 88);
             height: 55vh;

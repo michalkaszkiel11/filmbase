@@ -1,14 +1,21 @@
 import { useState } from "react";
 import { WatchedSummary } from "./Watched/WatchedSummary";
 import { Settings } from "./Settings";
-export const User = ({ watched }) => {
+import { toUppercase } from "../helpers/Capitalletter";
+
+export const User = ({ watched, loggedInUser }) => {
     const [openSummary, setOpenSummary] = useState(false);
     const [openSettings, setOpenSettings] = useState(false);
 
     return (
         <div className="user-info">
             <div className="user-info-username">
-                <h3>User</h3>
+                <h3>
+                    Welcome to your Dashboard:{" "}
+                    <span className="user-info-username-span">
+                        {toUppercase(loggedInUser)}
+                    </span>
+                </h3>
             </div>
             <div className="user-info-box">
                 <h4

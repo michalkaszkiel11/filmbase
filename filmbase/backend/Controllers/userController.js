@@ -1,42 +1,44 @@
-const config = require("../dbFiles/dbConfig");
-const mssql = require("mssql");
 const bcrypt = require("bcrypt");
+const { createUserQuery, checkUserQuery } = require("../dbFiles/userQueries");
+const { queryDatabase } = require("../dbFiles/dbUtils");
 
 const createUser = async (user) => {
     try {
-        let pool = await mssql.connect(config);
-        const checkUserQuery = `SELECT * FROM UsersList WHERE userId = '${user.userId}' OR email = '${user.email}'`;
-        const existingUser = await pool.request().query(checkUserQuery);
+        // Check if the user already exists
+        const existingUser = await queryDatabase(checkUserQuery(user));
 
-        if (existingUser.recordset.length > 0) {
+        if (existingUser.length > 0) {
             throw new Error("User already exists");
         }
-        const insertUserQuery = `
-        INSERT INTO UsersList (userId, userName, email, pass)
-        VALUES ('${user.userId}', '${user.userName}', '${user.email}', '${user.pass}')
-    `;
-        const insertedUser = await pool.request().query(insertUserQuery);
+
+        // Hash the password before storing it
+        const hashedPassword = await bcrypt.hash(user.password, 12);
+        user.password = hashedPassword;
+
+        // Insert the user into the database
+        const insertedUser = await queryDatabase(createUserQuery(user));
 
         return insertedUser;
     } catch (err) {
-        console.error(err);
-        throw err; // re-throw the error to handle it in the calling function
+        console.error("Error creating user:", err.message);
+        throw err;
     }
 };
+
 const loginUser = async (email, password) => {
     try {
-        let pool = await mssql.connect(config);
-        // Query the db
-        const query = `SELECT * FROM UsersList WHERE email = '${email}'`;
-        const result = await pool.request().query(query);
+        // Fetch user data from the database
+        const result = await queryDatabase(
+            `SELECT * FROM UsersList WHERE email = '${email}'`
+        );
 
         // If no user found
-        if (result.recordset.length === 0) {
+        if (result.length === 0) {
             return null;
         }
 
         // Extract user data from the query
-        const user = result.recordset[0];
+        const user = result[0];
 
         // Compare passwords
         const passwordMatch = await bcrypt.compare(password, user.pass);
@@ -52,5 +54,19 @@ const loginUser = async (email, password) => {
         throw error;
     }
 };
+const getUserById = async (userId) => {
+    try {
+        const query = `SELECT * FROM UsersList WHERE userId = '${userId}'`;
+        const user = await queryDatabase(query);
 
-module.exports = { createUser, loginUser };
+        if (user.length === 0) {
+            return null;
+        }
+
+        return user[0];
+    } catch (error) {
+        console.error("Error fetching user by ID:", error.message);
+        throw error;
+    }
+};
+module.exports = { createUser, loginUser, getUserById };
