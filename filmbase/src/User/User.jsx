@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { WatchedSummary } from "./Watched/WatchedSummary";
-import { Settings } from "./Settings";
+import { Settings } from "./Settings/Settings";
 import { toUppercase } from "../helpers/Capitalletter";
 
 export const User = ({ watched, loggedInUser }) => {
     const [openSummary, setOpenSummary] = useState(false);
     const [openSettings, setOpenSettings] = useState(false);
+    const { userName } = loggedInUser;
 
     return (
         <div className="user-info">
@@ -13,7 +14,7 @@ export const User = ({ watched, loggedInUser }) => {
                 <h3>
                     Welcome to your Dashboard:{" "}
                     <span className="user-info-username-span">
-                        {toUppercase(loggedInUser)}
+                        {toUppercase(userName)}
                     </span>
                 </h3>
             </div>
@@ -59,7 +60,7 @@ export const User = ({ watched, loggedInUser }) => {
             </div>
             <div className="user-info-option">
                 {openSummary && <WatchedSummary watched={watched} />}
-                {openSettings && <Settings />}
+                {openSettings && <Settings loggedInUser={loggedInUser} />}
             </div>
         </div>
     );

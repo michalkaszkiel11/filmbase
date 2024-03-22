@@ -3,6 +3,9 @@ const jwt = require("jsonwebtoken");
 const {
     createUser,
     loginUser,
+    changePassword,
+    changeEmail,
+    deleteAccount,
     // getUserById,
 } = require("./Controllers/userController");
 const { getUsers } = require("./Controllers/getUsers");
@@ -50,6 +53,8 @@ router.post("/users/login", async (req, res) => {
                 .json({
                     token,
                     userName: user.userName,
+                    email: user.email,
+                    userId: user.userId,
                 });
         } else {
             res.status(401).json({
@@ -61,4 +66,40 @@ router.post("/users/login", async (req, res) => {
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
+router.post("/users/change-password", async (req, res) => {
+    try {
+        const { userId, oldPass, newPass } = req.body;
+        const result = await changePassword(userId, oldPass, newPass);
+        res.status(200).json({ message: "Password changed successfully" });
+    } catch (error) {
+        console.error("Error changing password:", error.message);
+        if (error.message === "passwords do not match") {
+            res.status(401).json({ error: "Passwords do not match" });
+        } else {
+            res.status(500).json({ error: "Internal Server Error" });
+        }
+    }
+});
+
+router.post("/users/change-email", async (req, res) => {
+    try {
+        const { email, newEmail } = req.body;
+        const result = await changeEmail(email, newEmail);
+        res.status(200).json({ message: "E-mail changed successfully" });
+    } catch (error) {
+        console.error("Error changing password:", error.message);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+router.post("/users/delete-account", async (req, res) => {
+    try {
+        const { userId, password } = req.body;
+        const result = await deleteAccount(userId, password);
+        res.status(200).json({ message: "Account deleted successfully" });
+    } catch (error) {
+        console.error("Error changing password:", error.message);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
 module.exports = router;

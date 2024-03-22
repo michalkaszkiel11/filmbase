@@ -76,7 +76,7 @@ export const Login = ({
             Cookies.set("jwtToken", token);
             login();
             // const userData = await fetchUserInfo(token);
-            setLoggedInUser(data.userName);
+            setLoggedInUser(data);
             setClickContext();
         } catch (err) {
             console.error("Error logging in:", err.message);

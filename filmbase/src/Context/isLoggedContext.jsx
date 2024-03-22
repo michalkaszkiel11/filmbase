@@ -6,7 +6,7 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(!!Cookies.get("jwtToken"));
-    const [loggedInUser, setLoggedInUser] = useState(""); // Add loggedInUser state
+    const [loggedInUser, setLoggedInUser] = useState([]); // Add loggedInUser state
 
     const login = () => {
         setIsLoggedIn(true);
@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
     const logout = () => {
         Cookies.remove("jwtToken", { httpOnly: true, secure: true });
         setIsLoggedIn(false);
-        setLoggedInUser(""); // Clear loggedInUser when logging out
+        setLoggedInUser([]); // Clear loggedInUser when logging out
     };
 
     return (

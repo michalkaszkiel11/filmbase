@@ -69,4 +69,81 @@ const getUserById = async (userId) => {
         throw error;
     }
 };
-module.exports = { createUser, loginUser, getUserById };
+
+const changePassword = async (userId, oldPassword, newPassword) => {
+    try {
+        const result = await queryDatabase(
+            `SELECT * FROM UsersList WHERE userId = '${userId}'`
+        );
+
+        // Check if any rows were returned
+        if (result.length === 0) {
+            throw new Error("User not found");
+        }
+        const user = result[0];
+
+        const passwordMatch = await bcrypt.compare(oldPassword, user.pass);
+        if (oldPassword === newPassword) {
+            throw new Error("New password is the same as old password");
+        }
+
+        if (passwordMatch) {
+            const hashedPassword = await bcrypt.hash(newPassword, 12);
+            const updateQuery = `UPDATE UsersList SET pass = '${hashedPassword}' WHERE userId = '${userId}'`;
+            const updateResult = await queryDatabase(updateQuery); // Renamed result variable to updateResult
+            return updateResult; // Return the update result
+        } else {
+            throw new Error("Password does not match");
+        }
+    } catch (err) {
+        console.error("Error changing password:", err.message);
+        throw err;
+    }
+};
+
+const changeEmail = async (email, newEmail) => {
+    try {
+        const updateQuery = `UPDATE UsersList SET email = '${newEmail}' WHERE email = '${email}'`;
+        const result = await queryDatabase(updateQuery);
+        return result;
+    } catch (err) {
+        console.error("Error changing email:", err.message);
+        throw err;
+    }
+};
+
+const deleteAccount = async (userId, password) => {
+    try {
+        const result = await queryDatabase(
+            `SELECT * FROM Users WHERE userId = '${userId}'`
+        );
+
+        // Check if any rows were returned
+        if (result.length === 0) {
+            throw new Error("User not found");
+        }
+        const user = result[0];
+
+        const passwordMatch = await bcrypt.compare(password, user.pass);
+
+        if (passwordMatch) {
+            const deleteAccountQuery = `DELETE FROM Users WHERE userId = '${userId}'`;
+            const deletion = await queryDatabase(deleteAccountQuery);
+            return deletion;
+        } else {
+            console.error("Password does not match");
+        }
+    } catch (err) {
+        console.error("Error deleting account:", err.message);
+        throw err;
+    }
+};
+
+module.exports = {
+    createUser,
+    loginUser,
+    getUserById,
+    changeEmail,
+    changePassword,
+    deleteAccount,
+};

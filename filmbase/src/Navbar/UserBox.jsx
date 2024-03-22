@@ -1,6 +1,5 @@
 import { useClickContext } from "../Context/isClickedContext";
 import { useAuth } from "../Context/isLoggedContext";
-import userpng from "../images/user.png";
 import { User } from "../User/User";
 
 export const UserBox = ({
@@ -11,7 +10,7 @@ export const UserBox = ({
 }) => {
     const { setClickContext, isLogClicked } = useClickContext();
     const { loggedInUser, logout } = useAuth();
-
+    const { userName } = loggedInUser;
     return (
         <div className="user-box">
             <div className="user-icons">
@@ -25,7 +24,7 @@ export const UserBox = ({
                                     : null
                             }
                         >
-                            {loggedInUser}
+                            {userName}
                             <span>|</span>
                             <i className="fa-solid fa-chalkboard"></i>
                             <span>|</span>
