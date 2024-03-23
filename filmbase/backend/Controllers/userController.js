@@ -115,7 +115,7 @@ const changeEmail = async (email, newEmail) => {
 const deleteAccount = async (userId, password) => {
     try {
         const result = await queryDatabase(
-            `SELECT * FROM Users WHERE userId = '${userId}'`
+            `SELECT * FROM UsersList WHERE userId = '${userId}'`
         );
 
         // Check if any rows were returned
@@ -127,11 +127,11 @@ const deleteAccount = async (userId, password) => {
         const passwordMatch = await bcrypt.compare(password, user.pass);
 
         if (passwordMatch) {
-            const deleteAccountQuery = `DELETE FROM Users WHERE userId = '${userId}'`;
+            const deleteAccountQuery = `DELETE FROM UsersList WHERE userId = '${userId}'`;
             const deletion = await queryDatabase(deleteAccountQuery);
             return deletion;
         } else {
-            console.error("Password does not match");
+            throw new Error("Password does not match");
         }
     } catch (err) {
         console.error("Error deleting account:", err.message);

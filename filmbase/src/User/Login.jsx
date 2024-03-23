@@ -21,28 +21,6 @@ export const Login = ({
     const [error, setError] = useState("");
     const { login, setLoggedInUser, isLoggedIn } = useAuth();
 
-    // const fetchUserInfo = async (token) => {
-    //     try {
-    //         const response = await fetch(
-    //             "http://localhost:10000/api/users/me",
-    //             {
-    //                 method: "GET",
-    //                 headers: {
-    //                     Authorization: `Bearer ${token}`,
-    //                 },
-    //             }
-    //         );
-    //         if (!response.ok) {
-    //             throw new Error("Failed to fetch user info");
-    //         }
-    //         const data = await response.json();
-    //         console.log(data);
-    //         return data;
-    //     } catch (err) {
-    //         console.error("Error fetching user info:", err.message);
-    //         throw err;
-    //     }
-    // };
     const handleLogIn = async (e) => {
         e.preventDefault();
         const user = {
@@ -68,14 +46,12 @@ export const Login = ({
 
             const data = await response.json();
             const token = data.token;
-            console.log(data.token);
             if (!token) {
                 throw new Error("Token not found in response");
             }
 
             Cookies.set("jwtToken", token);
             login();
-            // const userData = await fetchUserInfo(token);
             setLoggedInUser(data);
             setClickContext();
         } catch (err) {

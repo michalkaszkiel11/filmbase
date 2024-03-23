@@ -1,14 +1,15 @@
 export const ChangePass = ({
-    click,
+    clickPass,
     setOld,
     setNew,
     changePass,
-    passMessage,
+    message,
+
     passChanged,
 }) => {
     return (
         <form className="settings-box" onSubmit={changePass}>
-            <h3 onClick={click}>Change password</h3>
+            <h3 onClick={clickPass}>Change password</h3>
             <input
                 type="password"
                 placeholder="old password"
@@ -29,7 +30,7 @@ export const ChangePass = ({
             {passChanged ? (
                 <p style={{ color: "green" }}>Success</p>
             ) : (
-                <p style={{ color: "red" }}>{passMessage}</p>
+                <p style={{ color: "red" }}>{message}</p>
             )}
         </form>
     );

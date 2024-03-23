@@ -87,7 +87,7 @@ router.post("/users/change-email", async (req, res) => {
         const result = await changeEmail(email, newEmail);
         res.status(200).json({ message: "E-mail changed successfully" });
     } catch (error) {
-        console.error("Error changing password:", error.message);
+        console.error("Error changing email:", error.message);
         res.status(500).json({ error: "Internal Server Error" });
     }
 });

@@ -9,10 +9,14 @@ export const Settings = ({ loggedInUser }) => {
     const [deleteAcc, setDeleteAcc] = useState(false);
     const [oldPassword, setOldpassword] = useState("");
     const [newPassword, setNewpassword] = useState("");
-    const [passMessage, setPassMessage] = useState("");
+    const [newEmail, setNewEmail] = useState("");
+    const [message, setMessage] = useState("");
     const [passChanged, setPassChanged] = useState(false);
+    const [emailChanged, setEmailChanged] = useState(false);
+    const [deletion, setDeleteion] = useState(false);
+    const [currentPass, setCurrentPass] = useState("");
+    const { userId, email } = loggedInUser;
 
-    const { userId } = loggedInUser;
     const handleChangePassword = async (e) => {
         e.preventDefault();
         const userInfo = {
@@ -35,24 +39,93 @@ export const Settings = ({ loggedInUser }) => {
             if (!response.ok) {
                 throw new Error("Network response was not ok");
             } else {
-                setPassMessage("Success");
+                setMessage("Success");
                 setPassChanged(true);
+                window.location.reload();
             }
         } catch (err) {
             setPassChanged(false);
             console.error("Error while changing password:", err.message);
             if (err.message === "Passwords do not match") {
-                setPassMessage("Passwords do not match");
+                setMessage("Passwords do not match");
             } else if (
                 err.message === "New password is the same as old password"
             ) {
-                setPassMessage("New password is the same as old password");
+                setMessage("New password is the same as old password");
             } else {
-                setPassMessage("An error occurred. Please try again later.");
+                setMessage("An error occurred. Please try again later.");
             }
+        } finally {
+            setOldpassword("");
+            setMessage("");
         }
     };
+    const handleChangeEmail = async (e) => {
+        e.preventDefault();
+        const userInfo = {
+            email: email,
+            newEmail: newEmail,
+        };
+        try {
+            const response = await fetch(
+                "http://localhost:10000/api/users/change-email",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(userInfo),
+                }
+            );
 
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            } else {
+                setMessage("Success");
+                setEmailChanged(true);
+                window.location.reload();
+            }
+        } catch (err) {
+            setEmailChanged(false);
+            setMessage(err.message);
+            console.error("Error while changing email:", err.message);
+        } finally {
+            setMessage("");
+        }
+    };
+    const handleDeleteAccount = async (e) => {
+        e.preventDefault();
+        const userInfo = {
+            userId: userId,
+            password: currentPass,
+        };
+        try {
+            const response = await fetch(
+                "http://localhost:10000/api/users/delete-account",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(userInfo),
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            } else {
+                setMessage("Success");
+                setDeleteion(true);
+                window.location.reload();
+            }
+        } catch (err) {
+            setMessage(err.message);
+            setDeleteion(false);
+            console.error("Error while changing email:", err.message);
+        } finally {
+            setMessage("");
+        }
+    };
     const clickPassword = () => {
         setChangeEmail(false);
         setDeleteAcc(false);
@@ -73,12 +146,12 @@ export const Settings = ({ loggedInUser }) => {
             <div>
                 {changePassword ? (
                     <ChangePass
-                        click={clickPassword}
+                        clickPass={clickPassword}
                         setOld={setOldpassword}
                         setNew={setNewpassword}
                         changePass={handleChangePassword}
                         passChanged={passChanged}
-                        passMessage={passMessage}
+                        message={message}
                     />
                 ) : (
                     <p onClick={clickPassword}>Change password</p>
@@ -86,16 +159,28 @@ export const Settings = ({ loggedInUser }) => {
             </div>
             <div>
                 {changeEmail ? (
-                    <ChangeEmail click={clickEmail} />
+                    <ChangeEmail
+                        clickEmail={clickEmail}
+                        setNewEmail={setNewEmail}
+                        handleChangeEmail={handleChangeEmail}
+                        emailChanged={emailChanged}
+                        message={message}
+                    />
                 ) : (
                     <p onClick={clickEmail}>Change e-mail</p>
                 )}
             </div>
             <div>
                 {deleteAcc ? (
-                    <DeleteAcc click={clickDelete} />
+                    <DeleteAcc
+                        clickDelete={clickDelete}
+                        handleDeleteAccount={handleDeleteAccount}
+                        message={message}
+                        deletion={deletion}
+                        setCurrentPass={setCurrentPass}
+                    />
                 ) : (
-                    <p onClick={clickDelete}>Change e-mail</p>
+                    <p onClick={clickDelete}>Delete account</p>
                 )}
             </div>
         </div>
