@@ -7,11 +7,9 @@ const {
     changeEmail,
     deleteAccount,
     getUserInfo,
-    // getUserById,
 } = require("./Controllers/userController");
 const { getUsers } = require("./Controllers/getUsers");
 const { authenticateToken } = require("./middleware/authentication");
-// const { authenticateToken } = require("./middleware/authentication");
 
 const router = express.Router();
 router.get("/users", async (req, res) => {

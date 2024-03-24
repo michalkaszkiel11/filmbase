@@ -44,7 +44,7 @@ export const Login = ({
             }
             const data = await response.json();
             const token = data.token;
-            console.log(data);
+            // console.log(data);
             if (!token) {
                 throw new Error("Token not found in response");
             }
