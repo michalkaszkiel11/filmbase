@@ -53,11 +53,8 @@ const loginUser = async (email, password) => {
         if (result.length === 0) {
             return null;
         }
-
         // Extract user data from the query
         const user = result[0];
-
-        // Compare passwords
         const passwordMatch = await bcrypt.compare(password, user.pass);
 
         // If passwords match, return the user data

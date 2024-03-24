@@ -12,17 +12,9 @@ export const AuthProvider = ({ children }) => {
     });
     const [loggedInUser, setLoggedInUser] = useState([]);
 
-    // useEffect(() => {
-    //     const token = Cookies.get("jwtToken");
-    //     if (token && isValidToken(token)) {
-    //         getUserInfo(token);
-    //         setIsLoggedIn(true);
-    //     }
-    // }, []);
-
     useEffect(() => {
         const token = Cookies.get("jwtToken");
-        if (token && isValidToken(token)) {
+        if (isLoggedIn && token && isValidToken(token)) {
             getUserInfo(token);
         }
     }, []);
@@ -56,8 +48,7 @@ export const AuthProvider = ({ children }) => {
             setLoggedInUser(userInfo);
         } catch (err) {
             console.error("Error retrieving user info:", err.message);
-            // Handle the case where user info cannot be fetched, e.g., token expired or user not logged in
-            // Clear the logged in user state
+
             setLoggedInUser(null);
         }
     };

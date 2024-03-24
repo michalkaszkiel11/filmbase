@@ -43,7 +43,12 @@ export const UserBox = ({ watched, isDashboardOpen, handleDashboard }) => {
                 </div>
             </div>
             {isLoggedIn && loggedInUser && isDashboardOpen ? (
-                <User watched={watched} loggedInUser={loggedInUser} />
+                <User
+                    watched={watched}
+                    loggedInUser={loggedInUser}
+                    userName={userName}
+                    logout={logout}
+                />
             ) : (
                 ""
             )}

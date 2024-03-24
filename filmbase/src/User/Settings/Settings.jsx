@@ -3,7 +3,7 @@ import { ChangePass } from "./ChangePass";
 import { ChangeEmail } from "./ChangeEmail";
 import { DeleteAcc } from "./DeleteAcc";
 
-export const Settings = ({ loggedInUser }) => {
+export const Settings = ({ loggedInUser, logout }) => {
     const [changePassword, setChangePassword] = useState(false);
     const [changeEmail, setChangeEmail] = useState(false);
     const [deleteAcc, setDeleteAcc] = useState(false);
@@ -41,6 +41,7 @@ export const Settings = ({ loggedInUser }) => {
             } else {
                 setMessage("Success");
                 setPassChanged(true);
+                logout();
                 window.location.reload();
             }
         } catch (err) {

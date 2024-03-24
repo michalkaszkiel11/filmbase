@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Register } from "./Register";
 import { useClickContext } from "../Context/isClickedContext";
 import { useAuth } from "../Context/isLoggedContext";
@@ -51,11 +51,10 @@ export const Login = ({
 
             login();
             Cookies.set("jwtToken", token, {
-                expires: 7, // Expires in 7 days (adjust as needed)
+                expires: 1, // Expires in 7 days (adjust as needed)
                 path: "/", // Set the path to root
                 domain: "localhost", // Set the domain to localhost
             });
-
             setLoggedInUser(data);
             setClickContext();
         } catch (err) {

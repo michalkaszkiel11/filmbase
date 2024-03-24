@@ -3,10 +3,9 @@ import { WatchedSummary } from "./Watched/WatchedSummary";
 import { Settings } from "./Settings/Settings";
 import { toUppercase } from "../helpers/Capitalletter";
 
-export const User = ({ watched, loggedInUser }) => {
+export const User = ({ watched, loggedInUser, userName, logout }) => {
     const [openSummary, setOpenSummary] = useState(false);
     const [openSettings, setOpenSettings] = useState(false);
-    const userName = loggedInUser?.userName;
 
     return (
         <div className="user-info">
@@ -60,7 +59,9 @@ export const User = ({ watched, loggedInUser }) => {
             </div>
             <div className="user-info-option">
                 {openSummary && <WatchedSummary watched={watched} />}
-                {openSettings && <Settings loggedInUser={loggedInUser} />}
+                {openSettings && (
+                    <Settings loggedInUser={loggedInUser} logout={logout} />
+                )}
             </div>
         </div>
     );
