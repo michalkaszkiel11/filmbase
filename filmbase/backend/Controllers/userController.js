@@ -24,7 +24,24 @@ const createUser = async (user) => {
         throw err;
     }
 };
-
+const getUserInfo = async (email) => {
+    try {
+        const result = await queryDatabase(
+            `SELECT * FROM UsersList WHERE email = '${email}'`
+        );
+        if (result.length === 0) {
+            return null;
+        }
+        const user = result[0];
+        if (user) {
+            return user;
+        } else {
+            throw new Error("user not found");
+        }
+    } catch (error) {
+        console.error("Error logging in:", error.message);
+    }
+};
 const loginUser = async (email, password) => {
     try {
         // Fetch user data from the database
@@ -141,6 +158,7 @@ const deleteAccount = async (userId, password) => {
 
 module.exports = {
     createUser,
+    getUserInfo,
     loginUser,
     getUserById,
     changeEmail,

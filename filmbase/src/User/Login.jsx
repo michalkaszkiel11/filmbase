@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Register } from "./Register";
 import { useClickContext } from "../Context/isClickedContext";
 import { useAuth } from "../Context/isLoggedContext";
@@ -18,8 +18,7 @@ export const Login = ({
     const [loginEmail, setLoginEmail] = useState("");
     // const [showPassword, setShowPassword] = useState(false);
     const [loginPassword, setLoginPassword] = useState("");
-    const [error, setError] = useState("");
-    const { login, setLoggedInUser, isLoggedIn } = useAuth();
+    const { login, setLoggedInUser } = useAuth();
 
     const handleLogIn = async (e) => {
         e.preventDefault();
@@ -43,15 +42,20 @@ export const Login = ({
             if (!response.ok) {
                 throw new Error("Network response was not ok");
             }
-
             const data = await response.json();
             const token = data.token;
+            console.log(data);
             if (!token) {
                 throw new Error("Token not found in response");
             }
 
-            Cookies.set("jwtToken", token);
             login();
+            Cookies.set("jwtToken", token, {
+                expires: 7, // Expires in 7 days (adjust as needed)
+                path: "/", // Set the path to root
+                domain: "localhost", // Set the domain to localhost
+            });
+
             setLoggedInUser(data);
             setClickContext();
         } catch (err) {

@@ -14,7 +14,6 @@ import { Pages } from "./Slider/Pages";
 import { LandingPage } from "./Main/LandingPage/LandingPage";
 import { UserBox } from "./Navbar/UserBox";
 import { Login } from "./User/Login";
-import { useAuth } from "./Context/isLoggedContext";
 
 const apiKey = "9fef7c80";
 export default function App() {
@@ -37,7 +36,6 @@ export default function App() {
     const pickedMovieRef = useRef(null);
     const pages = results / 10;
     const boxOverlay = !selectedId ? "overlay" : "";
-    const { isLoggedIn, logout } = useAuth();
     const {
         Title: title,
         Year: year,
@@ -200,7 +198,6 @@ export default function App() {
                 />
                 <NumResults results={results} />
                 <UserBox
-                    isLoggedIn={isLoggedIn}
                     watched={watched}
                     handleDashboard={handleDashboard}
                     isDashboardOpen={isDashboardOpen}

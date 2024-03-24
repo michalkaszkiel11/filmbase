@@ -6,9 +6,11 @@ const {
     changePassword,
     changeEmail,
     deleteAccount,
+    getUserInfo,
     // getUserById,
 } = require("./Controllers/userController");
 const { getUsers } = require("./Controllers/getUsers");
+const { authenticateToken } = require("./middleware/authentication");
 // const { authenticateToken } = require("./middleware/authentication");
 
 const router = express.Router();
@@ -31,6 +33,17 @@ router.post("/users/create", async (req, res) => {
         res.json(newUser);
     } catch (err) {
         console.error("Error creating user:", err.message);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+router.get("/users/info", authenticateToken, async (req, res) => {
+    try {
+        const userEmail = req.user.email;
+        const userInfo = await getUserInfo(userEmail);
+        res.json(userInfo);
+    } catch (err) {
+        console.error("Error retrieving user info:", err.message);
         res.status(500).json({ error: "Internal Server Error" });
     }
 });

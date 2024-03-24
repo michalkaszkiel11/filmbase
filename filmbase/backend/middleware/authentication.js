@@ -7,8 +7,11 @@ const authenticateToken = (req, res, next) => {
 
     jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
         if (err) return res.sendStatus(403); // Forbidden
+
+        console.log("Decoded user:", user);
         req.user = user;
         next();
     });
 };
+
 module.exports = { authenticateToken };
