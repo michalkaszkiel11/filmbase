@@ -1,3 +1,5 @@
+import filmbase from "../images/Filmbase1.png";
+
 export const Logo = ({ setMovies, setSelectedId, goHome }) => {
     return (
         <div
@@ -6,9 +8,10 @@ export const Logo = ({ setMovies, setSelectedId, goHome }) => {
                 setSelectedId(null);
                 setMovies([]);
                 goHome();
+                window.location.reload();
             }}
         >
-            <h1 className="logo-h1">Filmbase.</h1>
+            <img className="logo" src={filmbase} alt="logo"></img>
         </div>
     );
 };

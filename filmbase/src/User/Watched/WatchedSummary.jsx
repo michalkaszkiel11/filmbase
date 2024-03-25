@@ -1,11 +1,15 @@
 export const WatchedSummary = ({ watched }) => {
+    const summary = (arr) => arr.reduce((acc, cur) => acc + cur);
     const average = (arr) =>
         arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
     const avgImdbRating = average(watched.map((movie) => movie.imdbRating));
     const avgUserRating = average(watched.map((movie) => movie.userRating));
-    const avgRuntime = average(
-        watched.map((movie) => movie.Runtime.split(" ").at(0))
-    );
+    const timeWatched =
+        watched.length > 0
+            ? summary(
+                  watched.map((movie) => parseInt(movie.Runtime.split(" ")[0]))
+              ) / 60
+            : 0;
 
     return (
         <div className="summary">
@@ -24,7 +28,7 @@ export const WatchedSummary = ({ watched }) => {
                 </p>
                 <p>
                     <i className="fa-regular fa-hourglass-half"></i>
-                    <span>avarage {avgRuntime.toFixed(2)} min watched</span>
+                    <span> {timeWatched.toFixed(2)} h watched</span>
                 </p>
             </div>
         </div>

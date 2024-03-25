@@ -51,10 +51,11 @@ export const Login = ({
 
             login();
             Cookies.set("jwtToken", token, {
-                expires: 1, // Expires in 7 days (adjust as needed)
-                path: "/", // Set the path to root
-                domain: "localhost", // Set the domain to localhost
+                expires: 1, // Expires in 1 day
+                path: "/",
+                domain: "localhost",
             });
+
             setLoggedInUser(data);
             setClickContext();
         } catch (err) {

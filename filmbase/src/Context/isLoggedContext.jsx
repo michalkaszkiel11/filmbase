@@ -15,15 +15,25 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         const token = Cookies.get("jwtToken");
         if (isLoggedIn && token && isValidToken(token)) {
-            getUserInfo(token);
+            const expirationDate = new Date(token).getTime();
+            const currentDate = new Date().getTime();
+
+            if (expirationDate < currentDate) {
+                // Token has expired, logout the user
+                logout();
+            } else {
+                // Token is still valid, get user info
+                getUserInfo(token);
+            }
         }
     }, []);
 
     const login = (token) => {
-        Cookies.set("jwtToken", token, { expires: 0.03125 });
+        // Set the expiration to 45 minutes from now
+        const expirationDate = new Date(new Date().getTime() + 45 * 60 * 1000);
+        Cookies.set("jwtToken", token, { expires: expirationDate });
         setIsLoggedIn(true);
     };
-
     const logout = () => {
         // Remove JWT token from cookies
         Cookies.remove("jwtToken");

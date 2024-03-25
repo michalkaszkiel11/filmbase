@@ -29,7 +29,7 @@ export const MovieDetails = ({
                 <span>{selectedMovie.Genre}</span>
                 <div>
                     <span>⭐</span>
-                    <span>IMDb rating{selectedMovie.imdbRating}</span>
+                    <span>IMDb rating {selectedMovie.imdbRating}</span>
                 </div>
                 <div className="details-section">
                     <StarRating

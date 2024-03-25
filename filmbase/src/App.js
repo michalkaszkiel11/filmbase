@@ -52,6 +52,7 @@ export default function App() {
             );
             const data = await res.json();
             setSelectedMovie(data);
+            console.log(selectedMovie);
             setLoading(false);
         } catch (e) {
             console.error(e);
