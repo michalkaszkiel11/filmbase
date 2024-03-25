@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ChangePass } from "./ChangePass";
 import { ChangeEmail } from "./ChangeEmail";
 import { DeleteAcc } from "./DeleteAcc";
+import { Fade } from "react-awesome-reveal";
 
 export const Settings = ({ loggedInUser, logout }) => {
     const [changePassword, setChangePassword] = useState(false);
@@ -143,47 +144,49 @@ export const Settings = ({ loggedInUser, logout }) => {
         setDeleteAcc(!deleteAcc);
     };
     return (
-        <div className="settings">
-            <div>
-                {changePassword ? (
-                    <ChangePass
-                        clickPass={clickPassword}
-                        setOld={setOldpassword}
-                        setNew={setNewpassword}
-                        changePass={handleChangePassword}
-                        passChanged={passChanged}
-                        message={message}
-                    />
-                ) : (
-                    <p onClick={clickPassword}>Change password</p>
-                )}
-            </div>
-            <div>
-                {changeEmail ? (
-                    <ChangeEmail
-                        clickEmail={clickEmail}
-                        setNewEmail={setNewEmail}
-                        handleChangeEmail={handleChangeEmail}
-                        emailChanged={emailChanged}
-                        message={message}
-                    />
-                ) : (
-                    <p onClick={clickEmail}>Change e-mail</p>
-                )}
-            </div>
-            <div>
-                {deleteAcc ? (
-                    <DeleteAcc
-                        clickDelete={clickDelete}
-                        handleDeleteAccount={handleDeleteAccount}
-                        message={message}
-                        deletion={deletion}
-                        setCurrentPass={setCurrentPass}
-                    />
-                ) : (
-                    <p onClick={clickDelete}>Delete account</p>
-                )}
-            </div>
-        </div>
+        <Fade className="settings">
+            <>
+                <div>
+                    {changePassword ? (
+                        <ChangePass
+                            clickPass={clickPassword}
+                            setOld={setOldpassword}
+                            setNew={setNewpassword}
+                            changePass={handleChangePassword}
+                            passChanged={passChanged}
+                            message={message}
+                        />
+                    ) : (
+                        <p onClick={clickPassword}>Change password</p>
+                    )}
+                </div>
+                <div>
+                    {changeEmail ? (
+                        <ChangeEmail
+                            clickEmail={clickEmail}
+                            setNewEmail={setNewEmail}
+                            handleChangeEmail={handleChangeEmail}
+                            emailChanged={emailChanged}
+                            message={message}
+                        />
+                    ) : (
+                        <p onClick={clickEmail}>Change e-mail</p>
+                    )}
+                </div>
+                <div>
+                    {deleteAcc ? (
+                        <DeleteAcc
+                            clickDelete={clickDelete}
+                            handleDeleteAccount={handleDeleteAccount}
+                            message={message}
+                            deletion={deletion}
+                            setCurrentPass={setCurrentPass}
+                        />
+                    ) : (
+                        <p onClick={clickDelete}>Delete account</p>
+                    )}
+                </div>
+            </>
+        </Fade>
     );
 };

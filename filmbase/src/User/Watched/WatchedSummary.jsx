@@ -1,3 +1,5 @@
+import { Fade } from "react-awesome-reveal";
+
 export const WatchedSummary = ({ watched }) => {
     const summary = (arr) => arr.reduce((acc, cur) => acc + cur);
     const average = (arr) =>
@@ -12,25 +14,27 @@ export const WatchedSummary = ({ watched }) => {
             : 0;
 
     return (
-        <div className="summary">
-            <div className="watched-options">
-                <p>
-                    <i className="fa-solid fa-clapperboard"></i>
-                    <span>watched {watched.length} movies</span>
-                </p>
-                <p>
-                    <i className="fa-solid fa-star"></i>
-                    <span>imdb rating {avgImdbRating.toFixed(2)}</span>
-                </p>
-                <p>
-                    <i className="fa-solid fa-bahai"></i>
-                    <span>your rating {avgUserRating.toFixed(2)}</span>
-                </p>
-                <p>
-                    <i className="fa-regular fa-hourglass-half"></i>
-                    <span> {timeWatched.toFixed(2)} h watched</span>
-                </p>
-            </div>
-        </div>
+        <Fade className="summary">
+            <>
+                <div className="watched-options">
+                    <p>
+                        <i className="fa-solid fa-clapperboard"></i>
+                        <span>watched {watched.length} movies</span>
+                    </p>
+                    <p>
+                        <i className="fa-solid fa-star"></i>
+                        <span>imdb rating {avgImdbRating.toFixed(2)}</span>
+                    </p>
+                    <p>
+                        <i className="fa-solid fa-bahai"></i>
+                        <span>your rating {avgUserRating.toFixed(2)}</span>
+                    </p>
+                    <p>
+                        <i className="fa-regular fa-hourglass-half"></i>
+                        <span> {timeWatched.toFixed(2)} h watched</span>
+                    </p>
+                </div>
+            </>
+        </Fade>
     );
 };

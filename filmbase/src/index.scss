@@ -37,14 +37,15 @@
         .logo-box {
             @extend .row, .center;
             text-decoration: none;
-            padding: 1rem;
             width: 10%;
             align-items: center;
             color: #fff;
             cursor: pointer;
             .logo {
+                margin-left: 3.5rem;
                 width: fit-content;
                 height: 10vh;
+                padding: 0.5rem;
             }
         }
         .search-box {
@@ -93,6 +94,8 @@
                 background-color: rgba(0, 0, 0, 0.35);
                 top: 10vh;
                 right: 0;
+                border-radius: 0.75rem;
+
                 .user-info-username {
                     border-bottom: 1px solid rgba(217, 217, 217, 0.2);
                     .user-info-username-span {
@@ -127,6 +130,7 @@
                         }
                     }
                     .settings {
+                        overflow: hidden;
                         .settings-box {
                             @extend .row, .center;
                             h3 {
@@ -134,7 +138,7 @@
                             }
                             input {
                                 height: 40px;
-                                border-radius: 8px;
+                                border-radius: 2px;
                             }
                             button {
                                 height: 40px;

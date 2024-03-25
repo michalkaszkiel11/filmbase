@@ -1,4 +1,4 @@
-import filmbase from "../images/Filmbase1.png";
+import filmbase from "../images/Filmbase2.png";
 
 export const Logo = ({ setMovies, setSelectedId, goHome }) => {
     return (

@@ -9,7 +9,7 @@ export const LandingPage = ({ handleFocus }) => {
                 </div>
                 <div className="landing-page-info">
                     <h1>
-                        Movie <span className="header-span">tonight</span>
+                        Movies <span className="header-span">tonight</span>
                     </h1>
                     <p>
                         Welcome to our website, where you can explore a vast
