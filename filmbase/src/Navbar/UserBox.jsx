@@ -23,7 +23,7 @@ export const UserBox = ({ watched, isDashboardOpen, handleDashboard }) => {
                             {userName ? userName : "Login"}
                             <span>|</span>
                             <i className="fa-solid fa-chalkboard"></i>
-                            <span>|</span>
+                            <span className="chalkboard-span">|</span>
                             <i
                                 onClick={(e) => {
                                     e.stopPropagation();

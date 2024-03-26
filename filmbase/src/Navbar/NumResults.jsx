@@ -3,7 +3,7 @@ export const NumResults = ({ results }) => {
         <>
             {results && (
                 <p className="search-results">
-                    Found <strong>{results}</strong> results
+                    <strong>{results}</strong> results
                 </p>
             )}
         </>
