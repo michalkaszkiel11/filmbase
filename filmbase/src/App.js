@@ -170,7 +170,7 @@ export default function App() {
     const changeTitle = () => {
         return (document.title = selectedMovie.Title
             ? selectedMovie.Title
-            : "Film-base");
+            : "Filmaster");
     };
     const handleFocus = () => {
         if (searchInputRef.current) {

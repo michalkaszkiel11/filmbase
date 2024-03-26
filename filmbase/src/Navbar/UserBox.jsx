@@ -28,7 +28,7 @@ export const UserBox = ({
                             {loggedInUser}
                             <span>|</span>
                             <i className="fa-solid fa-chalkboard"></i>
-                            <span>|</span>
+                            <span className="chalkboard-span">|</span>
                             <i
                                 onClick={(e) => {
                                     e.stopPropagation();
