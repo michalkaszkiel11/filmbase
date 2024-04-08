@@ -48,7 +48,7 @@ export default function App() {
         try {
             setLoading(true);
             const res = await fetch(
-                `http://www.omdbapi.com/?apikey=${apiKey}&i=${id}`
+                `https://www.omdbapi.com/?apikey=${apiKey}&i=${id}`
             );
             const data = await res.json();
             setSelectedMovie(data);
@@ -66,7 +66,7 @@ export default function App() {
             try {
                 setLoading(true);
                 const res = await fetch(
-                    `http://www.omdbapi.com/?apikey=${apiKey}&s=${query}&page=${currentPage}`,
+                    `https://www.omdbapi.com/?apikey=${apiKey}&s=${query}&page=${currentPage}`,
                     { signal: controller.signal }
                 );
                 const data = await res.json();

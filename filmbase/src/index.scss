@@ -546,14 +546,16 @@
             height: 12vh !important;
             .logo-box {
                 height: 12vh;
-                width: 18%;
+                width: 15%;
+
                 .logo {
-                    margin-left: 0.75rem;
-                    height: 7vh;
+                    margin-left: 0.6rem;
+                    width: 127.5%;
+                    height: fit-content;
                 }
             }
             .search-box {
-                width: 45%;
+                width: 50%;
                 .scope-icon {
                     width: 20px;
                 }
@@ -562,7 +564,7 @@
                 }
             }
             .user-box {
-                width: 26%;
+                width: 25%;
                 .user-icons {
                     gap: 0.25rem;
                     font-size: 1rem;
@@ -619,7 +621,7 @@
                 justify-content: center;
                 align-items: center;
                 flex-direction: column;
-                width: 6%;
+                width: 5%;
                 font-size: 0.45rem;
             }
         }
@@ -637,14 +639,14 @@
                 height: 100%;
                 .fade {
                     .landing-page-info {
-                        width: 80%;
+                        width: 90%;
                         height: fit-content;
                         gap: 1rem;
                         h1 {
                             font-size: 9vw;
                         }
                         p {
-                            font-size: 2.8vw;
+                            font-size: 3.5vw;
                             text-align: justify;
                         }
                     }
@@ -652,8 +654,8 @@
                         width: 50%;
 
                         .graphic {
-                            width: 260px;
-                            height: 260px;
+                            width: 215px;
+                            height: 215px;
                         }
                     }
                 }
@@ -723,15 +725,9 @@
     .App {
         nav.nav-bar {
             height: 10vh !important;
-            .logo-box {
-                width: 20%;
-                .logo {
-                    height: 4.5vh;
-                    padding: 0;
-                    margin-left: 0;
-                }
-            }
+
             .search-box {
+                padding: 0rem;
                 .scope-icon {
                     width: 18px;
                 }
@@ -778,7 +774,7 @@
                 }
             }
             .search-results {
-                width: 8%;
+                width: 5%;
                 font-size: 0.425rem;
             }
         }
@@ -799,14 +795,14 @@
                             font-size: 10vw;
                         }
                         p {
-                            font-size: 3.5vw;
+                            font-size: 3.7vw;
                             text-align: justify;
                         }
                     }
                     .landing-page-graphic {
                         .graphic {
-                            width: 200px;
-                            height: 200px;
+                            width: 180px;
+                            height: 180px;
                         }
                     }
                 }
@@ -850,18 +846,8 @@
         nav.nav-bar {
             height: 10vh !important;
 
-            .logo-box {
-                width: 20%;
-                .logo {
-                    margin-left: 1rem;
-                    width: fit-content;
-                    height: 7vh;
-                    padding: 0.5rem;
-                }
-            }
             .search-box {
                 position: relative;
-                width: 40%;
                 height: fit-content;
 
                 .scope-icon {
@@ -880,7 +866,6 @@
             }
             .user-box {
                 position: relative;
-                width: 25%;
                 height: 100%;
                 .user-icons {
                     gap: 0.25rem;
