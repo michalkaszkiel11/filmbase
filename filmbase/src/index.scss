@@ -546,10 +546,10 @@
             height: 12vh !important;
             .logo-box {
                 height: 12vh;
-                width: 15%;
+                width: 18%;
                 .logo {
-                    margin-left: 1rem;
-                    height: 6.5vh;
+                    margin-left: 0.75rem;
+                    height: 7vh;
                 }
             }
             .search-box {
@@ -615,8 +615,12 @@
                 }
             }
             .search-results {
-                width: 10%;
-                font-size: 0.5rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                width: 6%;
+                font-size: 0.45rem;
             }
         }
         .user-login,
@@ -720,10 +724,11 @@
         nav.nav-bar {
             height: 10vh !important;
             .logo-box {
-                width: 18%;
+                width: 20%;
                 .logo {
-                    height: 7vh;
-                    padding: 0.5rem;
+                    height: 4.5vh;
+                    padding: 0;
+                    margin-left: 0;
                 }
             }
             .search-box {
@@ -1025,10 +1030,10 @@
                 height: 90vh;
                 .slider {
                     width: 100%;
-                    height: 80vh;
+                    height: 100%;
                     .movie {
-                        height: 60vh;
-                        padding: 4rem;
+                        height: 100%;
+                        padding: 2rem;
                         img {
                             width: 100%;
                         }
