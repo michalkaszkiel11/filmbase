@@ -14,6 +14,7 @@ import { Pages } from "./Slider/Pages";
 import { LandingPage } from "./Main/LandingPage/LandingPage";
 import { UserBox } from "./Navbar/UserBox";
 import { Login } from "./User/Login";
+import { useMobileContext } from "./Context/isMobile";
 
 const apiKey = "9fef7c80";
 export default function App() {
@@ -33,6 +34,7 @@ export default function App() {
     const [loading, setLoading] = useState(false);
     const searchInputRef = useRef(null);
     const { isLogClicked, goHome } = useClickContext();
+    const { isMobile } = useMobileContext();
     const pickedMovieRef = useRef(null);
     const pages = results / 10;
     const boxOverlay = !selectedId ? "overlay" : "";
@@ -187,11 +189,13 @@ export default function App() {
     return (
         <div className="App">
             <Navbar>
-                <Logo
-                    setMovies={setMovies}
-                    setSelectedId={setSelectedId}
-                    goHome={goHome}
-                />
+                {!isMobile && (
+                    <Logo
+                        setMovies={setMovies}
+                        setSelectedId={setSelectedId}
+                        goHome={goHome}
+                    />
+                )}
                 <Search
                     query={query}
                     setQuery={setQuery}
