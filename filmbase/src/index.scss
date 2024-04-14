@@ -323,9 +323,21 @@
                             width: 10rem;
                         }
                     }
+                    .details-poster_titles {
+                        display: flex;
+                        .details-poster {
+                            img {
+                                padding: 5rem;
+                            }
+                        }
+                        .details-titles {
+                        }
+                    }
                 }
-                img {
-                    height: 45vh;
+                .details-poster {
+                    img {
+                        height: 45vh;
+                    }
                 }
             }
         }
@@ -692,20 +704,41 @@
             .faded {
                 height: 100vh;
                 .selected-movie {
+                    flex-direction: column-reverse;
                     .details-overview {
-                        padding: 2rem;
-                        width: 60%;
+                        padding: 1rem;
+                        width: 100%;
+
                         .details-section {
                             .details-overview-cont {
                                 width: 90vw;
                             }
                         }
-                    }
-                    img {
-                        align-self: flex-start;
-                        height: 35vh;
-                        padding: 1rem 2rem 1rem 0rem;
-                        margin-top: 5rem;
+                        .details-poster_titles {
+                            display: flex;
+                            flex-direction: row-reverse;
+                            gap: 0.5rem;
+                            .details-poster {
+                                width: 50%;
+                                img {
+                                    width: 100%;
+                                    height: fit-content;
+                                    padding: 0;
+                                }
+                            }
+                            .details-titles {
+                                display: flex;
+                                flex-direction: column;
+                                justify-content: center;
+                                align-self: flex-end;
+                                gap: 0.5rem;
+                                width: 50%;
+                                button {
+                                    margin-top: 1rem;
+                                    width: 90%;
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -819,14 +852,6 @@
                     .page {
                         cursor: pointer;
                         font-size: 1.1rem;
-                    }
-                }
-            }
-
-            .faded {
-                .selected-movie {
-                    img {
-                        height: 32.5vh;
                     }
                 }
             }
@@ -981,7 +1006,7 @@
                     height: 100%;
 
                     .landing-page-info {
-                        width: 80%;
+                        width: 90%;
                         height: fit-content;
                         gap: 1rem;
                         h1 {
@@ -1024,10 +1049,11 @@
                     margin-top: 0rem;
                     display: flex;
                     width: 100%;
-                    height: 50px;
+                    height: 100%;
                     gap: 0.5rem;
                     .btn {
                         width: 120px;
+                        height: fit-content;
                         font-size: 0.4rem;
                     }
                     .page {
@@ -1038,31 +1064,16 @@
             .overlay {
                 overflow: hidden;
             }
-
-            .faded {
-                height: 100vh;
-                .selected-movie {
-                    width: 100vw;
-                    height: 100%;
-                    .details-overview {
-                        padding: 2rem;
-
-                        width: 100%;
-
-                        .details-section {
-                            gap: 1rem;
-                            padding: 1rem 0 1rem 0;
-
-                            .add-to {
-                                width: 10rem;
-                            }
-                            .details-overview-cont {
-                                width: 80vw;
+        }
+        .faded {
+            .selected-movie {
+                .details-overview {
+                    .details-poster_titles {
+                        .details-titles {
+                            button {
+                                font-size: smaller;
                             }
                         }
-                    }
-                    img {
-                        display: none;
                     }
                 }
             }
@@ -1305,8 +1316,10 @@
                             }
                         }
                     }
-                    img {
-                        display: none;
+                    .details-poster {
+                        img {
+                            display: none;
+                        }
                     }
                 }
             }
@@ -1569,8 +1582,10 @@
                             }
                         }
                     }
-                    img {
-                        display: none;
+                    .details-poster {
+                        img {
+                            display: none;
+                        }
                     }
                 }
             }

@@ -8,13 +8,14 @@ import { NumResults } from "./Navbar/NumResults";
 import { Logo } from "./Navbar/Logo";
 import { Main } from "./Main/Main";
 import { Box } from "./Box";
-import { MovieDetails } from "./Main/MovieDetails/MovieDetails";
 import { Carousel } from "./Slider/Carousel";
 import { Pages } from "./Slider/Pages";
 import { LandingPage } from "./Main/LandingPage/LandingPage";
 import { UserBox } from "./Navbar/UserBox";
 import { Login } from "./User/Login";
 import { useMobileContext } from "./Context/isMobile";
+import { MovieDetails } from "./Main/MovieDetails/MovieDetails";
+import { MobileDetails } from "./Main/MovieDetails/MobileDetails";
 
 const apiKey = "9fef7c80";
 export default function App() {
@@ -231,13 +232,23 @@ export default function App() {
                             {selectedId && (
                                 <Fade className="faded overlay">
                                     <Box classN="selected-movie overlay">
-                                        <MovieDetails
-                                            handleAdd={handleAdd}
-                                            selectedMovie={selectedMovie}
-                                            pickedMovieRef={pickedMovieRef}
-                                            rating={rating}
-                                            setRating={setRating}
-                                        />
+                                        {isMobile ? (
+                                            <MobileDetails
+                                                handleAdd={handleAdd}
+                                                selectedMovie={selectedMovie}
+                                                pickedMovieRef={pickedMovieRef}
+                                                rating={rating}
+                                                setRating={setRating}
+                                            ></MobileDetails>
+                                        ) : (
+                                            <MovieDetails
+                                                handleAdd={handleAdd}
+                                                selectedMovie={selectedMovie}
+                                                pickedMovieRef={pickedMovieRef}
+                                                rating={rating}
+                                                setRating={setRating}
+                                            />
+                                        )}
                                     </Box>
                                 </Fade>
                             )}

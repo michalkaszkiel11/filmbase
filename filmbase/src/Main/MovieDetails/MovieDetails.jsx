@@ -17,19 +17,23 @@ export const MovieDetails = ({
     return (
         <>
             <div className="details-overview" ref={pickedMovieRef}>
-                <h2 className="details-overview-h2">{selectedMovie.Title}</h2>
-                <div className="details-overview-p">
-                    <span>{selectedMovie.Released},</span>
-                    <span>
-                        {" "}
-                        {selectedMovie.Runtime}{" "}
-                        <i className="fa-solid fa-hourglass-half"></i>
-                    </span>
-                </div>
-                <span>{selectedMovie.Genre}</span>
                 <div>
-                    <span>⭐</span>
-                    <span>IMDb rating {selectedMovie.imdbRating}</span>
+                    <h2 className="details-overview-h2">
+                        {selectedMovie.Title}
+                    </h2>
+                    <div className="details-overview-p">
+                        <span>{selectedMovie.Released},</span>
+                        <span>
+                            {" "}
+                            {selectedMovie.Runtime}{" "}
+                            <i className="fa-solid fa-hourglass-half"></i>
+                        </span>
+                    </div>
+                    <span>{selectedMovie.Genre}</span>
+                    <div>
+                        <span>⭐</span>
+                        <span>IMDb rating {selectedMovie.imdbRating}</span>
+                    </div>
                 </div>
                 <div className="details-section">
                     <StarRating
@@ -44,11 +48,13 @@ export const MovieDetails = ({
                     <Plot selectedMovie={selectedMovie} />
                 </div>
             </div>
-            <img
-                src={selectedMovie.Poster}
-                alt="poster"
-                className="details-img"
-            />
+            <div className="details-poster">
+                <img
+                    src={selectedMovie.Poster}
+                    alt="poster"
+                    className="details-img"
+                />
+            </div>
         </>
     );
 };
