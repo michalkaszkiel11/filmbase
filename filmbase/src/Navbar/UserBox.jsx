@@ -48,6 +48,9 @@ export const UserBox = ({ watched, isDashboardOpen, handleDashboard }) => {
                     loggedInUser={loggedInUser}
                     userName={userName}
                     logout={logout}
+                    handleDashboard={handleDashboard}
+                    isDashboardOpen={isDashboardOpen}
+                    isLoggedIn={isLoggedIn}
                 />
             ) : (
                 ""

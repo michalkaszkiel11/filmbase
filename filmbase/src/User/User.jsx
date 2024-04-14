@@ -4,7 +4,15 @@ import { Settings } from "./Settings/Settings";
 import { toUppercase } from "../helpers/Capitalletter";
 import { Fade } from "react-awesome-reveal";
 
-export const User = ({ watched, loggedInUser, userName, logout }) => {
+export const User = ({
+    watched,
+    loggedInUser,
+    userName,
+    logout,
+    handleDashboard,
+    isDashboardOpen,
+    isLoggedIn,
+}) => {
     const [openSummary, setOpenSummary] = useState(false);
     const [openSettings, setOpenSettings] = useState(false);
 
@@ -18,6 +26,14 @@ export const User = ({ watched, loggedInUser, userName, logout }) => {
                             {userName ? toUppercase(userName) : "Login"}
                         </span>
                     </h3>
+                    <i
+                        className="fa-solid fa-xmark"
+                        onClick={
+                            isLoggedIn && loggedInUser
+                                ? () => handleDashboard(!isDashboardOpen)
+                                : null
+                        }
+                    ></i>
                 </div>
                 <div className="user-info-box">
                     <h4

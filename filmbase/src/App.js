@@ -39,14 +39,7 @@ export default function App() {
     const pickedMovieRef = useRef(null);
     const pages = results / 10;
     const boxOverlay = !selectedId ? "overlay" : "";
-    const {
-        Title: title,
-        Year: year,
-        Poster: poster,
-        Runtime: runtime,
-        imdbRating,
-        userRating,
-    } = selectedMovie;
+
     async function getSelectedMovie(id) {
         try {
             setLoading(true);
@@ -154,20 +147,13 @@ export default function App() {
 
     const handleAdd = (e) => {
         e.preventDefault();
-        const newWatchedMovie = {
-            imdbID: selectedId,
-            title,
-            year,
-            poster,
-            imdbRating: Number(imdbRating),
-            userRating: userRating,
-            runtime,
-        };
-        handleAddWatched(newWatchedMovie);
-        closeDetails();
+        const movieRating = { ...selectedMovie };
+        movieRating.userRating = rating;
+        handleAddWatched(movieRating);
+        setRating(0);
     };
-    const handleAddWatched = () => {
-        setWatched((watchedMovie) => [...watchedMovie, selectedMovie]);
+    const handleAddWatched = (movie) => {
+        setWatched((watchedMovie) => [...watchedMovie, movie]);
     };
     const changeTitle = () => {
         return (document.title = selectedMovie.Title
