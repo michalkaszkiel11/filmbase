@@ -16,12 +16,14 @@ import { Login } from "./User/Login";
 import { useMobileContext } from "./Context/isMobile";
 import { MovieDetails } from "./Main/MovieDetails/MovieDetails";
 import { MobileDetails } from "./Main/MovieDetails/MobileDetails";
+import { useAuth } from "./Context/isLoggedContext";
 
 const apiKey = "9fef7c80";
 export default function App() {
     const [query, setQuery] = useState("");
     const [movies, setMovies] = useState([]);
     const [watched, setWatched] = useState([]);
+    const [isWatchedUpadted, setIsWatchedUpadted] = useState(false);
     const [results, setResults] = useState("");
     const [selectedId, setSelectedId] = useState(null);
     const [selectedMovie, setSelectedMovie] = useState([]);
@@ -39,6 +41,7 @@ export default function App() {
     const pickedMovieRef = useRef(null);
     const pages = results / 10;
     const boxOverlay = !selectedId ? "overlay" : "";
+    const { login, setLoggedInUser, loggedInUser } = useAuth();
 
     async function getSelectedMovie(id) {
         try {
@@ -48,7 +51,6 @@ export default function App() {
             );
             const data = await res.json();
             setSelectedMovie(data);
-            console.log(selectedMovie);
             setLoading(false);
         } catch (e) {
             console.error(e);
@@ -89,15 +91,26 @@ export default function App() {
             controller.abort();
         };
     }, [query, currentPage]);
+
     useEffect(() => {
         getSelectedMovie(selectedId);
     }, [selectedId]);
+
     useEffect(() => {
         changeTitle();
     }, [selectedMovie]);
+
+    useEffect(() => {
+        if (loggedInUser && loggedInUser.email) {
+            // Check if loggedInUser and email are defined
+            getWatched(loggedInUser.email);
+        }
+    }, [loggedInUser, isWatchedUpadted]);
+
     const closeDetails = () => {
         setSelectedId(false);
     };
+
     function generateRandomId(length) {
         const characters =
             "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -144,40 +157,66 @@ export default function App() {
             setLoading(false);
         }
     };
-    // const updateWatched = async (watched) => {
-    //     try {
-    //         const response = await fetch(
-    //             "http://localhost:10000/api/users/create",
-    //             {
-    //                 method: "POST",
-    //                 headers: {
-    //                     "Content-Type": "application/json",
-    //                 },
-    //                 body: JSON.stringify(newUser),
-    //             }
-    //         );
-    //         if (!response.ok) {
-    //             setIsRegister(false);
-    //             setLoading(false);
-    //             throw new Error("Network response wasn't ok");
-    //         }
-    //         setIsRegister(true);
-    //         const data = await response.json();
-    //         console.log("New user created successfully:", data);
-    //     } catch (e) {
-    //         console.error("Error updating watched:", e);
-    //     }
-    // };
+    const updateWatched = async (watched) => {
+        const { imdbRating, Runtime, userRating } = watched;
+        const updatedWatched = {
+            email: loggedInUser.email,
+            watched: [{ imdbRating, Runtime, userRating }],
+        };
+        try {
+            setIsWatchedUpadted(true);
+            const response = await fetch(
+                "http://localhost:10000/api/users/update-watched",
+                {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(updatedWatched),
+                }
+            );
+            if (!response.ok) {
+                throw new Error("Network response wasn't ok");
+            }
+            const data = await response.json();
+            console.log("Watch list updated successfully:", data);
+        } catch (e) {
+            console.error("Error updating watched:", e);
+            setIsWatchedUpadted(false);
+        } finally {
+            setIsWatchedUpadted(false);
+        }
+    };
+
+    const getWatched = async (email) => {
+        try {
+            const response = await fetch(
+                `http://localhost:10000/api/users/getWatched/${email}`,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+            if (!response.ok) {
+                throw new Error("Network response wasn't ok");
+            }
+            const data = await response.json();
+            setWatched(data.user.watched);
+            console.log("Watch list retrieved successfully:", data);
+        } catch (e) {
+            console.error("Error retrieving watchlist:", e);
+        }
+    };
     const handleAdd = (e) => {
         e.preventDefault();
         const movieRating = { ...selectedMovie };
         movieRating.userRating = rating;
-        handleAddWatched(movieRating);
+        updateWatched(movieRating);
         setRating(0);
     };
-    const handleAddWatched = (movie) => {
-        setWatched((watchedMovie) => [...watchedMovie, movie]);
-    };
+
     const changeTitle = () => {
         return (document.title = selectedMovie.Title
             ? selectedMovie.Title
@@ -273,8 +312,10 @@ export default function App() {
                     setPassword={setPassword}
                     createUser={createUser}
                     loading={loading}
-                    isRegister={isRegister}
                     setLoading={setLoading}
+                    isRegister={isRegister}
+                    login={login}
+                    setLoggedInUser={setLoggedInUser}
                 />
             )}
         </div>

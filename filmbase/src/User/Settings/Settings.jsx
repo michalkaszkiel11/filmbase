@@ -85,6 +85,7 @@ export const Settings = ({ loggedInUser, logout }) => {
             } else {
                 setMessage("Success");
                 setEmailChanged(true);
+                logout();
                 window.location.reload();
             }
         } catch (err) {

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Register } from "./Register";
 import { useClickContext } from "../Context/isClickedContext";
-import { useAuth } from "../Context/isLoggedContext";
 import Cookies from "js-cookie";
 
 export const Login = ({
@@ -12,13 +11,14 @@ export const Login = ({
     loading,
     isRegister,
     setLoading,
+    login,
+    setLoggedInUser,
 }) => {
     const [isRegisterClicked, setIsRegisterClicked] = useState(false);
     const { setClickContext } = useClickContext();
     const [loginEmail, setLoginEmail] = useState("");
     // const [showPassword, setShowPassword] = useState(false);
     const [loginPassword, setLoginPassword] = useState("");
-    const { login, setLoggedInUser } = useAuth();
 
     const handleLogIn = async (e) => {
         e.preventDefault();
@@ -55,7 +55,6 @@ export const Login = ({
                 path: "/",
                 domain: "localhost",
             });
-
             setLoggedInUser(data);
             setClickContext();
         } catch (err) {

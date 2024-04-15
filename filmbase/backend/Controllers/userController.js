@@ -2,9 +2,13 @@ const bcrypt = require("bcrypt");
 const { createUserQuery, checkUserQuery } = require("../dbFiles/userQueries");
 const { queryDatabase } = require("../dbFiles/dbUtils");
 const UserModel = require("../mongoDbFiles/models/UserModelMDB");
+const jwt = require("jsonwebtoken");
+// const { User } = require("../../src/User/User");
 
-const createUser = async (user) => {
+const createUser = async (req, res) => {
     try {
+        const user = req.body;
+
         // Check if the user already exists
         const existingUser = await queryDatabase(checkUserQuery(user));
         const existingUserMDB = await UserModel.findOne({ email: user.email });
@@ -26,15 +30,18 @@ const createUser = async (user) => {
                 userRating: user.userRating,
                 runtime: user.runtime,
             });
+            res.json(newUser);
         }
-        return insertedUser;
+        res.json(insertedUser);
     } catch (err) {
         console.error("Error creating user:", err.message);
-        throw err;
+        res.status(500).json({ error: "Internal Server Error" });
     }
 };
-const getUserInfo = async (email) => {
+const getUserInfo = async (req, res) => {
     try {
+        const email = req.user.email;
+
         const result = await queryDatabase(
             `SELECT * FROM UsersList WHERE email = '${email}'`
         );
@@ -45,17 +52,20 @@ const getUserInfo = async (email) => {
         }
         const user = result[0];
         if (user) {
-            return user;
+            res.json(user);
         }
         if (userMDB) {
             return userMDB;
         }
-    } catch (error) {
-        console.error("Error logging in:", error.message);
+    } catch (err) {
+        console.error("Error retrieving user info:", err.message);
+        res.status(500).json({ error: "Internal Server Error" });
     }
 };
-const loginUser = async (email, password) => {
+const loginUser = async (req, res) => {
     try {
+        const { email, password } = req.body;
+
         // Fetch user data from the database
         const result = await queryDatabase(
             `SELECT * FROM UsersList WHERE email = '${email}'`
@@ -70,13 +80,29 @@ const loginUser = async (email, password) => {
 
         // If passwords match, return the user data
         if (passwordMatch) {
-            return user;
+            const token = jwt.sign(
+                { email: user.email },
+                process.env.JWT_SECRET,
+                { expiresIn: "45m" }
+            );
+
+            // Include additional user data like userName in the response
+            res.cookie("jwtToken", token, { httpOnly: true, secure: true })
+                .status(200)
+                .json({
+                    token,
+                    userName: user.userName,
+                    email: user.email,
+                    userId: user.userId,
+                });
         } else {
-            return null;
+            res.status(401).json({
+                message: "Combination email/password does not exist",
+            });
         }
     } catch (error) {
         console.error("Error logging in:", error.message);
-        throw error;
+        res.status(500).json({ error: "Internal Server Error" });
     }
 };
 const getUserById = async (userId) => {
@@ -95,8 +121,10 @@ const getUserById = async (userId) => {
     }
 };
 
-const changePassword = async (userId, oldPassword, newPassword) => {
+const changePassword = async (req, res) => {
     try {
+        const { userId, oldPass, newPass } = req.body;
+
         const result = await queryDatabase(
             `SELECT * FROM UsersList WHERE userId = '${userId}'`
         );
@@ -107,22 +135,24 @@ const changePassword = async (userId, oldPassword, newPassword) => {
         }
         const user = result[0];
 
-        const passwordMatch = await bcrypt.compare(oldPassword, user.pass);
-        if (oldPassword === newPassword) {
+        const passwordMatch = await bcrypt.compare(oldPass, user.pass);
+        if (oldPass === newPass) {
             throw new Error("New password is the same as old password");
         }
 
         if (passwordMatch) {
-            const hashedPassword = await bcrypt.hash(newPassword, 12);
+            const hashedPassword = await bcrypt.hash(newPass, 12);
             const updateQuery = `UPDATE UsersList SET pass = '${hashedPassword}' WHERE userId = '${userId}'`;
             const updateResult = await queryDatabase(updateQuery); // Renamed result variable to updateResult
-            return updateResult; // Return the update result
+            res.status(200).json({
+                message: "Password changed successfully",
+                updateResult,
+            });
         } else {
             throw new Error("Password does not match");
         }
     } catch (err) {
-        console.error("Error changing password:", err.message);
-        throw err;
+        res.status(500).json({ error: "Internal Server Error" });
     }
 };
 
@@ -130,10 +160,16 @@ const changeEmail = async (req, res) => {
     try {
         const { email, newEmail } = req.body;
         const updateQuery = `UPDATE UsersList SET email = '${newEmail}' WHERE email = '${email}'`;
+        const updateMDB = await UserModel.findOneAndUpdate(
+            { email: email },
+            { $set: { email: newEmail } },
+            { new: true }
+        );
         const result = await queryDatabase(updateQuery);
         res.status(200).json({
             message: "E-mail changed successfully",
             result,
+            updateMDB,
         });
     } catch (err) {
         console.error("Error changing email:", err.message);
@@ -178,21 +214,40 @@ const deleteAccount = async (req, res) => {
 
 const updateWatched = async (req, res) => {
     try {
+        const { email } = req.body;
+        const updatedWatched = req.body.watched;
+
         const user = await UserModel.findOneAndUpdate(
-            { email: req.body.email },
-            { $set: { watched: req.body.watched } },
-            { new: true }
+            { email: email },
+            { $push: { watched: updatedWatched } }, // Add the new watched data to the watched array
+            { new: true } // Return the updated document
         );
+
         if (!user) {
-            return res.status(404).send("Not found");
+            return res.status(404).send("User not found");
         }
+
         res.status(200).json(user);
     } catch (err) {
         console.error("Error updating watched:", err.message);
-        return res.status(500).json({ message: "server error" });
+        return res.status(500).json({ message: "Server error" });
     }
 };
 
+const getWatched = async (req, res) => {
+    try {
+        const user = await UserModel.findOne({ email: req.params.email });
+        if (!user) {
+            return res.status(404).send("Not found");
+        }
+        res.status(200).json({
+            message: "Watched data retrieved successfully",
+            user,
+        });
+    } catch (err) {
+        return res.status(500).json({ message: "Server error" });
+    }
+};
 module.exports = {
     createUser,
     getUserInfo,
@@ -202,4 +257,5 @@ module.exports = {
     changePassword,
     deleteAccount,
     updateWatched,
+    getWatched,
 };
