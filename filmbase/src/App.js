@@ -144,7 +144,30 @@ export default function App() {
             setLoading(false);
         }
     };
-
+    // const updateWatched = async (watched) => {
+    //     try {
+    //         const response = await fetch(
+    //             "http://localhost:10000/api/users/create",
+    //             {
+    //                 method: "POST",
+    //                 headers: {
+    //                     "Content-Type": "application/json",
+    //                 },
+    //                 body: JSON.stringify(newUser),
+    //             }
+    //         );
+    //         if (!response.ok) {
+    //             setIsRegister(false);
+    //             setLoading(false);
+    //             throw new Error("Network response wasn't ok");
+    //         }
+    //         setIsRegister(true);
+    //         const data = await response.json();
+    //         console.log("New user created successfully:", data);
+    //     } catch (e) {
+    //         console.error("Error updating watched:", e);
+    //     }
+    // };
     const handleAdd = (e) => {
         e.preventDefault();
         const movieRating = { ...selectedMovie };

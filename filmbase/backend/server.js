@@ -1,19 +1,30 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const router = require("./router");
 const cors = require("cors");
 require("dotenv").config();
 
 const app = express();
-const PORT = process.env.PORT || 10000; // Updated PORT definition
+const PORT = process.env.PORT || 10000;
+
 app.use(cors());
 app.use(express.json());
 app.use("/api", router);
 
-// SQL Server configuration
+// MongoDB configuration
+mongoose
+    .connect(
+        `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_NAME}`
+    )
+    .then(() => {
+        console.log("MongoDB connected! 😃");
+    })
+    .catch((error) => {
+        console.error("MongoDB connection error:", error);
+    });
 
-// Endpoint to get users
+// SQL database configuration
 
-// Start the server
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });

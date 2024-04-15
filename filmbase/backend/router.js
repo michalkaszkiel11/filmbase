@@ -5,8 +5,9 @@ const {
     loginUser,
     changePassword,
     changeEmail,
-    deleteAccount,
     getUserInfo,
+    updateWatched,
+    deleteAccount,
 } = require("./Controllers/userController");
 const { getUsers } = require("./Controllers/getUsers");
 const { authenticateToken } = require("./middleware/authentication");
@@ -27,6 +28,7 @@ router.get("/users", async (req, res) => {
 router.post("/users/create", async (req, res) => {
     try {
         const newUser = await createUser(req.body);
+
         console.log("User created successfully:", newUser);
         res.json(newUser);
     } catch (err) {
@@ -92,25 +94,9 @@ router.post("/users/change-password", async (req, res) => {
     }
 });
 
-router.post("/users/change-email", async (req, res) => {
-    try {
-        const { email, newEmail } = req.body;
-        const result = await changeEmail(email, newEmail);
-        res.status(200).json({ message: "E-mail changed successfully" });
-    } catch (error) {
-        console.error("Error changing email:", error.message);
-        res.status(500).json({ error: "Internal Server Error" });
-    }
-});
-router.post("/users/delete-account", async (req, res) => {
-    try {
-        const { userId, password } = req.body;
-        const result = await deleteAccount(userId, password);
-        res.status(200).json({ message: "Account deleted successfully" });
-    } catch (error) {
-        console.error("Error changing password:", error.message);
-        res.status(500).json({ error: "Internal Server Error" });
-    }
-});
+router.post("/users/change-email", changeEmail);
 
+router.post("/users/delete-account", deleteAccount);
+
+router.patch("/users/update-watched", updateWatched);
 module.exports = router;

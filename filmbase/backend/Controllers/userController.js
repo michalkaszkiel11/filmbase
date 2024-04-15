@@ -1,12 +1,13 @@
 const bcrypt = require("bcrypt");
 const { createUserQuery, checkUserQuery } = require("../dbFiles/userQueries");
 const { queryDatabase } = require("../dbFiles/dbUtils");
+const UserModel = require("../mongoDbFiles/models/UserModelMDB");
 
 const createUser = async (user) => {
     try {
         // Check if the user already exists
         const existingUser = await queryDatabase(checkUserQuery(user));
-
+        const existingUserMDB = await UserModel.findOne({ email: user.email });
         if (existingUser.length > 0) {
             throw new Error("User already exists");
         }
@@ -17,7 +18,15 @@ const createUser = async (user) => {
 
         // Insert the user into the database
         const insertedUser = await queryDatabase(createUserQuery(user));
-
+        if (!existingUserMDB) {
+            const newUser = await UserModel.create({
+                email: user.email,
+                watched: user.watched,
+                imdbRating: user.imdbRating,
+                userRating: user.userRating,
+                runtime: user.runtime,
+            });
+        }
         return insertedUser;
     } catch (err) {
         console.error("Error creating user:", err.message);
@@ -29,14 +38,17 @@ const getUserInfo = async (email) => {
         const result = await queryDatabase(
             `SELECT * FROM UsersList WHERE email = '${email}'`
         );
+        const userMDB = await UserModel.find({ email: email });
+
         if (result.length === 0) {
             return null;
         }
         const user = result[0];
         if (user) {
             return user;
-        } else {
-            throw new Error("user not found");
+        }
+        if (userMDB) {
+            return userMDB;
         }
     } catch (error) {
         console.error("Error logging in:", error.message);
@@ -48,7 +60,6 @@ const loginUser = async (email, password) => {
         const result = await queryDatabase(
             `SELECT * FROM UsersList WHERE email = '${email}'`
         );
-
         // If no user found
         if (result.length === 0) {
             return null;
@@ -115,41 +126,70 @@ const changePassword = async (userId, oldPassword, newPassword) => {
     }
 };
 
-const changeEmail = async (email, newEmail) => {
+const changeEmail = async (req, res) => {
     try {
+        const { email, newEmail } = req.body;
         const updateQuery = `UPDATE UsersList SET email = '${newEmail}' WHERE email = '${email}'`;
         const result = await queryDatabase(updateQuery);
-        return result;
+        res.status(200).json({
+            message: "E-mail changed successfully",
+            result,
+        });
     } catch (err) {
         console.error("Error changing email:", err.message);
-        throw err;
+        res.status(500).json({ error: "Internal Server Error" });
     }
 };
 
-const deleteAccount = async (userId, password) => {
+const deleteAccount = async (req, res) => {
     try {
-        const result = await queryDatabase(
-            `SELECT * FROM UsersList WHERE userId = '${userId}'`
-        );
+        const { email, password } = req.body;
 
-        // Check if any rows were returned
+        const result = await queryDatabase(
+            `SELECT * FROM UsersList WHERE email = '${email}'`
+        );
         if (result.length === 0) {
             throw new Error("User not found");
         }
-        const user = result[0];
 
+        const user = result[0];
         const passwordMatch = await bcrypt.compare(password, user.pass);
 
         if (passwordMatch) {
-            const deleteAccountQuery = `DELETE FROM UsersList WHERE userId = '${userId}'`;
+            const deleteAccountQuery = `DELETE FROM UsersList WHERE email = '${email}'`;
+            const resultMDB = await UserModel.findOneAndDelete({
+                email: email,
+            });
+
             const deletion = await queryDatabase(deleteAccountQuery);
-            return deletion;
+            res.status(200).json({
+                message: "Account deleted successfully",
+                deletion,
+                resultMDB,
+            });
         } else {
             throw new Error("Password does not match");
         }
     } catch (err) {
         console.error("Error deleting account:", err.message);
-        throw err;
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+};
+
+const updateWatched = async (req, res) => {
+    try {
+        const user = await UserModel.findOneAndUpdate(
+            { email: req.body.email },
+            { $set: { watched: req.body.watched } },
+            { new: true }
+        );
+        if (!user) {
+            return res.status(404).send("Not found");
+        }
+        res.status(200).json(user);
+    } catch (err) {
+        console.error("Error updating watched:", err.message);
+        return res.status(500).json({ message: "server error" });
     }
 };
 
@@ -161,4 +201,5 @@ module.exports = {
     changeEmail,
     changePassword,
     deleteAccount,
+    updateWatched,
 };

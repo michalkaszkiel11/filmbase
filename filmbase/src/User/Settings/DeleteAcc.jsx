@@ -15,7 +15,7 @@ export const DeleteAcc = ({
                     <input
                         type="password"
                         placeholder="enter password"
-                        onClick={(e) => setCurrentPass(e.target.value)}
+                        onChange={(e) => setCurrentPass(e.target.value)}
                     />
 
                     <button type="submit" className="btn1">

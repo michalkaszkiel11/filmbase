@@ -98,10 +98,12 @@ export const Settings = ({ loggedInUser, logout }) => {
     const handleDeleteAccount = async (e) => {
         e.preventDefault();
         const userInfo = {
-            userId: userId,
+            email: email,
             password: currentPass,
         };
         try {
+            console.log(userInfo);
+            console.log(currentPass);
             const response = await fetch(
                 "http://localhost:10000/api/users/delete-account",
                 {
@@ -123,7 +125,7 @@ export const Settings = ({ loggedInUser, logout }) => {
         } catch (err) {
             setMessage(err.message);
             setDeleteion(false);
-            console.error("Error while changing email:", err.message);
+            console.error("Error while deleting account:", err.message);
         } finally {
             setMessage("");
         }

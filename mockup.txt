@@ -27,3 +27,49 @@
 
 
                 // chnage password messages
+
+
+
+
+
+
+
+
+
+const deleteAccount = async (userId, password) => {
+    try {
+        const result = await queryDatabase(
+            `SELECT * FROM UsersList WHERE userId = '${userId}'`
+        );
+
+        // Check if any rows were returned
+        if (result.length === 0) {
+            throw new Error("User not found");
+        }
+        const user = result[0];
+
+        const passwordMatch = await bcrypt.compare(password, user.pass);
+
+        if (passwordMatch) {
+            const deleteAccountQuery = `DELETE FROM UsersList WHERE userId = '${userId}'`;
+            const deletion = await queryDatabase(deleteAccountQuery);
+            return deletion;
+        } else {
+            throw new Error("Password does not match");
+        }
+    } catch (err) {
+        console.error("Error deleting account:", err.message);
+        throw err;
+    }
+};
+
+router.post("/users/delete-account", async (req, res) => {
+    try {
+        const { userId, password } = req.body;
+        const result = await deleteAccount(userId, password);
+        res.status(200).json({ message: "Account deleted successfully" });
+    } catch (error) {
+        console.error("Error changing password:", error.message);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
