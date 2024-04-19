@@ -21,5 +21,5 @@ Stay organized and keep track of your viewing history, ratings, and reviews to c
 Development stages:
 - Backend
   
-![image](https://github.com/michalkaszkiel11/filmbase/assets/149673103/0f4328b5-996d-4ff6-a2ee-41c7bae3efae)
+![image](https://github.com/michalkaszkiel11/filmbase/assets/149673103/579a2848-a747-427a-b181-423db9a5f606)
 
