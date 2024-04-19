@@ -25,4 +25,4 @@ Development stages:
 
 - Frontend:
 
-![image](https://github.com/michalkaszkiel11/filmbase/assets/149673103/db96d609-a2ba-453b-af7b-708dea44aa6d)
+![image](https://github.com/michalkaszkiel11/filmbase/assets/149673103/5f0f0dea-d91c-4338-8ee7-367a29f805b0)
