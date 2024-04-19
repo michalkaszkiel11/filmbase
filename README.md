@@ -19,7 +19,10 @@ Personalized Experience:
 Stay organized and keep track of your viewing history, ratings, and reviews to curate a personalized collection of films that reflect your unique tastes and preferences.
 
 Development stages:
-- Backend
+- Backend:
   
 ![image](https://github.com/michalkaszkiel11/filmbase/assets/149673103/579a2848-a747-427a-b181-423db9a5f606)
 
+- Frontend:
+
+![image](https://github.com/michalkaszkiel11/filmbase/assets/149673103/db96d609-a2ba-453b-af7b-708dea44aa6d)
