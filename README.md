@@ -18,11 +18,18 @@ Personalized Experience:
 - Customize your film-watching journey with personalized watchlists and favorites, ensuring you never miss out on must-watch films or forget about your favorites.
 Stay organized and keep track of your viewing history, ratings, and reviews to curate a personalized collection of films that reflect your unique tastes and preferences.
 
-Development stages:
-- Backend:
+<h2>Development stages:</h2>
+
+# Backend:
   
 ![image](https://github.com/michalkaszkiel11/filmbase/assets/149673103/579a2848-a747-427a-b181-423db9a5f606)
 
-- Frontend:
+# Frontend:
+
+- Serachbar
 
 ![image](https://github.com/michalkaszkiel11/filmbase/assets/149673103/5f0f0dea-d91c-4338-8ee7-367a29f805b0)
+
+- User Dashboard
+
+![image](https://github.com/michalkaszkiel11/filmbase/assets/149673103/c99ab4b7-78a4-47a7-9532-e8a564582a18)
