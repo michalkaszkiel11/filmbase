@@ -33,3 +33,12 @@ Stay organized and keep track of your viewing history, ratings, and reviews to c
 - User Dashboard
 
 ![image](https://github.com/michalkaszkiel11/filmbase/assets/149673103/c99ab4b7-78a4-47a7-9532-e8a564582a18)
+
+- Carousel
+
+![image](https://github.com/michalkaszkiel11/filmbase/assets/149673103/e060aba9-5953-4abf-9a8e-4e881c05d520)
+
+- Selected Movie
+
+![image](https://github.com/michalkaszkiel11/filmbase/assets/149673103/13160cdc-e2aa-4db8-aeb3-166ab0b2ded0)
+
