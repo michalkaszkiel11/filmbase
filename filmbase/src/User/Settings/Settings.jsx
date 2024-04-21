@@ -123,6 +123,8 @@ export const Settings = ({ loggedInUser, logout }) => {
                 setDeleteion(true);
                 window.location.reload();
             }
+            logout();
+            window.location.reload();
         } catch (err) {
             setMessage(err.message);
             setDeleteion(false);

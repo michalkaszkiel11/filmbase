@@ -17,6 +17,7 @@ import { useMobileContext } from "./Context/isMobile";
 import { MovieDetails } from "./Main/MovieDetails/MovieDetails";
 import { MobileDetails } from "./Main/MovieDetails/MobileDetails";
 import { useAuth } from "./Context/isLoggedContext";
+import { Collection } from "./User/Collection/Collection";
 
 const apiKey = "9fef7c80";
 export default function App() {
@@ -35,6 +36,7 @@ export default function App() {
     const [password, setPassword] = useState("");
     const [isDashboardOpen, setIsDashboardOpen] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [showCollection, setShowCollection] = useState(false);
     const searchInputRef = useRef(null);
     const { isLogClicked, goHome } = useClickContext();
     const { isMobile } = useMobileContext();
@@ -51,6 +53,8 @@ export default function App() {
             );
             const data = await res.json();
             setSelectedMovie(data);
+            console.log(data);
+
             setLoading(false);
         } catch (e) {
             console.error(e);
@@ -158,10 +162,30 @@ export default function App() {
         }
     };
     const updateWatched = async (watched) => {
-        const { imdbRating, Runtime, userRating } = watched;
+        const {
+            Title,
+            imdbRating,
+            Runtime,
+            userRating,
+            Actors,
+            Awards,
+            Plot,
+            Poster,
+        } = watched;
         const updatedWatched = {
             email: loggedInUser.email,
-            watched: [{ imdbRating, Runtime, userRating }],
+            watched: [
+                {
+                    Title,
+                    imdbRating,
+                    Runtime,
+                    userRating,
+                    Actors,
+                    Awards,
+                    Plot,
+                    Poster,
+                },
+            ],
         };
         try {
             setIsWatchedUpadted(true);
@@ -213,6 +237,7 @@ export default function App() {
         e.preventDefault();
         const movieRating = { ...selectedMovie };
         movieRating.userRating = rating;
+        console.log("this is movie rating :", movieRating);
         updateWatched(movieRating);
         setRating(0);
     };
@@ -255,6 +280,8 @@ export default function App() {
                     watched={watched}
                     handleDashboard={handleDashboard}
                     isDashboardOpen={isDashboardOpen}
+                    setShowCollection={setShowCollection}
+                    setMovies={setMovies}
                 />
             </Navbar>
             {!isLogClicked ? (
@@ -301,6 +328,8 @@ export default function App() {
                                 </Fade>
                             )}
                         </>
+                    ) : showCollection ? (
+                        <Collection watched={watched} />
                     ) : (
                         <LandingPage handleFocus={handleFocus} />
                     )}

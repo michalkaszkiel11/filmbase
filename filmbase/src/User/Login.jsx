@@ -17,7 +17,8 @@ export const Login = ({
     const [isRegisterClicked, setIsRegisterClicked] = useState(false);
     const { setClickContext } = useClickContext();
     const [loginEmail, setLoginEmail] = useState("");
-    // const [showPassword, setShowPassword] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+
     const [loginPassword, setLoginPassword] = useState("");
 
     const handleLogIn = async (e) => {
@@ -64,7 +65,10 @@ export const Login = ({
             setLoading(false);
         }
     };
-
+    const handleShowPassword = () => {
+        setShowPassword(!showPassword);
+    };
+    const inputTypePassword = showPassword ? "text" : "password";
     return (
         <div className="user-login">
             <>
@@ -86,13 +90,24 @@ export const Login = ({
                                     }
                                 />
                                 <input
-                                    type="password"
+                                    type={inputTypePassword}
                                     placeholder="password"
                                     onChange={(e) =>
                                         setLoginPassword(e.target.value)
                                     }
                                     style={{ marginBottom: "10px" }}
                                 />
+                                {!showPassword ? (
+                                    <i
+                                        className="fa-solid fa-lock"
+                                        onClick={handleShowPassword}
+                                    ></i>
+                                ) : (
+                                    <i
+                                        className="fa-solid fa-lock-open"
+                                        onClick={handleShowPassword}
+                                    ></i>
+                                )}
                                 {isRegister ? (
                                     ""
                                 ) : (

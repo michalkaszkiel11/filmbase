@@ -8,6 +8,8 @@ export const StarRating = ({
     defaultRating = 0,
     rating,
     setRating,
+    disabled = false,
+    onRate,
 }) => {
     const [starHover, setStarHover] = useState(defaultRating);
     const contStyle = {
@@ -27,13 +29,18 @@ export const StarRating = ({
         fontSize: `${size}px`,
     };
     const handleRating = (rating) => {
-        setRating(rating);
+        if (!disabled) {
+            setRating(rating);
+        }
+        if (onRate) {
+            onRate(rating);
+        }
     };
     const starStyle = {
         width: `${size}px`,
         height: `${size}px`,
         display: "block",
-        cursor: "pointer",
+        cursor: disabled ? "default" : "pointer",
     };
     return (
         <div style={contStyle}>

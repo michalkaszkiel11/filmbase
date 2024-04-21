@@ -12,6 +12,8 @@ export const User = ({
     handleDashboard,
     isDashboardOpen,
     isLoggedIn,
+    setShowCollection,
+    setMovies,
 }) => {
     const [openSummary, setOpenSummary] = useState(false);
     const [openSettings, setOpenSettings] = useState(false);
@@ -55,6 +57,7 @@ export const User = ({
                             ""
                         )}
                     </h4>
+
                     <h4
                         onClick={() => {
                             setOpenSummary(false);
@@ -76,7 +79,13 @@ export const User = ({
                     </h4>
                 </div>
                 <div className="user-info-option">
-                    {openSummary && <WatchedSummary watched={watched} />}
+                    {openSummary && (
+                        <WatchedSummary
+                            watched={watched}
+                            setShowCollection={setShowCollection}
+                            setMovies={setMovies}
+                        />
+                    )}
                     {openSettings && (
                         <Settings loggedInUser={loggedInUser} logout={logout} />
                     )}

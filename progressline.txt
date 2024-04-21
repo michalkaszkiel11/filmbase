@@ -1,0 +1,3 @@
+userRating update from user collection level 
+list all collections 
+turn off collection button

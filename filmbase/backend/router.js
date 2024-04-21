@@ -8,6 +8,7 @@ const {
     deleteAccount,
     getWatched,
     updateWatched,
+    updateUserRating,
 } = require("./Controllers/userController");
 const { getUsers } = require("./Controllers/getUsers");
 const { authenticateToken } = require("./middleware/authentication");
@@ -34,5 +35,6 @@ router.post("/users/change-email", changeEmail);
 router.post("/users/delete-account", deleteAccount);
 router.patch("/users/update-watched", updateWatched);
 router.get("/users/getWatched/:email", getWatched);
+router.patch("/users/film/update-user-rating", updateUserRating);
 
 module.exports = router;

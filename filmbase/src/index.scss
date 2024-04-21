@@ -123,10 +123,10 @@
                 .user-info-option {
                     .summary {
                         .watched-options {
-                            p {
+                            .option {
                                 display: flex;
                                 flex-direction: row;
-                                gap: 0.5rem;
+                                justify-content: space-between;
                             }
                             i {
                                 font-size: 1.15rem;
@@ -256,6 +256,29 @@
                         background-position: center;
                         background-repeat: no-repeat;
                         background-size: contain;
+                    }
+                }
+            }
+        }
+        .collection {
+            width: 100vw;
+            height: 90vh;
+            display: flex;
+            @extend .center;
+            .collection-box {
+                width: 95vw;
+                height: 80vh;
+                background-color: #222;
+                ul {
+                    .film-box {
+                        .film-imdb-rating-box {
+                            display: flex;
+                            flex-direction: row;
+                        }
+                        .film-imdb-rating-user {
+                            display: flex;
+                            flex-direction: row;
+                        }
                     }
                 }
             }
@@ -596,7 +619,7 @@
                     .user-info-option {
                         .summary {
                             .watched-options {
-                                p {
+                                .option {
                                     gap: 0.5rem;
                                     font-size: 0.8rem;
                                 }
@@ -779,7 +802,7 @@
                     .user-info-option {
                         .summary {
                             .watched-options {
-                                p {
+                                .option {
                                     gap: 0.5rem;
                                     font-size: 0.8rem;
                                     padding: 0.25rem;
@@ -926,7 +949,7 @@
                     .user-info-option {
                         .summary {
                             .watched-options {
-                                p {
+                                .option {
                                     flex-direction: row;
                                     gap: 0.5rem;
                                     font-size: 0.8rem;
@@ -1146,7 +1169,7 @@
                     .user-info-option {
                         .summary {
                             .watched-options {
-                                p {
+                                .option {
                                     gap: 0.5rem;
                                 }
                                 i {
@@ -1405,7 +1428,7 @@
                     .user-info-option {
                         .summary {
                             .watched-options {
-                                p {
+                                .option {
                                     display: flex;
                                     flex-direction: row;
                                     gap: 0.5rem;

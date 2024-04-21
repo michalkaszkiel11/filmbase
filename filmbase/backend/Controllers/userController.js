@@ -233,7 +233,27 @@ const updateWatched = async (req, res) => {
         return res.status(500).json({ message: "Server error" });
     }
 };
-
+const updateUserRating = async (req, res) => {
+    const { _id } = req.body;
+    const newRating = req.body;
+    try {
+        const updatedMovie = await UserModel.findOneAndUpdate(
+            { _id: _id },
+            { $set: { userRating: newRating } },
+            { new: true }
+        );
+        if (!updatedMovie) {
+            // If no movie is found with the given ID
+            console.log("Movie not found");
+        } else {
+            // If the movie is successfully updated
+            console.log("Movie updated successfully:", updatedMovie);
+        }
+    } catch (error) {
+        // If an error occurs during the update operation
+        console.error("Error updating movie:", error);
+    }
+};
 const getWatched = async (req, res) => {
     try {
         const user = await UserModel.findOne({ email: req.params.email });
@@ -258,4 +278,5 @@ module.exports = {
     deleteAccount,
     updateWatched,
     getWatched,
+    updateUserRating,
 };
