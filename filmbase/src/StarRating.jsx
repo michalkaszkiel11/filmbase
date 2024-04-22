@@ -50,8 +50,10 @@ export const StarRating = ({
                         key={i}
                         onRate={() => handleRating(i + 1)}
                         full={starHover ? starHover >= i + 1 : rating >= i + 1}
-                        onHoverIn={() => setStarHover(i + 1)}
-                        onHoverOut={() => setStarHover(0)}
+                        onHoverIn={() =>
+                            disabled ? rating : setStarHover(i + 1)
+                        }
+                        onHoverOut={() => (disabled ? rating : setStarHover(0))}
                         starStyle={starStyle}
                         color={color}
                     ></Star>

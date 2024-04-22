@@ -270,6 +270,8 @@
                 height: 80vh;
                 background-color: #222;
                 ul {
+                    display: flex;
+                    flex-direction: row;
                     .film-box {
                         .film-imdb-rating-box {
                             display: flex;

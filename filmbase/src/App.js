@@ -53,7 +53,7 @@ export default function App() {
             );
             const data = await res.json();
             setSelectedMovie(data);
-            console.log(data);
+            // console.log(data);
 
             setLoading(false);
         } catch (e) {
@@ -228,7 +228,7 @@ export default function App() {
             }
             const data = await response.json();
             setWatched(data.user.watched);
-            console.log("Watch list retrieved successfully:", data);
+            // console.log("Watch list retrieved successfully:", data);
         } catch (e) {
             console.error("Error retrieving watchlist:", e);
         }
@@ -329,7 +329,10 @@ export default function App() {
                             )}
                         </>
                     ) : showCollection ? (
-                        <Collection watched={watched} />
+                        <Collection
+                            watched={watched}
+                            loggedInUser={loggedInUser}
+                        />
                     ) : (
                         <LandingPage handleFocus={handleFocus} />
                     )}

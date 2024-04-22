@@ -234,19 +234,21 @@ const updateWatched = async (req, res) => {
     }
 };
 const updateUserRating = async (req, res) => {
-    const { _id } = req.body;
-    const newRating = req.body;
+    console.log("req.body:", req.body);
+
+    const { email, _id, userRating } = req.body;
+    console.log("_id:", _id);
+    console.log("userRating", userRating);
+
     try {
         const updatedMovie = await UserModel.findOneAndUpdate(
-            { _id: _id },
-            { $set: { userRating: newRating } },
+            { email: email, "watched._id": _id },
+            { $set: { "watched.$.userRating": userRating } },
             { new: true }
         );
         if (!updatedMovie) {
-            // If no movie is found with the given ID
             console.log("Movie not found");
         } else {
-            // If the movie is successfully updated
             console.log("Movie updated successfully:", updatedMovie);
         }
     } catch (error) {
