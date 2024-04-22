@@ -1,3 +1,7 @@
-userRating update from user collection level 
-list all collections 
-turn off collection button
+
+# list all collections 
+# turn off collection button
+# delete film from database => find film by id => delete film from database
+# display movie details on click from user movie collection
+# do not add movie to the collection list when its already added 
+# find out why you cant add new movie to the collection when you enter the film name in the search bar again after displaying the collection (repair  it) pending request 

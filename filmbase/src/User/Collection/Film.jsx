@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { StarRating } from "../../StarRating";
 
 export const Film = ({ watch, loggedInUser }) => {
-    const { email } = loggedInUser;
+    const email = loggedInUser ? loggedInUser.email : "";
     const [userRating, setUserRating] = useState(watch.userRating);
     const updateUserRating = async () => {
         const payload = {
@@ -35,15 +35,17 @@ export const Film = ({ watch, loggedInUser }) => {
     return (
         <div className="film-box">
             <img src={watch.Poster} alt="poster" />
-            <h3>{watch.Title}</h3>
-            <p>{watch.Year}</p>
+            <div className="film-box-text">
+                <h3>{watch.Title}</h3>
+                <p>{watch.Year}</p>
+            </div>
             <div className="film-imdb-rating-box">
                 <p>imdb rating: </p>
                 <StarRating
                     rating={watch.imdbRating}
                     maxRating={10}
                     disabled={true}
-                    size={24}
+                    size={18}
                 />
             </div>
             <div className="film-imdb-rating-user">
@@ -52,7 +54,7 @@ export const Film = ({ watch, loggedInUser }) => {
                     rating={watch.userRating}
                     maxRating={10}
                     disabled={false}
-                    size={24}
+                    size={18}
                     setRating={setUserRating}
                 />
             </div>

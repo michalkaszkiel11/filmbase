@@ -12,6 +12,7 @@ const UserSchema = new Schema({
             Runtime: String,
             userRating: Number,
             Poster: String,
+            Year: String,
         },
     ],
 });

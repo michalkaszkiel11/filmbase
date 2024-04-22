@@ -8,7 +8,6 @@ export const MovieDetails = ({
     handleAdd,
     rating,
     setRating,
-    watched,
 }) => {
     useEffect(() => {
         if (pickedMovieRef.current) {

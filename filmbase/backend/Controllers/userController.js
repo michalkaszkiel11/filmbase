@@ -213,6 +213,8 @@ const deleteAccount = async (req, res) => {
 };
 
 const updateWatched = async (req, res) => {
+    console.log("update started");
+
     try {
         const { email } = req.body;
         const updatedWatched = req.body.watched;
@@ -226,6 +228,7 @@ const updateWatched = async (req, res) => {
         if (!user) {
             return res.status(404).send("User not found");
         }
+        console.log("updateWatched finish");
 
         res.status(200).json(user);
     } catch (err) {
@@ -234,11 +237,11 @@ const updateWatched = async (req, res) => {
     }
 };
 const updateUserRating = async (req, res) => {
-    console.log("req.body:", req.body);
+    // console.log("req.body:", req.body);
 
     const { email, _id, userRating } = req.body;
-    console.log("_id:", _id);
-    console.log("userRating", userRating);
+    // console.log("_id:", _id);
+    // console.log("userRating", userRating);
 
     try {
         const updatedMovie = await UserModel.findOneAndUpdate(
@@ -249,7 +252,7 @@ const updateUserRating = async (req, res) => {
         if (!updatedMovie) {
             console.log("Movie not found");
         }
-        console.log("Movie updated successfully:", updatedMovie);
+        // console.log("Movie updated successfully:", updatedMovie);
     } catch (error) {
         // If an error occurs during the update operation
         console.error("Error updating movie:", error);
