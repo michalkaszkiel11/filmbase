@@ -3,8 +3,7 @@ import { StarRating } from "../../StarRating";
 
 export const Film = ({ watch, loggedInUser }) => {
     const { email } = loggedInUser;
-    const [userRating, setUserRating] = useState(0);
-
+    const [userRating, setUserRating] = useState(watch.userRating);
     const updateUserRating = async () => {
         const payload = {
             email: email,
@@ -25,21 +24,14 @@ export const Film = ({ watch, loggedInUser }) => {
                 throw new Error("Network error");
             }
             const data = await response.json();
-            console.log("datauserRating:", data.userRating);
-
-            console.log("User rating updated successfully:", data);
         } catch (err) {
             console.log("Error updating user rating:", err);
         }
     };
-    const handleRate = (rating) => {
-        // Update rating state
-        setUserRating(rating);
-        // Call update function only when the rating is not 0
-        if (rating !== 0) {
-            updateUserRating(rating);
-        }
-    };
+    useEffect(() => {
+        updateUserRating();
+    }, [userRating]);
+
     return (
         <div className="film-box">
             <img src={watch.Poster} alt="poster" />
@@ -62,7 +54,6 @@ export const Film = ({ watch, loggedInUser }) => {
                     disabled={false}
                     size={24}
                     setRating={setUserRating}
-                    onRate={updateUserRating}
                 />
             </div>
         </div>

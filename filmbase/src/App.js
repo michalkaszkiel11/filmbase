@@ -314,6 +314,7 @@ export default function App() {
                                                 pickedMovieRef={pickedMovieRef}
                                                 rating={rating}
                                                 setRating={setRating}
+                                                watched={watched}
                                             ></MobileDetails>
                                         ) : (
                                             <MovieDetails
@@ -322,6 +323,7 @@ export default function App() {
                                                 pickedMovieRef={pickedMovieRef}
                                                 rating={rating}
                                                 setRating={setRating}
+                                                watched={watched}
                                             />
                                         )}
                                     </Box>

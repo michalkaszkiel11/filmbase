@@ -248,9 +248,8 @@ const updateUserRating = async (req, res) => {
         );
         if (!updatedMovie) {
             console.log("Movie not found");
-        } else {
-            console.log("Movie updated successfully:", updatedMovie);
         }
+        console.log("Movie updated successfully:", updatedMovie);
     } catch (error) {
         // If an error occurs during the update operation
         console.error("Error updating movie:", error);
