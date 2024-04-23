@@ -43,7 +43,8 @@ export const MovieDetails = ({
                         setRating={setRating}
                     />
                     <button onClick={handleAdd} className="btn add-to">
-                        + Add to list
+                        {/* <i className="fa-regular fa-circle-check"></i> */}+
+                        Add to list
                     </button>
                     <Plot selectedMovie={selectedMovie} />
                 </div>

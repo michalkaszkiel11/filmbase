@@ -1,8 +1,7 @@
 
 
-# turn off collection button
 # display movie details on click from user movie collection
-# do not add movie to the collection list when its already added 
+# do not add movie to the collection list when its already added !!!
 # film added to the collection button - made from add to list 
 
 

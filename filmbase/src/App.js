@@ -351,6 +351,7 @@ export default function App() {
                             watched={watched}
                             loggedInUser={loggedInUser}
                             setIsWatchedUpadted={setIsWatchedUpadted}
+                            setShowCollection={setShowCollection}
                         />
                     ) : (
                         <LandingPage handleFocus={handleFocus} />

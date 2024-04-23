@@ -287,10 +287,18 @@
             display: flex;
             @extend .center;
             .collection-box {
+                position: relative;
                 display: flex;
                 width: 97.5vw;
                 height: 85vh;
                 background-color: #222;
+                .close-list {
+                    position: absolute;
+                    top: 1%;
+                    right: 1%;
+                    font-size: larger;
+                    cursor: pointer;
+                }
                 .movie-list-ul {
                     display: flex;
                     flex-direction: row;
