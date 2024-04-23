@@ -262,7 +262,7 @@ const deleteMovie = async (req, res) => {
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
-        // Use findOneAndUpdate with $pull operator to remove the movie from the watched array
+
         const updatedUser = await UserModel.findOneAndUpdate(
             { email: email },
             { $pull: { watched: { _id: _id } } },

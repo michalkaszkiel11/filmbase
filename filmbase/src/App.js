@@ -250,7 +250,7 @@ export default function App() {
             // Update the watched state here
             setWatched((prevWatched) => [...prevWatched, movieRating]);
             // Reset selectedMovie and rating
-            setSelectedMovie([]);
+            // setSelectedMovie([]);
             setSelectedId("");
             setShowCollection(false);
             setRating(0);
