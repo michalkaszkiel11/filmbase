@@ -191,8 +191,6 @@ export default function App() {
             ],
         };
         try {
-            console.log("try update");
-
             setIsWatchedUpadted(true);
             const response = await fetch(
                 "http://localhost:10000/api/users/update-watched",
@@ -352,6 +350,7 @@ export default function App() {
                         <Collection
                             watched={watched}
                             loggedInUser={loggedInUser}
+                            setIsWatchedUpadted={setIsWatchedUpadted}
                         />
                     ) : (
                         <LandingPage handleFocus={handleFocus} />

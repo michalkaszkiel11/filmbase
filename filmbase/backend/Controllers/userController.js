@@ -255,6 +255,30 @@ const updateUserRating = async (req, res) => {
         return res.status(500).json({ message: "Server error" });
     }
 };
+const deleteMovie = async (req, res) => {
+    const { email, _id } = req.body;
+    try {
+        const user = await UserModel.findOne({ email: email });
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        // Use findOneAndUpdate with $pull operator to remove the movie from the watched array
+        const updatedUser = await UserModel.findOneAndUpdate(
+            { email: email },
+            { $pull: { watched: { _id: _id } } },
+            { new: true }
+        );
+        if (!updatedUser) {
+            return res
+                .status(500)
+                .json({ message: "Failed to delete the movie" });
+        }
+        return res.status(200).json({ message: "Movie deleted successfully" });
+    } catch (err) {
+        return res.status(500).json({ message: "Internal Server Error" });
+    }
+};
+
 const getWatched = async (req, res) => {
     try {
         const user = await UserModel.findOne({ email: req.params.email });
@@ -280,4 +304,5 @@ module.exports = {
     updateWatched,
     getWatched,
     updateUserRating,
+    deleteMovie,
 };
