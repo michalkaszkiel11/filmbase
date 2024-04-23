@@ -9,7 +9,10 @@ export const WatchedSummary = ({ watched, setShowCollection, setMovies }) => {
     const timeWatched =
         watched.length > 0
             ? summary(
-                  watched.map((movie) => parseInt(movie.Runtime.split(" ")[0]))
+                  watched.map((movie) => {
+                      const runtime = movie.Runtime?.split(" ")[0];
+                      return runtime ? parseInt(runtime) : 0;
+                  })
               ) / 60
             : 0;
 
