@@ -2,7 +2,13 @@ import { useClickContext } from "../Context/isClickedContext";
 import { useAuth } from "../Context/isLoggedContext";
 import { User } from "../User/User";
 
-export const UserBox = ({ watched, isDashboardOpen, handleDashboard }) => {
+export const UserBox = ({
+    watched,
+    isDashboardOpen,
+    handleDashboard,
+    setShowCollection,
+    setMovies,
+}) => {
     const { setClickContext, isLogClicked } = useClickContext();
     const { isLoggedIn, loggedInUser, logout } = useAuth();
 
@@ -51,6 +57,8 @@ export const UserBox = ({ watched, isDashboardOpen, handleDashboard }) => {
                     handleDashboard={handleDashboard}
                     isDashboardOpen={isDashboardOpen}
                     isLoggedIn={isLoggedIn}
+                    setShowCollection={setShowCollection}
+                    setMovies={setMovies}
                 />
             ) : (
                 ""

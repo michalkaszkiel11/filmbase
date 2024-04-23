@@ -17,6 +17,7 @@ import { useMobileContext } from "./Context/isMobile";
 import { MovieDetails } from "./Main/MovieDetails/MovieDetails";
 import { MobileDetails } from "./Main/MovieDetails/MobileDetails";
 import { useAuth } from "./Context/isLoggedContext";
+import { Collection } from "./User/Collection/Collection";
 
 const apiKey = "9fef7c80";
 export default function App() {
@@ -35,6 +36,7 @@ export default function App() {
     const [password, setPassword] = useState("");
     const [isDashboardOpen, setIsDashboardOpen] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [showCollection, setShowCollection] = useState(false);
     const searchInputRef = useRef(null);
     const { isLogClicked, goHome } = useClickContext();
     const { isMobile } = useMobileContext();
@@ -51,6 +53,8 @@ export default function App() {
             );
             const data = await res.json();
             setSelectedMovie(data);
+            // console.log(data);
+
             setLoading(false);
         } catch (e) {
             console.error(e);
@@ -107,9 +111,9 @@ export default function App() {
         }
     }, [loggedInUser, isWatchedUpadted]);
 
-    const closeDetails = () => {
-        setSelectedId(false);
-    };
+    // const closeDetails = () => {
+    //     setSelectedId(false);
+    // };
 
     function generateRandomId(length) {
         const characters =
@@ -158,12 +162,37 @@ export default function App() {
         }
     };
     const updateWatched = async (watched) => {
-        const { imdbRating, Runtime, userRating } = watched;
+        console.log("Inside updateWatched function");
+        const {
+            Title,
+            imdbRating,
+            Runtime,
+            userRating,
+            Actors,
+            Awards,
+            Plot,
+            Poster,
+            Year,
+        } = watched;
         const updatedWatched = {
             email: loggedInUser.email,
-            watched: [{ imdbRating, Runtime, userRating }],
+            watched: [
+                {
+                    Title,
+                    imdbRating,
+                    Runtime,
+                    userRating,
+                    Actors,
+                    Awards,
+                    Plot,
+                    Poster,
+                    Year,
+                },
+            ],
         };
         try {
+            console.log("try update");
+
             setIsWatchedUpadted(true);
             const response = await fetch(
                 "http://localhost:10000/api/users/update-watched",
@@ -175,14 +204,18 @@ export default function App() {
                     body: JSON.stringify(updatedWatched),
                 }
             );
+
             if (!response.ok) {
                 throw new Error("Network response wasn't ok");
             }
+            console.log("Response status:", response.status);
             const data = await response.json();
             console.log("Watch list updated successfully:", data);
+            setIsWatchedUpadted(false);
         } catch (e) {
             console.error("Error updating watched:", e);
             setIsWatchedUpadted(false);
+            throw e;
         } finally {
             setIsWatchedUpadted(false);
         }
@@ -204,17 +237,29 @@ export default function App() {
             }
             const data = await response.json();
             setWatched(data.user.watched);
-            console.log("Watch list retrieved successfully:", data);
+            // console.log("Watch list retrieved successfully:", data);
         } catch (e) {
             console.error("Error retrieving watchlist:", e);
         }
     };
-    const handleAdd = (e) => {
+    const handleAdd = async (e) => {
         e.preventDefault();
         const movieRating = { ...selectedMovie };
         movieRating.userRating = rating;
-        updateWatched(movieRating);
-        setRating(0);
+
+        try {
+            await updateWatched(movieRating);
+            // Update the watched state here
+            setWatched((prevWatched) => [...prevWatched, movieRating]);
+            // Reset selectedMovie and rating
+            setSelectedMovie([]);
+            setSelectedId("");
+            setShowCollection(false);
+            setRating(0);
+        } catch (error) {
+            console.error("Error updating watched:", error);
+            setRating(0);
+        }
     };
 
     const changeTitle = () => {
@@ -255,6 +300,8 @@ export default function App() {
                     watched={watched}
                     handleDashboard={handleDashboard}
                     isDashboardOpen={isDashboardOpen}
+                    setShowCollection={setShowCollection}
+                    setMovies={setMovies}
                 />
             </Navbar>
             {!isLogClicked ? (
@@ -301,6 +348,11 @@ export default function App() {
                                 </Fade>
                             )}
                         </>
+                    ) : showCollection ? (
+                        <Collection
+                            watched={watched}
+                            loggedInUser={loggedInUser}
+                        />
                     ) : (
                         <LandingPage handleFocus={handleFocus} />
                     )}
