@@ -10,7 +10,6 @@ export const Film = ({ watch, loggedInUser }) => {
             userRating: userRating,
             _id: watch._id,
         };
-
         try {
             const response = await fetch(
                 "http://localhost:10000/api/users/film/update-user-rating",
@@ -24,8 +23,10 @@ export const Film = ({ watch, loggedInUser }) => {
                 throw new Error("Network error");
             }
             const data = await response.json();
+            setUserRating(data.userRating);
         } catch (err) {
             console.log("Error updating user rating:", err);
+        } finally {
         }
     };
     useEffect(() => {

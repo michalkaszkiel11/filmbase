@@ -237,12 +237,7 @@ const updateWatched = async (req, res) => {
     }
 };
 const updateUserRating = async (req, res) => {
-    // console.log("req.body:", req.body);
-
     const { email, _id, userRating } = req.body;
-    // console.log("_id:", _id);
-    // console.log("userRating", userRating);
-
     try {
         const updatedMovie = await UserModel.findOneAndUpdate(
             { email: email, "watched._id": _id },
@@ -251,11 +246,13 @@ const updateUserRating = async (req, res) => {
         );
         if (!updatedMovie) {
             console.log("Movie not found");
+            return res.status(404).json({ message: "Movie not found" });
         }
-        // console.log("Movie updated successfully:", updatedMovie);
+        console.log("Movie updated successfully:", updatedMovie);
+        return res.status(200).json(updatedMovie);
     } catch (error) {
-        // If an error occurs during the update operation
         console.error("Error updating movie:", error);
+        return res.status(500).json({ message: "Server error" });
     }
 };
 const getWatched = async (req, res) => {

@@ -53,7 +53,7 @@ export default function App() {
             );
             const data = await res.json();
             setSelectedMovie(data);
-            console.log(data);
+            // console.log(data);
 
             setLoading(false);
         } catch (e) {
@@ -111,9 +111,9 @@ export default function App() {
         }
     }, [loggedInUser, isWatchedUpadted]);
 
-    const closeDetails = () => {
-        setSelectedId(false);
-    };
+    // const closeDetails = () => {
+    //     setSelectedId(false);
+    // };
 
     function generateRandomId(length) {
         const characters =
@@ -211,6 +211,7 @@ export default function App() {
             console.log("Response status:", response.status);
             const data = await response.json();
             console.log("Watch list updated successfully:", data);
+            setIsWatchedUpadted(false);
         } catch (e) {
             console.error("Error updating watched:", e);
             setIsWatchedUpadted(false);
@@ -241,40 +242,23 @@ export default function App() {
             console.error("Error retrieving watchlist:", e);
         }
     };
-    // const handleAdd = async (e) => {
-    //     console.log("Add is clicked");
-
-    //     e.preventDefault();
-    //     const movieRating = { ...selectedMovie };
-    //     movieRating.userRating = rating;
-    //     // console.log("this is movie rating :", movieRating);
-    //     try {
-    //         await updateWatched(movieRating);
-    //         setRating(0);
-    //     } catch (error) {
-    //         console.error("Error updating watched:", error);
-    //     }
-    //     // updateWatched(movieRating);
-    //     // setRating(0);
-    // };
     const handleAdd = async (e) => {
         e.preventDefault();
         const movieRating = { ...selectedMovie };
         movieRating.userRating = rating;
 
-        // Check if user is logged in
-        if (loggedInUser && loggedInUser.email) {
-            try {
-                console.log("handleAdd started");
-
-                // If logged in, update watched data
-                await updateWatched(movieRating);
-                setRating(0);
-            } catch (error) {
-                console.error("Error updating watched:", error);
-            }
-        } else {
-            console.log("User is not logged in. Please log in to add movies.");
+        try {
+            await updateWatched(movieRating);
+            // Update the watched state here
+            setWatched((prevWatched) => [...prevWatched, movieRating]);
+            // Reset selectedMovie and rating
+            setSelectedMovie([]);
+            setSelectedId("");
+            setShowCollection(false);
+            setRating(0);
+        } catch (error) {
+            console.error("Error updating watched:", error);
+            setRating(0);
         }
     };
 
