@@ -191,8 +191,6 @@ export default function App() {
             ],
         };
         try {
-            console.log("try update");
-
             setIsWatchedUpadted(true);
             const response = await fetch(
                 "http://localhost:10000/api/users/update-watched",
@@ -252,7 +250,7 @@ export default function App() {
             // Update the watched state here
             setWatched((prevWatched) => [...prevWatched, movieRating]);
             // Reset selectedMovie and rating
-            setSelectedMovie([]);
+            // setSelectedMovie([]);
             setSelectedId("");
             setShowCollection(false);
             setRating(0);
@@ -352,6 +350,8 @@ export default function App() {
                         <Collection
                             watched={watched}
                             loggedInUser={loggedInUser}
+                            setIsWatchedUpadted={setIsWatchedUpadted}
+                            setShowCollection={setShowCollection}
                         />
                     ) : (
                         <LandingPage handleFocus={handleFocus} />

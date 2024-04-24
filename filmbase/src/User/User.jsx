@@ -44,7 +44,7 @@ export const User = ({
                             setOpenSummary(true);
                         }}
                     >
-                        Watched{" "}
+                        Movie Collection{" "}
                         {openSummary ? (
                             <span
                                 className="fa-solid fa-xmark"

@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { StarRating } from "../../StarRating";
+import { Skew } from "../../Skew";
 
-export const Film = ({ watch, loggedInUser }) => {
+export const Film = ({ watch, loggedInUser, setIsWatchedUpadted }) => {
     const email = loggedInUser ? loggedInUser.email : "";
     const [userRating, setUserRating] = useState(watch.userRating);
     const updateUserRating = async () => {
@@ -10,7 +11,9 @@ export const Film = ({ watch, loggedInUser }) => {
             userRating: userRating,
             _id: watch._id,
         };
+
         try {
+            setIsWatchedUpadted(true);
             const response = await fetch(
                 "http://localhost:10000/api/users/film/update-user-rating",
                 {
@@ -24,17 +27,56 @@ export const Film = ({ watch, loggedInUser }) => {
             }
             const data = await response.json();
             setUserRating(data.userRating);
+            setIsWatchedUpadted(false);
         } catch (err) {
             console.log("Error updating user rating:", err);
+            setIsWatchedUpadted(false);
         } finally {
+            setIsWatchedUpadted(false);
         }
     };
+    const deleteMovie = async () => {
+        const payload = {
+            email: email,
+            _id: watch._id,
+        };
+        try {
+            setIsWatchedUpadted(true);
+            const response = await fetch(
+                "http://localhost:10000/api/users/film/delete-film",
+                {
+                    method: "PATCH",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload),
+                }
+            );
+            if (response.status === 404) {
+                throw new Error("user not found");
+            }
+            if (response.status === 500) {
+                throw new Error("Network error");
+            }
+            const data = response.json();
+            console.log(data);
+            setIsWatchedUpadted(false);
+        } catch (err) {
+            console.log("Error updating user rating:", err);
+            setIsWatchedUpadted(false);
+        } finally {
+            setIsWatchedUpadted(false);
+        }
+    };
+
     useEffect(() => {
         updateUserRating();
     }, [userRating]);
 
     return (
         <div className="film-box">
+            <i
+                className="fa fa-solid fa-xmark close-movie"
+                onClick={deleteMovie}
+            ></i>
             <img src={watch.Poster} alt="poster" />
             <div className="film-box-text">
                 <h3>{watch.Title}</h3>

@@ -9,6 +9,7 @@ const {
     getWatched,
     updateWatched,
     updateUserRating,
+    deleteMovie,
 } = require("./Controllers/userController");
 const { getUsers } = require("./Controllers/getUsers");
 const { authenticateToken } = require("./middleware/authentication");
@@ -36,5 +37,6 @@ router.post("/users/delete-account", deleteAccount);
 router.patch("/users/update-watched", updateWatched);
 router.get("/users/getWatched/:email", getWatched);
 router.patch("/users/film/update-user-rating", updateUserRating);
+router.patch("/users/film/delete-film", deleteMovie);
 
 module.exports = router;
