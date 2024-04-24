@@ -137,7 +137,7 @@ export default function App() {
         try {
             setLoading(true);
             const response = await fetch(
-                "http://localhost:10000/api/users/create",
+                "https://aykjzzapcctedmrtukqn.supabase.co/api/users/create",
                 {
                     method: "POST",
                     headers: {
