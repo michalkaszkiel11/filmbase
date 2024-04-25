@@ -300,6 +300,7 @@
                     cursor: pointer;
                 }
                 .movie-list-ul {
+                    overflow-y: auto;
                     display: flex;
                     flex-direction: row;
                     flex-wrap: wrap;
