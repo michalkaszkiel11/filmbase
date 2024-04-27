@@ -6,14 +6,15 @@ require("dotenv").config();
 
 const app = express();
 const PORT = process.env.PORT || 10000;
-app.use(
-    cors({
-        origin: "*", // Allow all origins * = wildcard
-        methods: ["HEAD", "GET", "POST", "PATCH", "DELETE"],
-        credentials: true,
-    })
-);
-// app.use(express.json());
+app.use(cors());
+// app.use(
+//     cors({
+//         origin: "*", // Allow all origins * = wildcard
+//         methods: ["HEAD", "GET", "POST", "PATCH", "DELETE"],
+//         credentials: true,
+//     })
+// );
+app.use(express.json());
 app.use("/api", router);
 
 // MongoDB configuration
