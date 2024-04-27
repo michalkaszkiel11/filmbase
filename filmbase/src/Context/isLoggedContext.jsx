@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }) => {
                 getUserInfo(token);
             }
         }
-    }, []);
+    }, [isLoggedIn, Cookies, isValidToken]);
 
     const login = (token) => {
         // Set the expiration to 45 minutes from now
