@@ -18,6 +18,8 @@ Personalized Experience:
 - Customize your film-watching journey with personalized watchlists and favorites, ensuring you never miss out on must-watch films or forget about your favorites.
 Stay organized and keep track of your viewing history, ratings, and reviews to curate a personalized collection of films that reflect your unique tastes and preferences.
 
+# Important info: 
+Filmbase was created for educational purposes which makes it non-profit application. Due to high Azure MySQL database maintenance costs I decided to transfer and refactor MySQL database server logic to NoSQL. 
 <h2>Development stages:</h2>
 
 # Backend:
