@@ -2,7 +2,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { isValidToken } from "../helpers/IsTokenValid";
-
+import { api } from "../utils/apiInstance";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -42,15 +42,12 @@ export const AuthProvider = ({ children }) => {
     };
     const getUserInfo = async (token) => {
         try {
-            const response = await fetch(
-                "http://localhost:10000/api/users/info",
-                {
-                    method: "GET",
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
+            const response = await fetch(`${api}/api/users/info`, {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
             if (!response.ok) {
                 throw new Error("Network response was not ok");
             }

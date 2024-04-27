@@ -3,6 +3,7 @@ import { ChangePass } from "./ChangePass";
 import { ChangeEmail } from "./ChangeEmail";
 import { DeleteAcc } from "./DeleteAcc";
 import { Fade } from "react-awesome-reveal";
+import { api } from "../../utils/apiInstance";
 
 export const Settings = ({ loggedInUser, logout }) => {
     const [changePassword, setChangePassword] = useState(false);
@@ -17,7 +18,6 @@ export const Settings = ({ loggedInUser, logout }) => {
     const [deletion, setDeleteion] = useState(false);
     const [currentPass, setCurrentPass] = useState("");
     const { email } = loggedInUser;
-
     const handleChangePassword = async (e) => {
         e.preventDefault();
         const userInfo = {
@@ -26,16 +26,13 @@ export const Settings = ({ loggedInUser, logout }) => {
             newPass: newPassword,
         };
         try {
-            const response = await fetch(
-                "http://localhost:10000/api/users/change-password",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(userInfo),
-                }
-            );
+            const response = await fetch(`${api}/api/users/change-password`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(userInfo),
+            });
 
             if (!response.ok) {
                 throw new Error("Network response was not ok");
@@ -69,16 +66,13 @@ export const Settings = ({ loggedInUser, logout }) => {
             newEmail: newEmail,
         };
         try {
-            const response = await fetch(
-                "http://localhost:10000/api/users/change-email",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(userInfo),
-                }
-            );
+            const response = await fetch(`${api}/api/users/change-email`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(userInfo),
+            });
 
             if (!response.ok) {
                 throw new Error("Network response was not ok");
@@ -105,16 +99,13 @@ export const Settings = ({ loggedInUser, logout }) => {
         try {
             console.log(userInfo);
             console.log(currentPass);
-            const response = await fetch(
-                "http://localhost:10000/api/users/delete-account",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(userInfo),
-                }
-            );
+            const response = await fetch(`${api}/api/users/delete-account`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(userInfo),
+            });
 
             if (!response.ok) {
                 throw new Error("Network response was not ok");

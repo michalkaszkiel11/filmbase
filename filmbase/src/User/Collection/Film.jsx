@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { StarRating } from "../../StarRating";
 import { Skew } from "../../Skew";
-
+import { api } from "../../utils/apiInstance";
 export const Film = ({ watch, loggedInUser, setIsWatchedUpadted }) => {
     const email = loggedInUser ? loggedInUser.email : "";
     const [userRating, setUserRating] = useState(watch.userRating);
@@ -15,7 +15,7 @@ export const Film = ({ watch, loggedInUser, setIsWatchedUpadted }) => {
         try {
             setIsWatchedUpadted(true);
             const response = await fetch(
-                "http://localhost:10000/api/users/film/update-user-rating",
+                `${api}/api/users/film/update-user-rating`,
                 {
                     method: "PATCH",
                     headers: { "Content-Type": "application/json" },
@@ -42,14 +42,11 @@ export const Film = ({ watch, loggedInUser, setIsWatchedUpadted }) => {
         };
         try {
             setIsWatchedUpadted(true);
-            const response = await fetch(
-                "http://localhost:10000/api/users/film/delete-film",
-                {
-                    method: "PATCH",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(payload),
-                }
-            );
+            const response = await fetch(`${api}/api/users/film/delete-film`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload),
+            });
             if (response.status === 404) {
                 throw new Error("user not found");
             }

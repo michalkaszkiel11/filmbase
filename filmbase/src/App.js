@@ -18,6 +18,7 @@ import { MovieDetails } from "./Main/MovieDetails/MovieDetails";
 import { MobileDetails } from "./Main/MovieDetails/MobileDetails";
 import { useAuth } from "./Context/isLoggedContext";
 import { Collection } from "./User/Collection/Collection";
+import { api } from "./utils/apiInstance";
 
 const apiKey = "9fef7c80";
 export default function App() {
@@ -115,17 +116,6 @@ export default function App() {
     //     setSelectedId(false);
     // };
 
-    // function generateRandomId(length) {
-    //     const characters =
-    //         "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    //     let id = "";
-    //     for (let i = 0; i < length; i++) {
-    //         const randomIndex = Math.floor(Math.random() * characters.length);
-    //         id += characters[randomIndex];
-    //     }
-    //     return id;
-    // }
-
     const createUser = async (e) => {
         e.preventDefault();
         const newUser = {
@@ -135,16 +125,13 @@ export default function App() {
         };
         try {
             setLoading(true);
-            const response = await fetch(
-                "http://localhost:10000/api/users/create",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(newUser),
-                }
-            );
+            const response = await fetch(`${api}/api/users/create`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(newUser),
+            });
             if (!response.ok) {
                 setIsRegister(false);
                 setLoading(false);
@@ -191,16 +178,13 @@ export default function App() {
         };
         try {
             setIsWatchedUpadted(true);
-            const response = await fetch(
-                "http://localhost:10000/api/users/update-watched",
-                {
-                    method: "PATCH",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(updatedWatched),
-                }
-            );
+            const response = await fetch(`${api}/api/users/update-watched`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(updatedWatched),
+            });
 
             if (!response.ok) {
                 throw new Error("Network response wasn't ok");
@@ -221,7 +205,7 @@ export default function App() {
     const getWatched = async (email) => {
         try {
             const response = await fetch(
-                `http://localhost:10000/api/users/getWatched/${email}`,
+                `${api}/api/users/getWatched/${email}`,
                 {
                     method: "GET",
                     headers: {

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Register } from "./Register";
 import { useClickContext } from "../Context/isClickedContext";
 import Cookies from "js-cookie";
-
+import { api } from "../utils/apiInstance";
 export const Login = ({
     setUserName,
     setEmail,
@@ -26,19 +26,16 @@ export const Login = ({
 
         try {
             setLoading(true);
-            const response = await fetch(
-                "http://localhost:10000/api/users/login",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        email: loginEmail,
-                        password: loginPassword,
-                    }),
-                }
-            );
+            const response = await fetch(`${api}/api/users/login`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email: loginEmail,
+                    password: loginPassword,
+                }),
+            });
 
             if (!response.ok) {
                 throw new Error("Network response was not ok");

@@ -1,5 +1,4 @@
 const bcrypt = require("bcrypt");
-const { queryDatabase } = require("../dbFiles/dbUtils");
 const UserModel = require("../mongoDbFiles/models/UserModelMDB");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
@@ -7,11 +6,8 @@ require("dotenv").config();
 const createUser = async (req, res) => {
     try {
         const user = req.body;
-
         // Check if the user already exists
-
         const existingUserMDB = await UserModel.findOne({ email: user.email });
-
         // Hash the password before storing it
         const hashedPassword = await bcrypt.hash(user.password, 12);
         user.password = hashedPassword;
@@ -38,7 +34,6 @@ const createUser = async (req, res) => {
 const getUserInfo = async (req, res) => {
     try {
         const email = req.user.email;
-
         const userMDB = await UserModel.findOne({ email: email });
         if (!userMDB) {
             throw new Error("Couldn't find user");
@@ -53,10 +48,7 @@ const getUserInfo = async (req, res) => {
 const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;
-
-        // Find the user by email
         const user = await UserModel.findOne({ email: email });
-
         // If no user found with the provided email
         if (!user) {
             return res.status(401).json({
@@ -154,16 +146,13 @@ const deleteAccount = async (req, res) => {
         if (!user) {
             throw new Error("User not found");
         }
-
         // Check if the password matches
         const passwordMatch = await bcrypt.compare(password, user.pass);
-
         if (passwordMatch) {
             // Delete account from MongoDB
             const resultMDB = await UserModel.findOneAndDelete({
                 email: email,
             });
-
             res.status(200).json({
                 message: "Account deleted successfully",
                 resultMDB,
@@ -178,8 +167,6 @@ const deleteAccount = async (req, res) => {
 };
 
 const updateWatched = async (req, res) => {
-    console.log("update started");
-
     try {
         const { email } = req.body;
         const updatedWatched = req.body.watched;
@@ -189,12 +176,9 @@ const updateWatched = async (req, res) => {
             { $push: { watched: updatedWatched } },
             { new: true }
         );
-
         if (!user) {
             return res.status(404).send("User not found");
         }
-        console.log("updateWatched finish");
-
         res.status(200).json(user);
     } catch (err) {
         console.error("Error updating watched:", err.message);
