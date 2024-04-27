@@ -8,6 +8,8 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(() => {
         const token = Cookies.get("jwtToken");
+        console.log("logged in");
+
         return !!token && isValidToken(token);
     });
     const [loggedInUser, setLoggedInUser] = useState([]);
