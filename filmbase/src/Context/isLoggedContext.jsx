@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         const token = Cookies.get("jwtToken");
-        if (isLoggedIn && token && isValidToken(token)) {
+        if (token && isValidToken(token)) {
             const expirationDate = new Date(token).getTime();
             const currentDate = new Date().getTime();
 
@@ -24,10 +24,13 @@ export const AuthProvider = ({ children }) => {
                 logout();
             } else {
                 // Token is still valid, get user info
+                console.log("getuserinfo");
+                
                 getUserInfo(token);
+                setIsLoggedIn(true); // Set user as logged in
             }
         }
-    }, [isLoggedIn, Cookies, isValidToken]);
+    }, []);
 
     const login = (token) => {
         // Set the expiration to 45 minutes from now
