@@ -23,10 +23,7 @@ export const Login = ({
 
     const handleLogIn = async (e) => {
         e.preventDefault();
-        const user = {
-            email: loginEmail,
-            password: loginPassword,
-        };
+
         try {
             setLoading(true);
             const response = await fetch(
@@ -36,7 +33,10 @@ export const Login = ({
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify(user),
+                    body: JSON.stringify({
+                        email: loginEmail,
+                        password: loginPassword,
+                    }),
                 }
             );
 
@@ -44,6 +44,7 @@ export const Login = ({
                 throw new Error("Network response was not ok");
             }
             const data = await response.json();
+            // console.log("Response data:", data);
             const token = data.token;
             // console.log(data);
             if (!token) {

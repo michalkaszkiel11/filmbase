@@ -16,12 +16,12 @@ export const Settings = ({ loggedInUser, logout }) => {
     const [emailChanged, setEmailChanged] = useState(false);
     const [deletion, setDeleteion] = useState(false);
     const [currentPass, setCurrentPass] = useState("");
-    const { userId, email } = loggedInUser;
+    const { email } = loggedInUser;
 
     const handleChangePassword = async (e) => {
         e.preventDefault();
         const userInfo = {
-            userId: userId,
+            email: email,
             oldPass: oldPassword,
             newPass: newPassword,
         };

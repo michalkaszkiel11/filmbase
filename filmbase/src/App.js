@@ -115,21 +115,20 @@ export default function App() {
     //     setSelectedId(false);
     // };
 
-    function generateRandomId(length) {
-        const characters =
-            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        let id = "";
-        for (let i = 0; i < length; i++) {
-            const randomIndex = Math.floor(Math.random() * characters.length);
-            id += characters[randomIndex];
-        }
-        return id;
-    }
+    // function generateRandomId(length) {
+    //     const characters =
+    //         "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    //     let id = "";
+    //     for (let i = 0; i < length; i++) {
+    //         const randomIndex = Math.floor(Math.random() * characters.length);
+    //         id += characters[randomIndex];
+    //     }
+    //     return id;
+    // }
 
     const createUser = async (e) => {
         e.preventDefault();
         const newUser = {
-            userId: generateRandomId(10),
             userName: userName,
             email: email,
             password: password,
@@ -137,7 +136,7 @@ export default function App() {
         try {
             setLoading(true);
             const response = await fetch(
-                "https://aykjzzapcctedmrtukqn.supabase.co/api/users/create",
+                "http://localhost:10000/api/users/create",
                 {
                     method: "POST",
                     headers: {
