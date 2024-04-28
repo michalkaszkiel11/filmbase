@@ -8,16 +8,17 @@ export const UserBox = ({
     handleDashboard,
     setShowCollection,
     setMovies,
+    loggedInUser,
 }) => {
     const { setClickContext, isLogClicked } = useClickContext();
-    const { isLoggedIn, loggedInUser, logout } = useAuth();
+    const { isLoggedIn, logout } = useAuth();
 
     const userName = loggedInUser?.userName;
     return (
         <div className="user-box">
             <div className="user-icons">
                 <div>
-                    {isLoggedIn && loggedInUser ? (
+                    {isLoggedIn && loggedInUser && userName ? (
                         <div
                             className="user-icon-name"
                             onClick={
@@ -26,7 +27,7 @@ export const UserBox = ({
                                     : null
                             }
                         >
-                            {userName ? userName : "Login"}
+                            {userName && userName}
                             <span>|</span>
                             <i className="fa-solid fa-chalkboard"></i>
                             <span className="chalkboard-span">|</span>

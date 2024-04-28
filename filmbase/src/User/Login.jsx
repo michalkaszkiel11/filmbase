@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Register } from "./Register";
 import { useClickContext } from "../Context/isClickedContext";
-import Cookies from "js-cookie";
-
+import { api } from "../utils/apiInstance";
+import { Spinner } from "../fillers/Spinner";
 export const Login = ({
     setUserName,
     setEmail,
@@ -23,22 +23,19 @@ export const Login = ({
 
     const handleLogIn = async (e) => {
         e.preventDefault();
-        const user = {
-            email: loginEmail,
-            password: loginPassword,
-        };
+
         try {
             setLoading(true);
-            const response = await fetch(
-                "http://localhost:10000/api/users/login",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(user),
-                }
-            );
+            const response = await fetch(`${api}/api/users/login`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email: loginEmail,
+                    password: loginPassword,
+                }),
+            });
 
             if (!response.ok) {
                 throw new Error("Network response was not ok");
@@ -50,12 +47,9 @@ export const Login = ({
                 throw new Error("Token not found in response");
             }
 
-            login();
-            Cookies.set("jwtToken", token, {
-                expires: 1, // Expires in 1 day
-                path: "/",
-                domain: "localhost",
-            });
+            login(token);
+            console.log(data);
+
             setLoggedInUser(data);
             setClickContext();
         } catch (err) {
@@ -73,7 +67,7 @@ export const Login = ({
         <div className="user-login">
             <>
                 {loading ? (
-                    <div className="loading-spinner"></div>
+                    <Spinner />
                 ) : (
                     <>
                         {!isRegisterClicked ? (

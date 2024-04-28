@@ -1,3 +1,4 @@
+import { Spinner } from "../fillers/Spinner";
 import { Message } from "./Message";
 
 export const Register = ({
@@ -47,7 +48,7 @@ export const Register = ({
                         </p>
                     </div>
                     {loading ? (
-                        <div className="loading-spinner"></div>
+                        <Spinner />
                     ) : (
                         <form
                             className="user-register-input-box"

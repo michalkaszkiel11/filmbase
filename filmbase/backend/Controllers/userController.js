@@ -1,30 +1,23 @@
 const bcrypt = require("bcrypt");
-const { createUserQuery, checkUserQuery } = require("../dbFiles/userQueries");
-const { queryDatabase } = require("../dbFiles/dbUtils");
 const UserModel = require("../mongoDbFiles/models/UserModelMDB");
 const jwt = require("jsonwebtoken");
-// const { User } = require("../../src/User/User");
+require("dotenv").config();
 
 const createUser = async (req, res) => {
     try {
         const user = req.body;
-
         // Check if the user already exists
-        const existingUser = await queryDatabase(checkUserQuery(user));
         const existingUserMDB = await UserModel.findOne({ email: user.email });
-        if (existingUser.length > 0) {
-            throw new Error("User already exists");
-        }
-
         // Hash the password before storing it
         const hashedPassword = await bcrypt.hash(user.password, 12);
         user.password = hashedPassword;
 
         // Insert the user into the database
-        const insertedUser = await queryDatabase(createUserQuery(user));
         if (!existingUserMDB) {
             const newUser = await UserModel.create({
                 email: user.email,
+                userName: user.userName,
+                pass: user.password,
                 watched: user.watched,
                 imdbRating: user.imdbRating,
                 userRating: user.userRating,
@@ -32,53 +25,40 @@ const createUser = async (req, res) => {
             });
             res.json(newUser);
         }
-        res.json(insertedUser);
     } catch (err) {
         console.error("Error creating user:", err.message);
         res.status(500).json({ error: "Internal Server Error" });
     }
 };
+
 const getUserInfo = async (req, res) => {
     try {
         const email = req.user.email;
-
-        const result = await queryDatabase(
-            `SELECT * FROM UsersList WHERE email = '${email}'`
-        );
-        const userMDB = await UserModel.find({ email: email });
-
-        if (result.length === 0) {
-            return null;
+        const userMDB = await UserModel.findOne({ email: email });
+        if (!userMDB) {
+            throw new Error("Couldn't find user");
         }
-        const user = result[0];
-        if (user) {
-            res.json(user);
-        }
-        if (userMDB) {
-            return userMDB;
-        }
+        console.log(userMDB);
+        return res.json(userMDB);
     } catch (err) {
         console.error("Error retrieving user info:", err.message);
         res.status(500).json({ error: "Internal Server Error" });
     }
 };
+
 const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;
-
-        // Fetch user data from the database
-        const result = await queryDatabase(
-            `SELECT * FROM UsersList WHERE email = '${email}'`
-        );
-        // If no user found
-        if (result.length === 0) {
-            return null;
+        const user = await UserModel.findOne({ email: email });
+        // If no user found with the provided email
+        if (!user) {
+            return res.status(401).json({
+                message: "User not found",
+            });
         }
-        // Extract user data from the query
-        const user = result[0];
+
         const passwordMatch = await bcrypt.compare(password, user.pass);
 
-        // If passwords match, return the user data
         if (passwordMatch) {
             const token = jwt.sign(
                 { email: user.email },
@@ -86,14 +66,13 @@ const loginUser = async (req, res) => {
                 { expiresIn: "45m" }
             );
 
-            // Include additional user data like userName in the response
+            // Include user data like userName in the response
             res.cookie("jwtToken", token, { httpOnly: true, secure: true })
                 .status(200)
                 .json({
                     token,
                     userName: user.userName,
                     email: user.email,
-                    userId: user.userId,
                 });
         } else {
             res.status(401).json({
@@ -105,48 +84,30 @@ const loginUser = async (req, res) => {
         res.status(500).json({ error: "Internal Server Error" });
     }
 };
-const getUserById = async (userId) => {
-    try {
-        const query = `SELECT * FROM UsersList WHERE userId = '${userId}'`;
-        const user = await queryDatabase(query);
-
-        if (user.length === 0) {
-            return null;
-        }
-
-        return user[0];
-    } catch (error) {
-        console.error("Error fetching user by ID:", error.message);
-        throw error;
-    }
-};
 
 const changePassword = async (req, res) => {
     try {
-        const { userId, oldPass, newPass } = req.body;
-
-        const result = await queryDatabase(
-            `SELECT * FROM UsersList WHERE userId = '${userId}'`
-        );
-
-        // Check if any rows were returned
-        if (result.length === 0) {
-            throw new Error("User not found");
-        }
-        const user = result[0];
-
+        const { email, oldPass, newPass } = req.body;
+        const user = await UserModel.findOne({ email: email });
         const passwordMatch = await bcrypt.compare(oldPass, user.pass);
+
+        // Check if the new password is the same as the old password
         if (oldPass === newPass) {
             throw new Error("New password is the same as old password");
         }
 
         if (passwordMatch) {
+            // Hash the new password before updating it in the database
             const hashedPassword = await bcrypt.hash(newPass, 12);
-            const updateQuery = `UPDATE UsersList SET pass = '${hashedPassword}' WHERE userId = '${userId}'`;
-            const updateResult = await queryDatabase(updateQuery); // Renamed result variable to updateResult
+            // Update the password field in the database
+            const updatedUser = await UserModel.findOneAndUpdate(
+                { email: email },
+                { $set: { pass: hashedPassword } },
+                { new: true }
+            );
             res.status(200).json({
                 message: "Password changed successfully",
-                updateResult,
+                updatedUser: updatedUser,
             });
         } else {
             throw new Error("Password does not match");
@@ -159,16 +120,16 @@ const changePassword = async (req, res) => {
 const changeEmail = async (req, res) => {
     try {
         const { email, newEmail } = req.body;
-        const updateQuery = `UPDATE UsersList SET email = '${newEmail}' WHERE email = '${email}'`;
+
+        // Update email in MongoDB
         const updateMDB = await UserModel.findOneAndUpdate(
             { email: email },
             { $set: { email: newEmail } },
             { new: true }
         );
-        const result = await queryDatabase(updateQuery);
+
         res.status(200).json({
             message: "E-mail changed successfully",
-            result,
             updateMDB,
         });
     } catch (err) {
@@ -181,26 +142,20 @@ const deleteAccount = async (req, res) => {
     try {
         const { email, password } = req.body;
 
-        const result = await queryDatabase(
-            `SELECT * FROM UsersList WHERE email = '${email}'`
-        );
-        if (result.length === 0) {
+        // Check if the user exists in MongoDB
+        const user = await UserModel.findOne({ email: email });
+        if (!user) {
             throw new Error("User not found");
         }
-
-        const user = result[0];
+        // Check if the password matches
         const passwordMatch = await bcrypt.compare(password, user.pass);
-
         if (passwordMatch) {
-            const deleteAccountQuery = `DELETE FROM UsersList WHERE email = '${email}'`;
+            // Delete account from MongoDB
             const resultMDB = await UserModel.findOneAndDelete({
                 email: email,
             });
-
-            const deletion = await queryDatabase(deleteAccountQuery);
             res.status(200).json({
                 message: "Account deleted successfully",
-                deletion,
                 resultMDB,
             });
         } else {
@@ -213,24 +168,37 @@ const deleteAccount = async (req, res) => {
 };
 
 const updateWatched = async (req, res) => {
-    console.log("update started");
-
     try {
         const { email } = req.body;
         const updatedWatched = req.body.watched;
-
-        const user = await UserModel.findOneAndUpdate(
-            { email: email },
-            { $push: { watched: updatedWatched } }, // Add the new watched data to the watched array
-            { new: true } // Return the updated document
-        );
+        const user = await UserModel.findOne({
+            email: email,
+        });
 
         if (!user) {
             return res.status(404).send("User not found");
         }
-        console.log("updateWatched finish");
 
-        res.status(200).json(user);
+        const updatedFilmsPosters = updatedWatched.map(
+            (watched) => watched.Poster
+        );
+
+        const filmExists = user.watched.some(
+            (film) => film.Poster === updatedFilmsPosters[0]
+        );
+
+        if (!filmExists) {
+            const watched = await UserModel.findOneAndUpdate(
+                { email: email },
+                { $push: { watched: updatedWatched } },
+                { new: true }
+            );
+            return res.status(200).json(watched);
+        } else {
+            return res
+                .status(409)
+                .json({ message: "Film already exists in your collection" });
+        }
     } catch (err) {
         console.error("Error updating watched:", err.message);
         return res.status(500).json({ message: "Server error" });
@@ -297,7 +265,6 @@ module.exports = {
     createUser,
     getUserInfo,
     loginUser,
-    getUserById,
     changeEmail,
     changePassword,
     deleteAccount,
