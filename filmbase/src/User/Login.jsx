@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Register } from "./Register";
 import { useClickContext } from "../Context/isClickedContext";
-import Cookies from "js-cookie";
 import { api } from "../utils/apiInstance";
+import { Spinner } from "../fillers/Spinner";
 export const Login = ({
     setUserName,
     setEmail,
@@ -41,7 +41,6 @@ export const Login = ({
                 throw new Error("Network response was not ok");
             }
             const data = await response.json();
-            // console.log("Response data:", data);
             const token = data.token;
             // console.log(data);
             if (!token) {
@@ -68,7 +67,7 @@ export const Login = ({
         <div className="user-login">
             <>
                 {loading ? (
-                    <div className="loading-spinner"></div>
+                    <Spinner />
                 ) : (
                     <>
                         {!isRegisterClicked ? (

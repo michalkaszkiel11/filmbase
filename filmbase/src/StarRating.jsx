@@ -43,8 +43,8 @@ export const StarRating = ({
         cursor: disabled ? "default" : "pointer",
     };
     return (
-        <div style={contStyle}>
-            <div style={starContStyle}>
+        <div style={contStyle} className="star-box">
+            <div style={starContStyle} className="star">
                 {Array.from({ length: maxRating }, (_, i) => (
                     <Star
                         key={i}
@@ -59,7 +59,9 @@ export const StarRating = ({
                     ></Star>
                 ))}
             </div>
-            <p style={textStyle}>{rating || ""}</p>
+            <p style={textStyle} className="star-rating">
+                {rating || ""}
+            </p>
         </div>
     );
 };

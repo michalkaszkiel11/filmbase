@@ -24,7 +24,6 @@ export const AuthProvider = ({ children }) => {
                 logout();
             } else {
                 // Token is still valid, get user info
-                console.log("getuserinfo");
                 getUserInfo(token);
                 setIsLoggedIn(true); // Set user as logged in
             }
@@ -40,6 +39,7 @@ export const AuthProvider = ({ children }) => {
     const logout = () => {
         // Remove JWT token from cookies
         Cookies.remove("jwtToken");
+        window.location.reload();
         setIsLoggedIn(false);
         setLoggedInUser(null);
     };
@@ -55,7 +55,6 @@ export const AuthProvider = ({ children }) => {
                 throw new Error("Network response was not ok");
             }
             const userInfo = await response.json();
-            console.log(userInfo);
 
             setLoggedInUser(userInfo);
         } catch (err) {

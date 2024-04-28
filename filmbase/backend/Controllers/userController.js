@@ -171,16 +171,34 @@ const updateWatched = async (req, res) => {
     try {
         const { email } = req.body;
         const updatedWatched = req.body.watched;
+        const user = await UserModel.findOne({
+            email: email,
+        });
 
-        const user = await UserModel.findOneAndUpdate(
-            { email: email },
-            { $push: { watched: updatedWatched } },
-            { new: true }
-        );
         if (!user) {
             return res.status(404).send("User not found");
         }
-        res.status(200).json(user);
+
+        const updatedFilmsPosters = updatedWatched.map(
+            (watched) => watched.Poster
+        );
+
+        const filmExists = user.watched.some(
+            (film) => film.Poster === updatedFilmsPosters[0]
+        );
+
+        if (!filmExists) {
+            const watched = await UserModel.findOneAndUpdate(
+                { email: email },
+                { $push: { watched: updatedWatched } },
+                { new: true }
+            );
+            return res.status(200).json(watched);
+        } else {
+            return res
+                .status(409)
+                .json({ message: "Film already exists in your collection" });
+        }
     } catch (err) {
         console.error("Error updating watched:", err.message);
         return res.status(500).json({ message: "Server error" });
