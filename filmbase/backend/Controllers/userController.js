@@ -38,7 +38,8 @@ const getUserInfo = async (req, res) => {
         if (!userMDB) {
             throw new Error("Couldn't find user");
         }
-        return userMDB;
+        console.log(userMDB);
+        return res.json(userMDB);
     } catch (err) {
         console.error("Error retrieving user info:", err.message);
         res.status(500).json({ error: "Internal Server Error" });

@@ -8,9 +8,10 @@ export const UserBox = ({
     handleDashboard,
     setShowCollection,
     setMovies,
+    loggedInUser,
 }) => {
     const { setClickContext, isLogClicked } = useClickContext();
-    const { isLoggedIn, loggedInUser, logout } = useAuth();
+    const { isLoggedIn, logout } = useAuth();
 
     const userName = loggedInUser?.userName;
     return (

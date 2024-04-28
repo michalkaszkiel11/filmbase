@@ -283,6 +283,7 @@ export default function App() {
                     isDashboardOpen={isDashboardOpen}
                     setShowCollection={setShowCollection}
                     setMovies={setMovies}
+                    loggedInUser={loggedInUser}
                 />
             </Navbar>
             {!isLogClicked ? (

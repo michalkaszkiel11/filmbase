@@ -48,12 +48,9 @@ export const Login = ({
                 throw new Error("Token not found in response");
             }
 
-            login();
-            Cookies.set("jwtToken", token, {
-                expires: 1, // Expires in 1 day
-                path: "/",
-                domain: "localhost",
-            });
+            login(token);
+            console.log(data);
+
             setLoggedInUser(data);
             setClickContext();
         } catch (err) {
