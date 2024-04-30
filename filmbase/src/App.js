@@ -38,6 +38,7 @@ export default function App() {
     const [isDashboardOpen, setIsDashboardOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [showCollection, setShowCollection] = useState(false);
+    const [isAdded, setIsAdded] = useState(false);
     const searchInputRef = useRef(null);
     const { isLogClicked, goHome } = useClickContext();
     const { isMobile } = useMobileContext();
