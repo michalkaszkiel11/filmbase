@@ -18,6 +18,7 @@ export const User = ({
     const [openSummary, setOpenSummary] = useState(false);
     const [openSettings, setOpenSettings] = useState(false);
     const dashboardRef = useRef(null);
+
     useEffect(() => {
         const handleClickOutside = (e) => {
             if (

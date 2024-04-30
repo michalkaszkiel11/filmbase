@@ -189,6 +189,7 @@ export default function App() {
             if (!response.ok) {
                 throw new Error("Network response wasn't ok");
             }
+
             console.log("Response status:", response.status);
             const data = await response.json();
             console.log("Watch list updated successfully:", data);
