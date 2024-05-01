@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { StarRating } from "../../StarRating";
 import { Plot } from "./Plot";
+// import { deleteMovie } from "../../methods/deleteMovie";
 
 export const MovieDetails = ({
     selectedMovie,
@@ -8,12 +9,23 @@ export const MovieDetails = ({
     handleAdd,
     rating,
     setRating,
+    watched,
+    // email,
+    // setIsWatchedUpadted,
 }) => {
     useEffect(() => {
         if (pickedMovieRef.current) {
             pickedMovieRef.current.scrollIntoView({ behavior: "smooth" });
         }
     }, [pickedMovieRef]);
+    const watchedMovies = watched.some(
+        (movie) => movie.Poster === selectedMovie.Poster
+    );
+    // const selectedMovieId = watched.find(
+    //     (movie) => movie.Poster === selectedMovie.Poster
+    // );
+    // const selectedId = selectedMovieId ? selectedMovieId._id : null;
+
     return (
         <>
             <div className="details-overview" ref={pickedMovieRef}>
@@ -43,7 +55,22 @@ export const MovieDetails = ({
                         setRating={setRating}
                     />
                     <button onClick={handleAdd} className="btn add-to">
-                        + Add to list
+                        {watchedMovies === true ? (
+                            <i
+                                class="fa-solid fa-circle-check"
+                                // onClick={(e) => {
+                                //     e.stopPropagation();
+
+                                //     deleteMovie(
+                                //         email,
+                                //         selectedId,
+                                //         setIsWatchedUpadted
+                                //     );
+                                // }}
+                            ></i>
+                        ) : (
+                            "+ Add to list"
+                        )}
                     </button>
                     <Plot selectedMovie={selectedMovie} />
                 </div>

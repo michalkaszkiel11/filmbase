@@ -3,6 +3,6 @@
 # display movie details on click from user movie collection
 # do not add movie to the collection list when its already added !!!
 # film added to the collection button - made from add to list 
+#<i>Added</i> onClick - delete from user collection
 
-
-I created signle page application which allow users to search for films, when user set the query from the input page automaticlly presents  the results on the screen. then user can pick the movie and read its details and also can add it to movie collection of course only if he is logged in. My problem is when user add movies from search bar after logging in then is able to  add movies to watched array connected to the  user account on the server but when user go to movie collection and then again is trying to search the movies from the level of movie collection page then updateWatched function is pending. I suspect problem with the state management or loggedin user context i am not sure. please help me to make request active not pending when user tries to add movies from collection page level = #solved useeffect recieved false from isWatchupdated #
+make request active not pending when user tries to add movies from collection page level = #solved useeffect recieved false from isWatchupdated #

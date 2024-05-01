@@ -38,7 +38,6 @@ export default function App() {
     const [isDashboardOpen, setIsDashboardOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [showCollection, setShowCollection] = useState(false);
-    const [isAdded, setIsAdded] = useState(false);
     const searchInputRef = useRef(null);
     const { isLogClicked, goHome } = useClickContext();
     const { isMobile } = useMobileContext();
@@ -218,6 +217,7 @@ export default function App() {
             if (!response.ok) {
                 throw new Error("Network response wasn't ok");
             }
+
             const data = await response.json();
             setWatched(data.user.watched);
             // console.log("Watch list retrieved successfully:", data);
@@ -227,6 +227,8 @@ export default function App() {
     };
     const handleAdd = async (e) => {
         e.preventDefault();
+        e.stopPropagation();
+
         const movieRating = { ...selectedMovie };
         movieRating.userRating = rating;
 
@@ -263,8 +265,13 @@ export default function App() {
     const handleDashboard = () => {
         setIsDashboardOpen(!isDashboardOpen);
     };
+    const appStyles = {
+        scrollbar: {
+            width: "7.5px",
+        },
+    };
     return (
-        <div className="App">
+        <div className={`App ${isMobile ? appStyles.scrollbar : ""}`}>
             <Navbar>
                 {!isMobile && (
                     <Logo
@@ -326,6 +333,11 @@ export default function App() {
                                                 pickedMovieRef={pickedMovieRef}
                                                 rating={rating}
                                                 setRating={setRating}
+                                                watched={watched}
+                                                // email={email}
+                                                // setIsWatchedUpadted={
+                                                //     setIsWatchedUpadted
+                                                // }
                                             />
                                         )}
                                     </Box>

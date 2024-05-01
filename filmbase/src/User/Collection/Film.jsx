@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import { StarRating } from "../../StarRating";
 import { api } from "../../utils/apiInstance";
 import { Spinner } from "../../fillers/Spinner";
+import { deleteMovie } from "../../methods/deleteMovie";
 export const Film = ({ watch, loggedInUser, setIsWatchedUpadted }) => {
     const email = loggedInUser ? loggedInUser.email : "";
     const [userRating, setUserRating] = useState(watch.userRating);
+
     const updateUserRating = async () => {
         const payload = {
             email: email,
@@ -35,34 +37,6 @@ export const Film = ({ watch, loggedInUser, setIsWatchedUpadted }) => {
             setIsWatchedUpadted(false);
         }
     };
-    const deleteMovie = async () => {
-        const payload = {
-            email: email,
-            _id: watch._id,
-        };
-        try {
-            setIsWatchedUpadted(true);
-            const response = await fetch(`${api}/api/users/film/delete-film`, {
-                method: "PATCH",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload),
-            });
-            if (response.status === 404) {
-                throw new Error("user not found");
-            }
-            if (response.status === 500) {
-                throw new Error("Network error");
-            }
-            const data = response.json();
-            console.log(data);
-            setIsWatchedUpadted(false);
-        } catch (err) {
-            console.log("Error updating user rating:", err);
-            setIsWatchedUpadted(false);
-        } finally {
-            setIsWatchedUpadted(false);
-        }
-    };
 
     useEffect(() => {
         updateUserRating();
@@ -74,7 +48,9 @@ export const Film = ({ watch, loggedInUser, setIsWatchedUpadted }) => {
                 <div className="film-box">
                     <i
                         className="fa fa-solid fa-xmark close-movie"
-                        onClick={deleteMovie}
+                        onClick={() =>
+                            deleteMovie(email, watch, setIsWatchedUpadted)
+                        }
                     ></i>
                     <img src={watch.Poster} alt="poster" />
                     <div className="film-box-text">
