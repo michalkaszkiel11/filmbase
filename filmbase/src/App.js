@@ -334,10 +334,11 @@ export default function App() {
                                                 rating={rating}
                                                 setRating={setRating}
                                                 watched={watched}
-                                                // email={email}
-                                                // setIsWatchedUpadted={
-                                                //     setIsWatchedUpadted
-                                                // }
+                                                setIsWatchedUpadted={
+                                                    setIsWatchedUpadted
+                                                }
+                                                loggedInUser={loggedInUser}
+                                                setSelectedId={setSelectedId}
                                             />
                                         )}
                                     </Box>

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { StarRating } from "../../StarRating";
 import { Plot } from "./Plot";
-// import { deleteMovie } from "../../methods/deleteMovie";
+import { deleteMovie } from "../../methods/deleteMovie";
 
 export const MovieDetails = ({
     selectedMovie,
@@ -10,8 +10,9 @@ export const MovieDetails = ({
     rating,
     setRating,
     watched,
-    // email,
-    // setIsWatchedUpadted,
+    setIsWatchedUpadted,
+    loggedInUser,
+    setSelectedId,
 }) => {
     useEffect(() => {
         if (pickedMovieRef.current) {
@@ -21,10 +22,10 @@ export const MovieDetails = ({
     const watchedMovies = watched.some(
         (movie) => movie.Poster === selectedMovie.Poster
     );
-    // const selectedMovieId = watched.find(
-    //     (movie) => movie.Poster === selectedMovie.Poster
-    // );
-    // const selectedId = selectedMovieId ? selectedMovieId._id : null;
+    const selectedMovieId = watched.find(
+        (movie) => movie.Poster === selectedMovie.Poster
+    );
+    const selectedId = selectedMovieId ? selectedMovieId._id : null;
 
     return (
         <>
@@ -56,18 +57,20 @@ export const MovieDetails = ({
                     />
                     <button onClick={handleAdd} className="btn add-to">
                         {watchedMovies === true ? (
-                            <i
-                                class="fa-solid fa-circle-check"
-                                // onClick={(e) => {
-                                //     e.stopPropagation();
-
-                                //     deleteMovie(
-                                //         email,
-                                //         selectedId,
-                                //         setIsWatchedUpadted
-                                //     );
-                                // }}
-                            ></i>
+                            <span
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    deleteMovie(
+                                        loggedInUser.email,
+                                        selectedId,
+                                        setIsWatchedUpadted,
+                                        setSelectedId
+                                    );
+                                }}
+                            >
+                                <i class="fa-solid fa-circle-check"></i>
+                            </span>
                         ) : (
                             "+ Add to list"
                         )}

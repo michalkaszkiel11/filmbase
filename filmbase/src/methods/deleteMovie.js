@@ -6,6 +6,8 @@ export const deleteMovie = async (email, watch, setIsWatchedUpadted) => {
         _id: watch._id,
     };
     try {
+        console.log("email:", email, "watched:", watch);
+
         setIsWatchedUpadted(true);
         const response = await fetch(`${api}/api/users/film/delete-film`, {
             method: "PATCH",
@@ -18,7 +20,7 @@ export const deleteMovie = async (email, watch, setIsWatchedUpadted) => {
         if (response.status === 500) {
             throw new Error("Network error");
         }
-        const data = response.json();
+        const data = await response.json();
         console.log(data);
         setIsWatchedUpadted(false);
     } catch (err) {
