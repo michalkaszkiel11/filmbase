@@ -325,6 +325,12 @@ export default function App() {
                                                 pickedMovieRef={pickedMovieRef}
                                                 rating={rating}
                                                 setRating={setRating}
+                                                watched={watched}
+                                                setIsWatchedUpadted={
+                                                    setIsWatchedUpadted
+                                                }
+                                                loggedInUser={loggedInUser}
+                                                setSelectedId={setSelectedId}
                                             ></MobileDetails>
                                         ) : (
                                             <MovieDetails
