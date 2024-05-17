@@ -1,8 +1,6 @@
 
 
 # display movie details on click from user movie collection
-# do not add movie to the collection list when its already added !!!
-# film added to the collection button - made from add to list 
 #<i>Added</i> onClick - delete from user collection
 
 make request active not pending when user tries to add movies from collection page level = #solved useeffect recieved false from isWatchupdated #

@@ -6,7 +6,6 @@ export const deleteMovie = async (email, watch, setIsWatchedUpadted) => {
         _id: watch._id,
     };
     try {
-        console.log("email:", email, "watched:", watch);
 
         setIsWatchedUpadted(true);
         const response = await fetch(`${api}/api/users/film/delete-film`, {
