@@ -303,6 +303,7 @@
                     overflow-y: auto;
                     display: flex;
                     @extend .center;
+                    height: 100%;
 
                     flex-direction: row;
                     flex-wrap: wrap;
@@ -311,7 +312,7 @@
                     .film-box-wrapper {
                         display: flex;
                         flex-direction: row;
-
+                        position: relative;
                         .film-box {
                             display: flex;
                             @extend .center;
@@ -335,6 +336,7 @@
                                 right: 0.5rem;
                                 top: 0.5rem;
                                 cursor: pointer;
+                                z-index: 12;
                             }
                             img {
                                 height: fit-content;
@@ -374,8 +376,13 @@
                                 }
                             }
                         }
-                        .film-details {
+                        .film-details-plot {
+                            padding: 2rem;
+                            text-align: justify;
+                            position: absolute;
                             width: 100%;
+                            z-index: 11;
+                            background-color: rgb(73, 73, 73);
                         }
                     }
                 }

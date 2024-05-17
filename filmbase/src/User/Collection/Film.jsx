@@ -3,7 +3,7 @@ import { StarRating } from "../../StarRating";
 import { api } from "../../utils/apiInstance";
 import { Spinner } from "../../fillers/Spinner";
 import { deleteMovie } from "../../methods/deleteMovie";
-// import { FilmDetails } from "./FilmDetails";
+import { Fade } from "react-awesome-reveal";
 
 export const Film = ({
     watch,
@@ -14,18 +14,20 @@ export const Film = ({
 }) => {
     const email = loggedInUser ? loggedInUser.email : "";
     const [userRating, setUserRating] = useState(watch.userRating);
-    const [isDetailClicked, setIsDetailClicked] = useState(false);
+    const [isDetailOver, setIsDetailOver] = useState(false);
     const filmRef = useRef();
+
     useEffect(() => {
         const handleClickOutside = (e) => {
             if (filmRef.current && !filmRef.current.contains(e.target)) {
-                setIsDetailClicked(false);
+                setIsDetailOver(false);
             }
         };
         document.addEventListener("mousedown", handleClickOutside);
         return () =>
             document.removeEventListener("mousedown", handleClickOutside);
     }, []);
+
     const updateUserRating = async () => {
         const payload = {
             email: email,
@@ -56,9 +58,7 @@ export const Film = ({
             setIsWatchedUpadted(false);
         }
     };
-    const isDetailStyles = {
-        width: "90%",
-    };
+
     useEffect(() => {
         updateUserRating();
     }, [userRating]);
@@ -69,11 +69,13 @@ export const Film = ({
                 <div
                     ref={filmRef}
                     className="film-box-wrapper"
-                    style={isDetailClicked ? isDetailStyles : {}}
-                    onClick={(e) => {
+                    onMouseEnter={() => {
                         getMovie(watch);
                         console.log("movieDetails", watch);
-                        setIsDetailClicked(true);
+                        setIsDetailOver(true);
+                    }}
+                    onMouseLeave={() => {
+                        setIsDetailOver(false);
                     }}
                 >
                     <div className="film-box">
@@ -108,9 +110,11 @@ export const Film = ({
                             />
                         </div>
                     </div>
-                    {isDetailClicked &&
-                        // <FilmDetails movieDetails={movieDetails} />
-                        movieDetails.Plot}
+                    {isDetailOver && movieDetails && (
+                        <Fade direction="left" className="film-details-plot">
+                            {movieDetails.Plot}
+                        </Fade>
+                    )}
                 </div>
             ) : (
                 <Spinner />
