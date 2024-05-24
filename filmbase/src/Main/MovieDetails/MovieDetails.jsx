@@ -26,6 +26,7 @@ export const MovieDetails = ({
         (movie) => movie.Poster === selectedMovie.Poster
     );
     const selectedId = selectedMovieId ? selectedMovieId._id : null;
+    const watchedRating = selectedMovieId ? selectedMovieId.userRating : null;
 
     return (
         <>
@@ -52,7 +53,7 @@ export const MovieDetails = ({
                     <StarRating
                         maxRating={10}
                         size={24}
-                        rating={rating}
+                        rating={watchedRating}
                         setRating={setRating}
                     />
                     <button onClick={handleAdd} className="btn add-to">
