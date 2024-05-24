@@ -303,71 +303,86 @@
                     overflow-y: auto;
                     display: flex;
                     @extend .center;
+                    height: 100%;
 
                     flex-direction: row;
                     flex-wrap: wrap;
                     gap: 1.5rem;
                     padding: 1.5rem;
-                    .film-box {
+                    .film-box-wrapper {
                         display: flex;
-                        @extend .center;
-                        flex-direction: column;
-                        border-bottom: 5px solid rgb(73, 73, 73);
-                        border-top: 15px solid rgb(73, 73, 73);
-                        border-left: 1px solid rgb(73, 73, 73);
-                        border-right: 1px solid rgb(73, 73, 73);
-                        flex-basis: 22.5vw;
-                        min-width: 22.5vw;
-                        max-width: 30vw;
-                        flex-shrink: 1;
-                        flex-grow: 1;
-
-                        height: 100%;
-                        padding: 1.5rem;
-                        gap: 0.75rem;
+                        flex-direction: row;
                         position: relative;
-                        .close-movie {
-                            position: absolute;
-                            right: 0.5rem;
-                            top: 0.5rem;
-                            cursor: pointer;
-                        }
-                        img {
-                            height: fit-content;
-                            min-height: 65%;
-                            height: 65%;
-                        }
-                        .film-box-text {
-                            text-align: center;
-                            height: 15%;
-                            h3 {
-                                font-size: 2.5vh;
-                            }
-                            p {
-                                font-size: 2vh;
-                            }
-                        }
-                        .film-imdb-rating-box,
-                        .film-imdb-rating-user {
-                            height: 5%;
+                        .film-box {
                             display: flex;
-                            justify-content: space-around;
-                            align-items: center;
-                            width: 100%;
-                            p {
-                                font-size: 2vh;
-                                width: 100%;
+                            @extend .center;
+                            flex-direction: column;
+                            border-bottom: 5px solid rgb(73, 73, 73);
+                            border-top: 15px solid rgb(73, 73, 73);
+                            border-left: 1px solid rgb(73, 73, 73);
+                            border-right: 1px solid rgb(73, 73, 73);
+                            flex-basis: 22.5vw;
+                            min-width: 22.5vw;
+                            max-width: 30vw;
+                            flex-shrink: 1;
+                            flex-grow: 1;
+
+                            height: 100%;
+                            padding: 1.5rem;
+                            gap: 0.75rem;
+                            position: relative;
+                            .close-movie {
+                                position: absolute;
+                                right: 0.5rem;
+                                top: 0.5rem;
+                                cursor: pointer;
+                                z-index: 12;
                             }
-                            display: flex;
-                            flex-direction: row;
-                            div {
-                                width: 100%;
+                            img {
+                                height: fit-content;
+                                min-height: 65%;
+                                height: 65%;
                             }
-                            .star-box {
-                                .star-rating {
-                                    font-size: 2vh !important;
+                            .film-box-text {
+                                text-align: center;
+                                height: 15%;
+                                h3 {
+                                    font-size: 2.5vh;
+                                }
+                                p {
+                                    font-size: 2vh;
                                 }
                             }
+                            .film-imdb-rating-box,
+                            .film-imdb-rating-user {
+                                height: 5%;
+                                display: flex;
+                                justify-content: space-around;
+                                align-items: center;
+                                width: 100%;
+                                p {
+                                    font-size: 2vh;
+                                    width: 100%;
+                                }
+                                display: flex;
+                                flex-direction: row;
+                                div {
+                                    width: 100%;
+                                }
+                                .star-box {
+                                    .star-rating {
+                                        font-size: 2vh !important;
+                                    }
+                                }
+                            }
+                        }
+                        .film-details-plot {
+                            padding: 2rem;
+                            text-align: justify;
+                            position: absolute;
+                            width: 100%;
+                            z-index: 11;
+                            background-color: rgb(73, 73, 73);
                         }
                     }
                 }
@@ -598,37 +613,42 @@
                     }
                     .movie-list-ul {
                         gap: 1.5rem;
-                        .film-box {
-                            flex-basis: 40vw;
-                            min-width: 40vw;
-                            max-width: 45vw;
-                            flex-shrink: 1;
-                            flex-grow: 1;
+                        .film-box-wrapper {
+                            display: flex;
+                            flex-direction: row;
+                            position: relative;
+                            .film-box {
+                                flex-basis: 40vw;
+                                min-width: 40vw;
+                                max-width: 45vw;
+                                flex-shrink: 1;
+                                flex-grow: 1;
 
-                            height: 80%;
-                            padding: 0.5rem;
-                            gap: 0.5rem;
-                            img {
-                                min-height: 55%;
-                                height: 65%;
-                            }
-                            .film-box-text {
-                                height: 15%;
-                                h3 {
-                                    font-size: 2.25vh;
+                                height: 80%;
+                                padding: 0.5rem;
+                                gap: 0.5rem;
+                                img {
+                                    min-height: 55%;
+                                    height: 65%;
                                 }
-                                p {
-                                    font-size: 1.75vh;
+                                .film-box-text {
+                                    height: 15%;
+                                    h3 {
+                                        font-size: 2.25vh;
+                                    }
+                                    p {
+                                        font-size: 1.75vh;
+                                    }
                                 }
-                            }
-                            .film-imdb-rating-box,
-                            .film-imdb-rating-user {
-                                p {
-                                    font-size: 1.75vh;
-                                }
+                                .film-imdb-rating-box,
+                                .film-imdb-rating-user {
+                                    p {
+                                        font-size: 1.75vh;
+                                    }
 
-                                div {
-                                    width: 100%;
+                                    div {
+                                        width: 100%;
+                                    }
                                 }
                             }
                         }
@@ -710,25 +730,30 @@
                     }
                     .movie-list-ul {
                         padding: 1.5rem 0 1.5rem 0;
-                        .film-box {
-                            flex-basis: 40vw;
-                            min-width: 45vw;
-                            max-width: 45vw;
-                            .film-imdb-rating-box,
-                            .film-imdb-rating-user {
-                                p {
-                                    font-size: 1.25vh;
-                                }
-
-                                div {
-                                    width: 100%;
-                                }
-                                .star-box {
-                                    .star {
-                                        padding: 0.25rem;
+                        .film-box-wrapper {
+                            display: flex;
+                            flex-direction: row;
+                            position: relative;
+                            .film-box {
+                                flex-basis: 40vw;
+                                min-width: 45vw;
+                                max-width: 45vw;
+                                .film-imdb-rating-box,
+                                .film-imdb-rating-user {
+                                    p {
+                                        font-size: 1.25vh;
                                     }
-                                    .star-rating {
-                                        font-size: 1.75vh !important;
+
+                                    div {
+                                        width: 100%;
+                                    }
+                                    .star-box {
+                                        .star {
+                                            padding: 0.25rem;
+                                        }
+                                        .star-rating {
+                                            font-size: 1.75vh !important;
+                                        }
                                     }
                                 }
                             }
@@ -946,24 +971,29 @@
                     }
                     .movie-list-ul {
                         padding: 1.5rem 0 1.5rem 0;
-                        .film-box {
-                            flex-basis: 90vw;
-                            min-width: 90vw;
-                            .film-imdb-rating-box,
-                            .film-imdb-rating-user {
-                                p {
-                                    font-size: 2vh;
-                                }
-
-                                div {
-                                    width: 100%;
-                                }
-                                .star-box {
-                                    .star {
-                                        padding: 0.25rem;
+                        .film-box-wrapper {
+                            display: flex;
+                            flex-direction: row;
+                            position: relative;
+                            .film-box {
+                                flex-basis: 90vw;
+                                min-width: 90vw;
+                                .film-imdb-rating-box,
+                                .film-imdb-rating-user {
+                                    p {
+                                        font-size: 2vh;
                                     }
-                                    .star-rating {
-                                        font-size: 2vh !important;
+
+                                    div {
+                                        width: 100%;
+                                    }
+                                    .star-box {
+                                        .star {
+                                            padding: 0.25rem;
+                                        }
+                                        .star-rating {
+                                            font-size: 2vh !important;
+                                        }
                                     }
                                 }
                             }
@@ -1561,36 +1591,41 @@
                     }
                     .movie-list-ul {
                         gap: 1.5rem;
-                        .film-box {
-                            flex-basis: 45vw;
-                            min-width: 42.5vw;
-                            max-width: 42.5vw;
-                            flex-shrink: 1;
-                            flex-grow: 1;
-                            height: 100%;
-                            padding: 0.5rem;
-                            gap: 0.5rem;
-                            img {
-                                min-height: 55%;
-                                height: 65%;
-                            }
-                            .film-box-text {
-                                height: 15%;
-                                h3 {
-                                    font-size: 3vh;
+                        .film-box-wrapper {
+                            display: flex;
+                            flex-direction: row;
+                            position: relative;
+                            .film-box {
+                                flex-basis: 45vw;
+                                min-width: 42.5vw;
+                                max-width: 42.5vw;
+                                flex-shrink: 1;
+                                flex-grow: 1;
+                                height: 100%;
+                                padding: 0.5rem;
+                                gap: 0.5rem;
+                                img {
+                                    min-height: 55%;
+                                    height: 65%;
                                 }
-                                p {
-                                    font-size: 2vh;
+                                .film-box-text {
+                                    height: 15%;
+                                    h3 {
+                                        font-size: 3vh;
+                                    }
+                                    p {
+                                        font-size: 2vh;
+                                    }
                                 }
-                            }
-                            .film-imdb-rating-box,
-                            .film-imdb-rating-user {
-                                p {
-                                    font-size: 2.5vh;
-                                }
+                                .film-imdb-rating-box,
+                                .film-imdb-rating-user {
+                                    p {
+                                        font-size: 2.5vh;
+                                    }
 
-                                div {
-                                    width: 100%;
+                                    div {
+                                        width: 100%;
+                                    }
                                 }
                             }
                         }
@@ -1871,15 +1906,20 @@
                     }
                     .movie-list-ul {
                         gap: 1.5rem;
-                        .film-box {
-                            flex-basis: 42.5vw;
-                            min-width: 42.5vw;
-                            max-width: 44vw;
-                            height: 100%;
-                            .film-imdb-rating-box,
-                            .film-imdb-rating-user {
-                                p {
-                                    font-size: 2vh;
+                        .film-box-wrapper {
+                            display: flex;
+                            flex-direction: row;
+                            position: relative;
+                            .film-box {
+                                flex-basis: 42.5vw;
+                                min-width: 42.5vw;
+                                max-width: 44vw;
+                                height: 100%;
+                                .film-imdb-rating-box,
+                                .film-imdb-rating-user {
+                                    p {
+                                        font-size: 2vh;
+                                    }
                                 }
                             }
                         }

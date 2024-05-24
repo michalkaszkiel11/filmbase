@@ -1,11 +1,32 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { StarRating } from "../../StarRating";
 import { api } from "../../utils/apiInstance";
 import { Spinner } from "../../fillers/Spinner";
 import { deleteMovie } from "../../methods/deleteMovie";
-export const Film = ({ watch, loggedInUser, setIsWatchedUpadted }) => {
+import { Fade } from "react-awesome-reveal";
+
+export const Film = ({
+    watch,
+    loggedInUser,
+    setIsWatchedUpadted,
+    getMovie,
+    movieDetails,
+}) => {
     const email = loggedInUser ? loggedInUser.email : "";
     const [userRating, setUserRating] = useState(watch.userRating);
+    const [isDetailOver, setIsDetailOver] = useState(false);
+    const filmRef = useRef();
+
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (filmRef.current && !filmRef.current.contains(e.target)) {
+                setIsDetailOver(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () =>
+            document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
 
     const updateUserRating = async () => {
         const payload = {
@@ -45,37 +66,55 @@ export const Film = ({ watch, loggedInUser, setIsWatchedUpadted }) => {
     return (
         <>
             {watch ? (
-                <div className="film-box">
-                    <i
-                        className="fa fa-solid fa-xmark close-movie"
-                        onClick={() =>
-                            deleteMovie(email, watch, setIsWatchedUpadted)
-                        }
-                    ></i>
-                    <img src={watch.Poster} alt="poster" />
-                    <div className="film-box-text">
-                        <h3>{watch.Title}</h3>
-                        <p>{watch.Year}</p>
+                <div
+                    ref={filmRef}
+                    className="film-box-wrapper"
+                    onMouseEnter={() => {
+                        getMovie(watch);
+                        console.log("movieDetails", watch);
+                        setIsDetailOver(true);
+                    }}
+                    onMouseLeave={() => {
+                        setIsDetailOver(false);
+                    }}
+                >
+                    <div className="film-box">
+                        <i
+                            className="fa fa-solid fa-xmark close-movie"
+                            onClick={() =>
+                                deleteMovie(email, watch, setIsWatchedUpadted)
+                            }
+                        ></i>
+                        <img src={watch.Poster} alt="poster" />
+                        <div className="film-box-text">
+                            <h3>{watch.Title}</h3>
+                            <p>{watch.Year}</p>
+                        </div>
+                        <div className="film-imdb-rating-box">
+                            <p>imdb rating: </p>
+                            <StarRating
+                                rating={watch.imdbRating}
+                                maxRating={10}
+                                disabled={true}
+                                size={18}
+                            />
+                        </div>
+                        <div className="film-imdb-rating-user">
+                            <p>your rating</p>
+                            <StarRating
+                                rating={watch.userRating}
+                                maxRating={10}
+                                disabled={false}
+                                size={18}
+                                setRating={setUserRating}
+                            />
+                        </div>
                     </div>
-                    <div className="film-imdb-rating-box">
-                        <p>imdb rating: </p>
-                        <StarRating
-                            rating={watch.imdbRating}
-                            maxRating={10}
-                            disabled={true}
-                            size={18}
-                        />
-                    </div>
-                    <div className="film-imdb-rating-user">
-                        <p>your rating</p>
-                        <StarRating
-                            rating={watch.userRating}
-                            maxRating={10}
-                            disabled={false}
-                            size={18}
-                            setRating={setUserRating}
-                        />
-                    </div>
+                    {isDetailOver && movieDetails && (
+                        <Fade direction="left" className="film-details-plot">
+                            {movieDetails.Plot}
+                        </Fade>
+                    )}
                 </div>
             ) : (
                 <Spinner />

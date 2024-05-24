@@ -1,6 +1,7 @@
 
 
-# display movie details on click from user movie collection
+
 #<i>Added</i> onClick - delete from user collection
+#rating - chenage rating when user set it
 
 make request active not pending when user tries to add movies from collection page level = #solved useeffect recieved false from isWatchupdated #
