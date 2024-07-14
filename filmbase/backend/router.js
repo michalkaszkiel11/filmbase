@@ -30,6 +30,9 @@ router.get("/users", async (req, res) => {
 router.get("/awake", (req, res) => {
     res.send({ message: "Server is awake!" });
 });
+router.get("/catch", (req, res) => {
+    res.send({ message: "Server is caught!" });
+});
 router.post("/users/create", createUser);
 router.get("/users/info", authenticateToken, getUserInfo);
 router.post("/users/login", loginUser);
