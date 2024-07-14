@@ -31,7 +31,10 @@ router.get("/awake", (req, res) => {
     res.send({ message: "Server is awake!" });
     console.log("Request received for /awake");
 });
-
+router.get("/catch", (req, res) => {
+    res.send({ message: "Server is awake!" });
+    console.log("Request received for /awake");
+});
 router.post("/users/create", createUser);
 router.get("/users/info", authenticateToken, getUserInfo);
 router.post("/users/login", loginUser);
