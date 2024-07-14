@@ -27,12 +27,8 @@ router.get("/users", async (req, res) => {
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
-router.get("/awake", async (req, res) => {
-    try {
-        res.send("server is awaken! :)");
-    } catch (err) {
-        console.err("Error while requesting awake", err.message);
-    }
+router.get("/awake", (req, res) => {
+    res.send({ message: "Server is awake!" });
 });
 router.post("/users/create", createUser);
 router.get("/users/info", authenticateToken, getUserInfo);
